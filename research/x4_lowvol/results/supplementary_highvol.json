@@ -1,0 +1,62 @@
+{
+ "discovery_high5": {
+  "wealth": 0.32257348525295504,
+  "mean_per_period": 0.053424521044486646,
+  "median_per_period": -0.03233950868159502,
+  "excess_vs_random_k_mean": 0.0020494661329613297,
+  "excess_vs_random_k_ci90": [
+   -0.04717734800781881,
+   0.07134753402861885
+  ],
+  "excess_vs_LINK_mean": -0.041636355050173386,
+  "excess_vs_LINK_ci90": [
+   -0.12331205639600606,
+   0.07231363148339051
+  ]
+ },
+ "discovery_high10": {
+  "wealth": 1.6660768409289854,
+  "mean_per_period": 0.0726437426611173,
+  "median_per_period": 0.005293013711149019,
+  "excess_vs_random_k_mean": 0.020741925172253393,
+  "excess_vs_random_k_ci90": [
+   -0.013169740179650263,
+   0.062471468878390946
+  ],
+  "excess_vs_LINK_mean": -0.022417133433542718,
+  "excess_vs_LINK_ci90": [
+   -0.09727096953924601,
+   0.0734443829634245
+  ]
+ },
+ "holdout_high5": {
+  "wealth": 0.0730822468827845,
+  "mean_per_period": -0.03290433378037088,
+  "median_per_period": -0.10771194448640269,
+  "excess_vs_random_k_mean": -0.010351453803584472,
+  "excess_vs_random_k_ci90": [
+   -0.053176335040229325,
+   0.06556573990694574
+  ],
+  "excess_vs_LINK_mean": -0.051583672064052774,
+  "excess_vs_LINK_ci90": [
+   -0.10427307617994075,
+   0.049606286556743956
+  ]
+ },
+ "holdout_high10": {
+  "wealth": 0.06756207034581813,
+  "mean_per_period": -0.04688099640815483,
+  "median_per_period": -0.10574241789678604,
+  "excess_vs_random_k_mean": -0.024834214059724146,
+  "excess_vs_random_k_ci90": [
+   -0.04769878040580641,
+   0.023796523715883172
+  ],
+  "excess_vs_LINK_mean": -0.06556033469183671,
+  "excess_vs_LINK_ci90": [
+   -0.1048194275007789,
+   0.009712659257828443
+  ]
+ }
+}

@@ -584,3 +584,24 @@ Horizon set by the researcher as **open-ended**; H365 primary, H730 sensitivity 
   2024–26, vs LINK 0.84×.
 - *Do not revive funding-level cross-sectional selection without a new regime and a fresh
   pre-registered holdout.*
+
+### X4. Low-volatility cross-section (4-weekly) — REQUIRES VALIDATION (information POSITIVE; no robust gain vs hold-LINK)
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-26_x4_low_volatility.md` (the
+filename date is an error, explained in the file), `research/x4_lowvol/`.
+- **Process:** pre-registered (`4754441`); discovery committed (`1d1fad3`) before the holdout.
+- **Data:** X1's survivorship-free Binance panel.
+- **IC(vol60, fwd 28d):**
+  - discovery −0.157 (t = −4.28), holdout **−0.254 (t = −6.87)**;
+  - momentum/size-controlled partial IC: −0.151 / −0.245;
+  - **negative in all 7 years and all 4 phases.**
+  - This is the most stable cross-sectional regularity measured in this project.
+- **Economics (lowest-vol k = 1–10 long-only):**
+  - vs random-k: **+3.6% to +5.3% per 28d in the holdout, CIs excluding 0**;
+  - vs hold-LINK and hold-BTC: CIs span 0, and it was negative vs LINK in discovery for k ≥ 3.
+  - LINK sits at a median 32nd volatility percentile.
+- **Supplementary (not pre-registered):** high-vol baskets 0.07× in the holdout, with a median of
+  −10.6% per 28d. Their arithmetic mean was positive in 2020–21, so the arithmetic-vs-median
+  distinction is open.
+- **Supports:** a filter against rotating up the volatility ranking, and a conflict with
+  vol_expansion-triggered tactical entries.
+- **Does not support:** leaving LINK.

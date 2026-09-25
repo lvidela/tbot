@@ -45,3 +45,18 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
       alts bleeding) ex ante. At monthly turnover it could clear 0.92% switches. It also answers
       R13's "hold another asset" question with far more assets than a single pair.
     - X3 (capitulation rebound) follows.
+- **2026-09-25 23:25Z — X4 closed: REQUIRES VALIDATION.** Finding
+  `2026-09-26_x4_low_volatility.md`.
+  - **Evidence:** strong for information (holdout t = −6.87, every year negative). Weak for
+    economics vs the live holding (hold-LINK/BTC CIs span 0).
+  - **Learned:** unlike positioning (X1), volatility ranks are regime-stable. The decision value
+    is as a filter against high-vol rotation and tactical entries, not as a switch.
+  - **Invalidation:** a positive IC over two consecutive quarters of fresh data.
+  - **Next:** X4b, a **venue replication on Kraken's own public daily data**. It is cheap, and it
+    is exactly what the live agent would need before any filter:
+    - `research/tsmom/ohlc_long.json`, 20 Kraken assets, 2024-10 → 2026-09;
+    - pre-registered IC(vol60, fwd 28d) < 0.
+  - **Then:** X3 (capitulation rebound).
+  - **New idea (priority 4):** X12, vol-managed exposure to LINK itself. Scale LINK exposure
+    inversely to its trailing volatility (the time-series analogue of X4). It needs the
+    static-exposure control from the live agent's S2 request.
