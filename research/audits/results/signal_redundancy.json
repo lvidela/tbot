@@ -1,0 +1,144 @@
+{
+  "generated_utc": "2026-09-25T23:27:16Z",
+  "data": {
+    "fetched_utc": "2026-09-25T23:26:28Z",
+    "pairs": 20,
+    "pair_bars": 14300,
+    "timestamps": 715
+  },
+  "thresholds": {
+    "VOL_EXPANSION_MIN": 1.5,
+    "VOLUME_MIN": 3.0,
+    "MOMENTUM_MIN": 0.02,
+    "REL_STRENGTH_MIN": 0.03
+  },
+  "firing_rate": {
+    "volatility_expansion": 0.1363,
+    "volume_confirmation": 0.0511,
+    "momentum_continuation": 0.0597,
+    "breakout_confirmed": 0.0658,
+    "relative_strength": 0.0434
+  },
+  "phi_binary": [
+    [
+      1.0,
+      0.299,
+      0.227,
+      0.233,
+      0.251
+    ],
+    [
+      0.299,
+      1.0,
+      0.14,
+      0.246,
+      0.214
+    ],
+    [
+      0.227,
+      0.14,
+      1.0,
+      0.274,
+      0.351
+    ],
+    [
+      0.233,
+      0.246,
+      0.274,
+      1.0,
+      0.238
+    ],
+    [
+      0.251,
+      0.214,
+      0.351,
+      0.238,
+      1.0
+    ]
+  ],
+  "spearman_continuous": [
+    [
+      1.0,
+      0.398,
+      -0.002,
+      0.047,
+      0.05
+    ],
+    [
+      0.398,
+      1.0,
+      0.013,
+      0.324,
+      0.036
+    ],
+    [
+      -0.002,
+      0.013,
+      1.0,
+      0.149,
+      0.296
+    ],
+    [
+      0.047,
+      0.324,
+      0.149,
+      1.0,
+      0.134
+    ],
+    [
+      0.05,
+      0.036,
+      0.296,
+      0.134,
+      1.0
+    ]
+  ],
+  "meff_binary": 4.74,
+  "meff_continuous": 4.84,
+  "conditional_probabilities": {
+    "P(volume_confirmation|volatility_expansion)": 0.217,
+    "P(momentum_continuation|volatility_expansion)": 0.195,
+    "P(breakout_confirmed|volatility_expansion)": 0.211,
+    "P(relative_strength|volatility_expansion)": 0.172,
+    "P(volatility_expansion|volume_confirmation)": 0.579,
+    "P(momentum_continuation|volume_confirmation)": 0.202,
+    "P(breakout_confirmed|volume_confirmation)": 0.328,
+    "P(relative_strength|volume_confirmation)": 0.231,
+    "P(volatility_expansion|momentum_continuation)": 0.445,
+    "P(volume_confirmation|momentum_continuation)": 0.174,
+    "P(breakout_confirmed|momentum_continuation)": 0.335,
+    "P(relative_strength|momentum_continuation)": 0.327,
+    "P(volatility_expansion|breakout_confirmed)": 0.438,
+    "P(volume_confirmation|breakout_confirmed)": 0.255,
+    "P(momentum_continuation|breakout_confirmed)": 0.304,
+    "P(relative_strength|breakout_confirmed)": 0.226,
+    "P(volatility_expansion|relative_strength)": 0.541,
+    "P(volume_confirmation|relative_strength)": 0.272,
+    "P(momentum_continuation|relative_strength)": 0.449,
+    "P(breakout_confirmed|relative_strength)": 0.343
+  },
+  "confluence_ge3_observed": 0.03203,
+  "confluence_ge3_if_independent": 0.00282,
+  "confluence_ge3_inflation": 11.4,
+  "spearman_confluence_vs_trailing24h_return": 0.188,
+  "confluence_ge3_combinations": {
+    "volatility_expansion+volume_confirmation+momentum_continuation+breakout_confirmed+relative_strength": 67,
+    "volatility_expansion+volume_confirmation+breakout_confirmed": 57,
+    "volatility_expansion+momentum_continuation+breakout_confirmed+relative_strength": 56,
+    "volatility_expansion+momentum_continuation+relative_strength": 55,
+    "volatility_expansion+volume_confirmation+relative_strength": 47,
+    "volatility_expansion+volume_confirmation+momentum_continuation+breakout_confirmed": 43,
+    "volatility_expansion+momentum_continuation+breakout_confirmed": 43,
+    "volatility_expansion+volume_confirmation+breakout_confirmed+relative_strength": 22,
+    "momentum_continuation+breakout_confirmed+relative_strength": 19,
+    "volatility_expansion+breakout_confirmed+relative_strength": 14,
+    "volume_confirmation+momentum_continuation+breakout_confirmed": 11,
+    "volatility_expansion+volume_confirmation+momentum_continuation+relative_strength": 10,
+    "volatility_expansion+volume_confirmation+momentum_continuation": 6,
+    "volume_confirmation+momentum_continuation+breakout_confirmed+relative_strength": 3,
+    "volume_confirmation+momentum_continuation+relative_strength": 3,
+    "volume_confirmation+breakout_confirmed+relative_strength": 2
+  },
+  "mean_r24_when_confluence_ge3": 0.1065,
+  "share_ge3_with_r24_positive": 0.987
+}

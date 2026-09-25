@@ -1,0 +1,42 @@
+{
+  "generated_utc": "2026-09-25T23:30:52Z",
+  "weeks": 652,
+  "span": [
+    "2014-04-03",
+    "2026-09-24"
+  ],
+  "regimes": {
+    "btc_vol_high": {
+      "episodes_total": 24,
+      "episodes_on": 12,
+      "episodes_off": 12,
+      "weeks_on": 249,
+      "weeks_off": 403,
+      "median_on_length_weeks": 12.5
+    },
+    "btc_trend_up": {
+      "episodes_total": 24,
+      "episodes_on": 12,
+      "episodes_off": 12,
+      "weeks_on": 369,
+      "weeks_off": 283,
+      "median_on_length_weeks": 23.0
+    },
+    "alt_led": {
+      "episodes_total": 56,
+      "episodes_on": 28,
+      "episodes_off": 28,
+      "weeks_on": 199,
+      "weeks_off": 453,
+      "median_on_length_weeks": 4.5
+    },
+    "high_corr": {
+      "episodes_total": 28,
+      "episodes_on": 14,
+      "episodes_off": 14,
+      "weeks_on": 421,
+      "weeks_off": 231,
+      "median_on_length_weeks": 17.5
+    }
+  }
+}

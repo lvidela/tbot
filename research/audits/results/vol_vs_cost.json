@@ -1,0 +1,112 @@
+{
+  "generated_utc": "2026-09-25T23:30:54Z",
+  "snapshot_utc": "2026-09-25T23:30:54Z",
+  "n_pairs": 115,
+  "clip_usd": 13.0,
+  "min_usd_vol_24h": 250000.0,
+  "elasticity_log_spread_on_log_sigma": 0.641,
+  "spearman_sigma_spread": 0.24,
+  "by_volatility_quintile": [
+    {
+      "quintile": 1,
+      "n": 23,
+      "sigma30_pct": 3.3294,
+      "spread_bps": 3.3462,
+      "impact_bps_clip": 0.0,
+      "depth_05pct_usd": 152308.1984,
+      "usd_vol_24h": 1369658.6914,
+      "taker_rt_pct": 1.6335,
+      "maker_rt_pct_floor": 0.908,
+      "breakeven_frac_3d_sigma_maker": 0.1575,
+      "breakeven_frac_3d_sigma_taker": 0.3025,
+      "examples": [
+        "COMPUSD",
+        "XRPUSD",
+        "SANDUSD",
+        "LINKUSD"
+      ]
+    },
+    {
+      "quintile": 2,
+      "n": 23,
+      "sigma30_pct": 4.2263,
+      "spread_bps": 10.3583,
+      "impact_bps_clip": 0.0,
+      "depth_05pct_usd": 14528.5516,
+      "usd_vol_24h": 1179548.0203,
+      "taker_rt_pct": 1.714,
+      "maker_rt_pct_floor": 0.908,
+      "breakeven_frac_3d_sigma_maker": 0.124,
+      "breakeven_frac_3d_sigma_taker": 0.2328,
+      "examples": [
+        "SYRUPUSD",
+        "EIGENUSD",
+        "POLUSD",
+        "PLUMEUSD"
+      ]
+    },
+    {
+      "quintile": 3,
+      "n": 23,
+      "sigma30_pct": 5.2455,
+      "spread_bps": 7.0355,
+      "impact_bps_clip": 0.0,
+      "depth_05pct_usd": 27000.7422,
+      "usd_vol_24h": 1375503.6296,
+      "taker_rt_pct": 1.6704,
+      "maker_rt_pct_floor": 0.908,
+      "breakeven_frac_3d_sigma_maker": 0.0999,
+      "breakeven_frac_3d_sigma_taker": 0.1926,
+      "examples": [
+        "TRUMPUSD",
+        "ONDOUSD",
+        "OPUSD",
+        "USUSD"
+      ]
+    },
+    {
+      "quintile": 4,
+      "n": 23,
+      "sigma30_pct": 6.4526,
+      "spread_bps": 9.5012,
+      "impact_bps_clip": 0.0,
+      "depth_05pct_usd": 30429.5516,
+      "usd_vol_24h": 2201005.8334,
+      "taker_rt_pct": 1.695,
+      "maker_rt_pct_floor": 0.908,
+      "breakeven_frac_3d_sigma_maker": 0.0812,
+      "breakeven_frac_3d_sigma_taker": 0.1585,
+      "examples": [
+        "XCNUSD",
+        "METUSD",
+        "FARTCOINUSD",
+        "JUPUSD"
+      ]
+    },
+    {
+      "quintile": 5,
+      "n": 23,
+      "sigma30_pct": 10.0074,
+      "spread_bps": 9.4384,
+      "impact_bps_clip": 0.0,
+      "depth_05pct_usd": 8529.1848,
+      "usd_vol_24h": 1102655.2998,
+      "taker_rt_pct": 1.6944,
+      "maker_rt_pct_floor": 0.908,
+      "breakeven_frac_3d_sigma_maker": 0.0524,
+      "breakeven_frac_3d_sigma_taker": 0.0981,
+      "examples": [
+        "USELESSUSD",
+        "SKRUSD",
+        "AKEUSD",
+        "LSKUSD"
+      ]
+    }
+  ],
+  "caveats": [
+    "single order-book snapshot; spreads vary intraday",
+    "maker cost is a FLOOR: adverse selection measured only in calm LINKUSD (n=2)",
+    "survivorship: only pairs listed and liquid today",
+    "no forward returns computed -- predictability is NOT measured here"
+  ]
+}

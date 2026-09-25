@@ -120,3 +120,13 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     - a new-hypothesis scan: expected-vs-median, i.e. do rank effects (X4/X6) translate into
       *mean* gains at 2-leg cost under any objective the researchers endorse. This one is a
       question for the researchers, not a study.
+- **2026-09-25 23:45Z — independent audit delivered** (audit agent, not the
+  Research Agent): `research/audits/NEXT_RESEARCH_HANDOFF.md`. The registry gained AU1–AU4.
+  - **Top items, by information value:**
+    1. a program-wide trial ledger (`research/TRIALS.jsonl`) and prior-exposure controls C1–C4;
+    2. a forward frozen-spec holdout (FROZEN-1), with null entrants;
+    3. a decision-snapshot schema (live agent);
+    4. a virtual maker-fill/markout study on public trades.
+  - **For X2 (next in the queue) and later studies:** any 2024–26 window is a *reused,
+    pre-cutoff* holdout (AU1; eight studies share it). Label it so, add the prior-exposure
+    disclosure (C1) to the pre-registration, and report the program-level threshold (C4).

@@ -1,0 +1,443 @@
+{
+  "generated": "2026-09-25",
+  "author": "independent audit agent (cloud)",
+  "companion": "research/audits/external_agent_audit_2026-09-25.md",
+  "classification_legend": [
+    "STRONG",
+    "PARTIAL",
+    "MISSING",
+    "NOT APPLICABLE"
+  ],
+  "external_systems": {
+    "agent_market_arena": {
+      "ref": "arXiv:2510.11695",
+      "kind": "live multi-market LLM benchmark"
+    },
+    "ai_trader_hkuds": {
+      "ref": "arXiv:2512.10971; github.com/HKUDS/AI-Trader",
+      "kind": "live data-uncontaminated benchmark"
+    },
+    "dxrg_continuous_record": {
+      "ref": "arXiv:2609.05663",
+      "kind": "production telemetry, two fleets"
+    },
+    "tradingagents": {
+      "ref": "arXiv:2412.20138",
+      "kind": "multi-agent LLM architecture, 3-month backtest"
+    },
+    "alpha_arena_nof1": {
+      "ref": "nof1.ai",
+      "kind": "real-money LLM competition, 17 days"
+    },
+    "traderank": {
+      "ref": "traderank.ai/how-it-works",
+      "kind": "public live LLM leaderboard"
+    },
+    "clawstreet": {
+      "ref": "docs.clawstreet.io",
+      "kind": "paper-trading agent arena (methodology undocumented)"
+    }
+  },
+  "summary": {
+    "STRONG": 1,
+    "PARTIAL": 15,
+    "MISSING": 4
+  },
+  "capabilities": [
+    {
+      "id": 1,
+      "capability": "Point-in-time data and look-ahead protection",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "research/x4_lowvol/test_x4.py (no look-ahead test)",
+          "research/timing/test_timing.py",
+          "scripts/counterfactual.py docstring: entry frozen at decision time"
+        ],
+        "weakness": "Hypothesis-selection look-ahead unaddressed: LLM knowledge cutoff (June 2026) postdates all research data; X4 chosen after X1 holdout tables; no file mentions model cutoff"
+      },
+      "external": {
+        "agent_market_arena": "live-only evaluation; point-in-time news verification",
+        "ai_trader_hkuds": "tools time-gated to simulated time; live window",
+        "dxrg_continuous_record": "production record (forward by construction)",
+        "tradingagents": "claims no future data; no discussion of LLM training contamination",
+        "alpha_arena_nof1": "live real-money",
+        "traderank": "live",
+        "clawstreet": "live paper"
+      },
+      "recommendation": "Forward-only frozen-spec holdout; state model cutoff and prior exposure in every pre-registration",
+      "expected_information_value": "HIGH"
+    },
+    {
+      "id": 2,
+      "capability": "Immutable decision snapshots",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "scripts/counterfactual.py record_rejection (decision-time bid/ask/spread/signals)",
+          "data/shadow_trades.json"
+        ],
+        "weakness": "Ledgers rewritten wholesale (_rw), no hash chain; shadow benchmark fields backfilled; escalated sessions write no structured snapshot; data/escalation_context.json overwritten and gitignored"
+      },
+      "external": {
+        "dxrg_continuous_record": "every order carries rendered state + template revision + config revision at that turn",
+        "traderank": "every prompt and JSON decision published",
+        "ai_trader_hkuds": "reasoning traces recorded",
+        "agent_market_arena": "undocumented",
+        "tradingagents": "undocumented",
+        "alpha_arena_nof1": "model outputs shown publicly",
+        "clawstreet": "undocumented"
+      },
+      "recommendation": "Append-only hash-chained decision snapshot recorder (schema in NEXT_RESEARCH_HANDOFF.md); no execute.py change",
+      "expected_information_value": "HIGH"
+    },
+    {
+      "id": 3,
+      "capability": "Experiment/version fingerprints",
+      "this_repo": {
+        "classification": "MISSING",
+        "evidence": [
+          "no git hash or file hash in any ledger/log/finding (grep)"
+        ],
+        "weakness": "Shadow rows all labelled tactical_v4 while predicted_prob spans {0.50,0.56,0.59,0.62} across the R7 model change"
+      },
+      "external": {
+        "dxrg_continuous_record": "template/config revision lineage joined per turn",
+        "others": "undocumented"
+      },
+      "recommendation": "Record git commit + sha256 of gate/strategy files + CLAUDE.md + prompt on every record",
+      "expected_information_value": "HIGH"
+    },
+    {
+      "id": 4,
+      "capability": "Locked out-of-sample holdout",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "discovery committed before holdout: X1 87df027->f4f4086, X4 1d1fad3->96bb638",
+          "research/timing/PREREGISTRATION.md"
+        ],
+        "weakness": "Same 2024-01..2026-09 holdout reused by T1, X1, X3, X4, X4b, X5, X6 (+R12/R13); X4 pre-registered 76s after X1 holdout commit; all pre-cutoff; access control procedural"
+      },
+      "external": {
+        "agent_market_arena": "continuous live evaluation replaces a historical holdout",
+        "ai_trader_hkuds": "live window",
+        "others": "none"
+      },
+      "recommendation": "Forward holdout of frozen specs with query budget and access log",
+      "expected_information_value": "HIGH"
+    },
+    {
+      "id": 5,
+      "capability": "Ablation testing",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "research/Q1_signal_combinations.md (31 subsets)",
+          "REGISTRY R10 C1/C2",
+          "REGISTRY R12 static-exposure control",
+          "research/audits/results/signal_redundancy.json"
+        ],
+        "weakness": "No leave-one-out incremental test; redundancy argued (D4) but unmeasured before this audit"
+      },
+      "external": {
+        "dxrg_continuous_record": "'firm' evidence tier requires >=1 ablation or permutation check",
+        "agent_market_arena": "backbone vs architecture comparison",
+        "others": "undocumented"
+      },
+      "recommendation": "Require independence-null co-firing ratio + trailing-return-controlled leave-one-out for any future composite signal; do not re-run outcome ablation on the historical cache",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 6,
+      "capability": "Market-regime detection",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "scripts/execution_stats.py vol_regime",
+          "scripts/monitor.py detectors"
+        ],
+        "weakness": "Per-asset vol regime only; no market-wide regime recorded on decisions"
+      },
+      "external": {
+        "dxrg_continuous_record": "volatility sextiles used in analysis",
+        "others": "undocumented"
+      },
+      "recommendation": "Record market-wide regime labels in decision snapshots and counterfactual rows",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 7,
+      "capability": "Regime-conditioned strategy selection",
+      "this_repo": {
+        "classification": "MISSING",
+        "evidence": [
+          "research/audits/results/regime_episodes.json: ~12 vol/trend episodes in 12 years"
+        ],
+        "weakness": "Missing by design; history too short to fit"
+      },
+      "external": {
+        "all": "none documented"
+      },
+      "recommendation": "Do not build; one pre-registered interaction test (X4 x alt-led) on forward data only",
+      "expected_information_value": "LOW"
+    },
+    {
+      "id": 8,
+      "capability": "Strategy tournaments",
+      "this_repo": {
+        "classification": "MISSING",
+        "evidence": [
+          "data/shadow_trades.json: single strategy tactical_v4"
+        ],
+        "weakness": "Each study evaluates one candidate against its own controls"
+      },
+      "external": {
+        "alpha_arena_nof1": "model tournament, single path, no nulls",
+        "traderank": "model seasons, 28 days",
+        "agent_market_arena": "multi-agent/backbone live comparison",
+        "dxrg_continuous_record": "paired replay model league, Holm-adjusted: no differences"
+      },
+      "recommendation": "Small forward tournament (<=6 entrants incl. >=2 null controls), max-statistic comparison",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 9,
+      "capability": "Independent adversarial falsification",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "research/Q4_adversarial_review.md",
+          "research/HANDOFF.md (live agent ACCEPT/REJECT)",
+          "REGISTRY R10, R12"
+        ],
+        "weakness": "Author and validator share model family, priors and data"
+      },
+      "external": {
+        "tradingagents": "bull/bear LLM debate (argumentative, not measured)",
+        "others": "undocumented"
+      },
+      "recommendation": "Validator runs frozen spec on forward data only; do not add debate agents or a second model family",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 10,
+      "capability": "Multiple-testing / researcher-DoF control",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "per-study Bonferroni (X1, X4, T1)",
+          "Q1 permutation FWER p=0.971",
+          "REGISTRY D5 MDE rule"
+        ],
+        "weakness": "No program-level trial count (~266 formal tests) or budget"
+      },
+      "external": {
+        "dxrg_continuous_record": "Holm-adjusted model league; evidence tiers",
+        "traderank": "rule-based churn limits (not statistical)",
+        "others": "none"
+      },
+      "recommendation": "research/TRIALS.jsonl append-only + program-level threshold beside every POSITIVE",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 11,
+      "capability": "Execution-aware performance attribution",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "scripts/execution_stats.py",
+          "scripts/edge.py costs()",
+          "REGISTRY A1"
+        ],
+        "weakness": "adverse_bps = submit->fill mid drift, not post-fill markout; n=2 calm fills"
+      },
+      "external": {
+        "traderank": "0.1% fee, no slippage",
+        "ai_trader_hkuds": "no explicit costs",
+        "dxrg_continuous_record": "fees reported; paper engine zero slippage/funding",
+        "tradingagents": "no costs",
+        "alpha_arena_nof1": "real exchange fills"
+      },
+      "recommendation": "Live agent: add post-fill markout at 1/5/30 min; research: virtual maker-fill study on public trades",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 12,
+      "capability": "Decision replay",
+      "this_repo": {
+        "classification": "MISSING",
+        "evidence": [
+          ".gitignore: data/escalation_context.json, logs/claude_sessions/"
+        ],
+        "weakness": "Inputs to past sessions not retained"
+      },
+      "external": {
+        "dxrg_continuous_record": "416 captured production scenarios replayed across models",
+        "traderank": "published prompts allow replay",
+        "others": "undocumented"
+      },
+      "recommendation": "Decision snapshot captures replay inputs (hash + compact payload)",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 13,
+      "capability": "Prompt/model/tool version tracking",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "CLAUDE.md, scripts/launch_claude.sh prompt, .claude/settings.json versioned in git"
+        ],
+        "weakness": "No per-decision join; no model id or CLI version recorded"
+      },
+      "external": {
+        "dxrg_continuous_record": "per-turn template+config revision; frozen model/temperature",
+        "traderank": "model per season",
+        "ai_trader_hkuds": "model per run",
+        "others": "undocumented"
+      },
+      "recommendation": "Record model id, CLI version and prompt hash per session (launcher change needs researcher approval)",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 14,
+      "capability": "Capital allocation methodology",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "scripts/edge.py gate",
+          "scripts/tactical.py SIZE_MIN/MAX"
+        ],
+        "weakness": "Ad hoc sizing; moot while p=0.50"
+      },
+      "external": {
+        "traderank": "min 10% equity, max 10 positions",
+        "dxrg_continuous_record": "volatility-blind sizing identified as main loss driver",
+        "others": "undocumented"
+      },
+      "recommendation": "No change now; if any strategy activates, size by measured uncertainty and sigma",
+      "expected_information_value": "LOW"
+    },
+    {
+      "id": 15,
+      "capability": "Automatic strategy retirement",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "REGISTRY rejects with reopen criteria"
+        ],
+        "weakness": "No pre-declared live kill rule; N/A while only HOLD is live"
+      },
+      "external": {
+        "all": "none documented"
+      },
+      "recommendation": "Pre-declare kill rule at activation of any non-HOLD strategy",
+      "expected_information_value": "LOW"
+    },
+    {
+      "id": 16,
+      "capability": "Novel strategy discovery",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "research/BACKLOG.md X1-X12",
+          "research/PROGRAM.md"
+        ],
+        "weakness": "Serial, LLM-generated (prior-contaminated) candidates"
+      },
+      "external": {
+        "all": "LLM agents choose trades; no systematic strategy discovery documented"
+      },
+      "recommendation": "Label pre-cutoff discoveries exploratory; confirm only forward",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 17,
+      "capability": "Counterfactual evaluation",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "scripts/counterfactual.py",
+          "scripts/shadow.py (D8 fix)"
+        ],
+        "weakness": "31 rows / 16 opportunities from 2 decision hours; specs not frozen or versioned"
+      },
+      "external": {
+        "dxrg_continuous_record": "mechanical bracket counterfactual (+39 bps/position)",
+        "others": "undocumented"
+      },
+      "recommendation": "Frozen-spec entrants + fixed-time (non-signal) sampling for high-vol ledger",
+      "expected_information_value": "HIGH"
+    },
+    {
+      "id": 18,
+      "capability": "Benchmark-relative performance",
+      "this_repo": {
+        "classification": "STRONG",
+        "evidence": [
+          "data/benchmark.json (immutable)",
+          "REGISTRY D8",
+          "REGISTRY R12 static-exposure control"
+        ],
+        "weakness": "-"
+      },
+      "external": {
+        "traderank": "vs buy-and-hold BTC/SPY",
+        "ai_trader_hkuds": "vs index",
+        "agent_market_arena": "vs buy-and-hold",
+        "dxrg_continuous_record": "vs matched retail benchmark",
+        "tradingagents": "vs buy-and-hold + rule baselines",
+        "alpha_arena_nof1": "raw return leaderboard"
+      },
+      "recommendation": "Keep",
+      "expected_information_value": "-"
+    },
+    {
+      "id": 19,
+      "capability": "Agent-behaviour telemetry",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "logs/activity.jsonl (reasoning, dedup transitions)",
+          "scripts/evaluations.py verdicts"
+        ],
+        "weakness": "No session duration, tools used, model id, hypotheses considered/rejected, data cutoff"
+      },
+      "external": {
+        "dxrg_continuous_record": "population-scale behaviour telemetry; memory, triggers, config revisions",
+        "traderank": "published reasoning",
+        "ai_trader_hkuds": "ReAct traces"
+      },
+      "recommendation": "Structured, non-chain-of-thought fields in decision snapshot",
+      "expected_information_value": "MEDIUM"
+    },
+    {
+      "id": 20,
+      "capability": "Research reproducibility",
+      "this_repo": {
+        "classification": "PARTIAL",
+        "evidence": [
+          "research/*/results/*.json",
+          "tests per study",
+          "pre-registration commits"
+        ],
+        "weakness": "Q1-Q4 backtests depend on gitignored data/cache; fetched data not content-hashed; 0-byte output incident"
+      },
+      "external": {
+        "ai_trader_hkuds": "code and evaluation data open-sourced",
+        "dxrg_continuous_record": "versioned public datasets and artifacts",
+        "tradingagents": "code open-sourced",
+        "others": "undocumented"
+      },
+      "recommendation": "Content-hash every fetched dataset in results JSON; commit small snapshots",
+      "expected_information_value": "LOW"
+    }
+  ],
+  "audit_measurements": {
+    "signal_redundancy": "results/signal_redundancy.json",
+    "vol_vs_cost": "results/vol_vs_cost.json",
+    "holdout_reuse_sim": "results/holdout_reuse_sim.json",
+    "regime_episodes": "results/regime_episodes.json"
+  },
+  "note": "X3, X5, X6 were merged to main during the audit and are included in the holdout-reuse and test counts."
+}

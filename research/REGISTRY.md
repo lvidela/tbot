@@ -651,3 +651,66 @@ filename date is an error, explained in the file), `research/x4_lowvol/`.
   both periods.
 - Closes implied volatility as a timing state. Price, trend, realised vol, funding and implied
   vol have all now failed.
+---
+
+## INDEPENDENT AUDIT ENTRIES (appended 2026-09-25, audit agent — not the live or Research Agent)
+Source: `research/audits/external_agent_audit_2026-09-25.md`. These entries record only
+measured or verifiable facts. The recommendations stay in `research/audits/NEXT_RESEARCH_HANDOFF.md`.
+
+### AU1. DEFECT — the 2024–26 "holdout" is reused and selection-contaminated; X4's holdout is not independent confirmation
+- **Reuse:** the same 2024-01 → 2026-09 window serves as the holdout or evaluation window of T1,
+  X1, X3, X4, X4b, X5 and X6, with R12/R13 overlapping it.
+- **Sequence:** X4 was pre-registered (`4754441`, 23:13:49Z) **76 s** after X1's holdout results
+  were committed (`f4f4086`, 23:12:33Z). Those results included a momentum/volatility-controlled
+  IC on the same holdout and the 0.16× alt-basket figure. The BACKLOG chose X4 because it
+  "predicts the 2024–26 pattern".
+- **Model cutoff:** all research data predates the agents' model knowledge cutoff (June 2026).
+- **Consequence:** X4's holdout t = −6.87 and X4b are **not independent confirmations** and
+  must not be cited as such.
+- **What survives:** X4's discovery result (t = −4.28, p ≈ 1e-4) still clears a program-wide
+  Bonferroni over the ≈ 266 formal tests recorded to date, is negative in all 7 years, and
+  matches published crypto low-volatility evidence. X4's REQUIRES-VALIDATION label therefore
+  stands, and the only remaining uncontaminated validation route is forward data.
+- **X6 is in the same position, with a weaker discovery stage.** It was built on X4's grid and
+  holdout. Its discovery partial IC t = 2.68 passes its 3-test family but not a program-level
+  bar (|t| ≳ 3.7), so its holdout t = 3.45 is not independent confirmation either.
+- **Simulation** (`research/audits/holdout_reuse_sim.py`, global null, K = 20 candidates):
+  - holdout peeking raises the holdout-stage pass rate from 5% to 44–88%;
+  - the two-stage gate's false-positive rate rises from 0.036% to 0.3–0.6% per study, or
+    **1.3%** if both periods are prior-exposed;
+  - that is a **12% chance of ≥ 1 false POSITIVE over 10 studies.**
+
+### AU2. MEASURED — confluence conditions are one event in the tail (confirms D4 empirically)
+- **Data:** `research/audits/signal_redundancy.py`, 20 Kraken pairs × 715 4h bars; outcome-blind,
+  no forward returns computed.
+- **Co-firing:** confluence ≥ 3 occurs on **3.20%** of pair-bars vs **0.28%** if the five
+  conditions were independent at their observed rates, i.e. **11.4×**.
+- **Direction:** **98.7%** of confluence ≥ 3 cases have a positive trailing-24h return, with a
+  mean of **+10.7%**.
+- **Pairwise correlation** is modest (Spearman ≤ 0.40, Nyholt M_eff 4.7 of 5). **Average
+  correlation understates the dependence, which lives in the tail.**
+- "Confluence ≥ 3" ≈ "rose ~10% in a day". It is not three independent confirmations.
+
+### AU3. MEASURED — cost relative to volatility falls with volatility on Kraken; cost is not what disqualifies high-vol names
+- **Data:** `research/audits/vol_vs_cost.py`, 115 USD pairs with ≥ $250k 24h volume, a single
+  snapshot at 2026-09-25T23:31Z, $13 clip.
+- **Spread vs σ:** spread scales with σ at an elasticity of **0.64**. Fees dominate at every
+  quintile, and impact at a $13 clip is ≈ 0.
+- **Cost as a share of a 3-day σ,** lowest → highest volatility quintile:
+  - maker (floor) **15.8% → 5.2%**;
+  - taker **30.3% → 9.8%**.
+- **Limits:** a snapshot; survivorship (today's listings); maker adverse selection in volatile
+  markets **unmeasured** (n = 0).
+- The binding constraint for high-vol assets is the **sign** of the predictable component (X4:
+  negative rank/median), not cost.
+
+### AU4. DEFECT — no version fingerprints; decision inputs not retained
+- **Ledgers:** no ledger, log or finding records a git commit or file hash. The shadow ledger
+  labels all 19 rows `strategy: tactical_v4` while `predicted_prob` takes values
+  {0.50, 0.56, 0.59, 0.62}, spanning the R7 model change. Rows from different model versions
+  are indistinguishable by label.
+- **Decision inputs:** `data/escalation_context.json` (the inputs an escalated session saw) is
+  overwritten on every escalation and gitignored. So no past live decision can be replayed from
+  the repository.
+- **Status:** recorded as fact. The remedy (a decision-snapshot schema) is a recommendation in
+  the handoff, not an accepted change.

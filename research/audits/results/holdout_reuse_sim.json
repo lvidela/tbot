@@ -1,0 +1,169 @@
+{
+  "generated_utc": "2026-09-25T23:30:10Z",
+  "sims": 200000,
+  "gate": "discovery one-sided z>2.498 AND holdout one-sided z>1.645, same sign",
+  "results": [
+    {
+      "K": 5,
+      "mode": "honest",
+      "peek_noise": null,
+      "p_discovery_pass": 0.00613,
+      "p_holdout_pass": 0.05006,
+      "p_false_positive": 0.00033,
+      "p_any_false_positive_10_studies": 0.0032951038099511276
+    },
+    {
+      "K": 5,
+      "mode": "holdout_peek",
+      "peek_noise": 0.0,
+      "p_discovery_pass": 0.006655,
+      "p_holdout_pass": 0.41298,
+      "p_false_positive": 0.00275,
+      "p_any_false_positive_10_studies": 0.027162171154347936
+    },
+    {
+      "K": 5,
+      "mode": "holdout_peek",
+      "peek_noise": 0.5,
+      "p_discovery_pass": 0.006495,
+      "p_holdout_pass": 0.347565,
+      "p_false_positive": 0.002415,
+      "p_any_false_positive_10_studies": 0.023889232931345483
+    },
+    {
+      "K": 5,
+      "mode": "holdout_peek",
+      "peek_noise": 1.0,
+      "p_discovery_pass": 0.006315,
+      "p_holdout_pass": 0.25197,
+      "p_false_positive": 0.00167,
+      "p_any_false_positive_10_studies": 0.01657505676545601
+    },
+    {
+      "K": 5,
+      "mode": "holdout_peek",
+      "peek_noise": 2.0,
+      "p_discovery_pass": 0.00602,
+      "p_holdout_pass": 0.154795,
+      "p_false_positive": 0.001,
+      "p_any_false_positive_10_studies": 0.009955119790251765
+    },
+    {
+      "K": 5,
+      "mode": "both_peek",
+      "peek_noise": 0.0,
+      "p_discovery_pass": 0.0449,
+      "p_holdout_pass": 0.251795,
+      "p_false_positive": 0.00315,
+      "p_any_false_positive_10_studies": 0.03105721760718816
+    },
+    {
+      "K": 5,
+      "mode": "both_peek",
+      "peek_noise": 0.5,
+      "p_discovery_pass": 0.04016,
+      "p_holdout_pass": 0.22,
+      "p_false_positive": 0.00335,
+      "p_any_false_positive_10_studies": 0.032999472602679436
+    },
+    {
+      "K": 5,
+      "mode": "both_peek",
+      "peek_noise": 1.0,
+      "p_discovery_pass": 0.030055,
+      "p_holdout_pass": 0.17187,
+      "p_false_positive": 0.00283,
+      "p_any_false_positive_10_studies": 0.027942305898155495
+    },
+    {
+      "K": 5,
+      "mode": "both_peek",
+      "peek_noise": 2.0,
+      "p_discovery_pass": 0.01924,
+      "p_holdout_pass": 0.11662,
+      "p_false_positive": 0.001725,
+      "p_any_false_positive_10_studies": 0.01711671097380596
+    },
+    {
+      "K": 20,
+      "mode": "honest",
+      "peek_noise": null,
+      "p_discovery_pass": 0.00642,
+      "p_holdout_pass": 0.04929,
+      "p_false_positive": 0.000365,
+      "p_any_false_positive_10_studies": 0.0036440107065288663
+    },
+    {
+      "K": 20,
+      "mode": "holdout_peek",
+      "peek_noise": 0.0,
+      "p_discovery_pass": 0.00646,
+      "p_holdout_pass": 0.8783,
+      "p_false_positive": 0.00575,
+      "p_any_false_positive_10_studies": 0.056034772644308894
+    },
+    {
+      "K": 20,
+      "mode": "holdout_peek",
+      "peek_noise": 0.5,
+      "p_discovery_pass": 0.0064,
+      "p_holdout_pass": 0.67477,
+      "p_false_positive": 0.00432,
+      "p_any_false_positive_10_studies": 0.04236979382606898
+    },
+    {
+      "K": 20,
+      "mode": "holdout_peek",
+      "peek_noise": 1.0,
+      "p_discovery_pass": 0.006275,
+      "p_holdout_pass": 0.43934,
+      "p_false_positive": 0.002665,
+      "p_any_false_positive_10_studies": 0.02633266060761974
+    },
+    {
+      "K": 20,
+      "mode": "holdout_peek",
+      "peek_noise": 2.0,
+      "p_discovery_pass": 0.005995,
+      "p_holdout_pass": 0.23205,
+      "p_false_positive": 0.001475,
+      "p_any_false_positive_10_studies": 0.01465248096838001
+    },
+    {
+      "K": 20,
+      "mode": "both_peek",
+      "peek_noise": 0.0,
+      "p_discovery_pass": 0.108905,
+      "p_holdout_pass": 0.438045,
+      "p_false_positive": 0.012795,
+      "p_any_false_positive_10_studies": 0.12082877947932369
+    },
+    {
+      "K": 20,
+      "mode": "both_peek",
+      "peek_noise": 0.5,
+      "p_discovery_pass": 0.086725,
+      "p_holdout_pass": 0.368335,
+      "p_false_positive": 0.01099,
+      "p_any_false_positive_10_studies": 0.10462115688406515
+    },
+    {
+      "K": 20,
+      "mode": "both_peek",
+      "peek_noise": 1.0,
+      "p_discovery_pass": 0.05803,
+      "p_holdout_pass": 0.266805,
+      "p_false_positive": 0.00807,
+      "p_any_false_positive_10_studies": 0.07783156435755745
+    },
+    {
+      "K": 20,
+      "mode": "both_peek",
+      "peek_noise": 2.0,
+      "p_discovery_pass": 0.029615,
+      "p_holdout_pass": 0.1589,
+      "p_false_positive": 0.00354,
+      "p_any_false_positive_10_studies": 0.03484136858475084
+    }
+  ]
+}
