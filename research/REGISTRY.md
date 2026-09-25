@@ -323,3 +323,64 @@ windows (`backtests/reversal_nonoverlap.py`), where t fell to +1.19.
 **Standing rule from this:** any forward-looking study with horizon h > 1 must report a
 non-overlapping or phase-averaged t alongside the clustered one. A clustered t at h = 14 is
 inflated by roughly sqrt(14) = 3.7x.
+
+---
+
+## ADDED 2026-09-25 (live agent, session `s-2026-09-25T1427Z-08`)
+
+### R12. Weekly time-series momentum (TSMOM) — trend timing LINK vs USD
+**Rejected for live use 2026-09-25.** Full decision record:
+`research/findings/2026-09-25-tsmom-adoption-decision.md`. 366 weekly bars × 20 assets — the
+longest history used in this project, and the first test of *market timing* (all prior work was
+cross-sectional, which removes the market factor by construction). The code is clean: no
+look-ahead, incomplete bar dropped, benchmark-relative, costs charged at 0.45%/switch.
+
+Rejected on four independent grounds:
+- **Arithmetic (= expected final USD, the stated objective): every one of 9 rules is negative
+  vs hold.** Pooled mom4 −1.010%/wk (t=−1.36).
+- **Family-wise corrected log statistic: best p_FWER = 0.055** (mom2, mom4). The headline
+  single-rule p=0.009 was a 1-of-9 selection.
+- **Exposure control is decisive (V4): a static ~45% position with zero timing captures +0.61
+  to +0.74 of mom4's ~+1.10 log ratio.** Four of nine rules do *worse* than the static control.
+  The effect is mostly de-risking, which raises the median and lowers the mean.
+- **Attribution: 2022 and 2025 carry it**; every rule is negative pre-2021 and positive after.
+  20 correlated assets sharing one bear market ≈ 1–2 effective observations (R1's error at
+  regime scale).
+
+**New standing warning — the circular-shift permutation is a weak bar.** Its null (random
+timing at equal exposure) is strongly negative, so passing it does not imply profitability.
+**Counterexample from the data: `mom1` passes at p=0.017 while ending at W=0.44 vs hold's 2.63
+— it destroys 83% of terminal wealth and still "beats random".** Never report this permutation
+without the vs-hold and vs-static-exposure comparisons beside it.
+
+*Note: all 9 rules signalled IN LINK at decision time, so nothing was forgone by rejecting.*
+
+### R13. "Hold a different asset" — not resolvable, and the variance-drag argument for BTC fails
+**Tested and not supported 2026-09-25.** Record: `research/findings/2026-09-25-which-asset-to-hold.md`.
+First direct test of *what to hold* rather than *when to trade* — a one-off 0.81% decision that
+dominates the open-ended outcome, and one the registry had never examined (Q5 tested LINK vs
+cash only).
+
+Paired weekly log-drift differences over LINK's full 366-week history:
+**LINK − BTC = −5.8%/yr (t = −0.20); LINK − ETH = −12.3%/yr (t = −0.50).** LINK's own annual
+log drift carries a standard error of **±37 pp**. Not resolvable, and not close.
+
+Start-date dependence is the real finding: over 2019-09→now LINK is **+27.2%/yr**; over the
+20-asset common window from 2021-12-16 it is **−10.0%/yr**, ranking 9/20 with a median asset at
+W=0.57. **The two windows disagree in sign.**
+
+**The variance-drag argument for switching to BTC is rejected, not merely unproven.** LINK vol
+98.2%/yr vs BTC 59.3%/yr is precisely estimated and real, and if arithmetic drifts were equal
+BTC's median would compound ~30%/yr faster. But adding σ²/2 back gives implied arithmetic drift
+of **LINK ≈ +75%/yr vs BTC ≈ +50%/yr** — the high-vol asset had the *higher* arithmetic drift,
+as risk-premium reasoning predicts. "Equal arithmetic drift" is an assumption that favours the
+desired conclusion and the data contradict it. This is **R8 in different clothing**: realised
+returns already contain the drag.
+
+Measured but deliberately not acted on: **6 of 20 liquid Kraken assets lost >90% in 4.8 years.**
+Real left-tail base rate for single-alt concentration, but those assets share one 2022 bear, so
+it is ~1–2 independent observations, not 20.
+
+**Only route that should flip this quickly: an asset-specific non-price fact about LINK**
+(delisting, protocol failure, liquidity/minimum change). That is a monitoring task, not a
+statistical one.
