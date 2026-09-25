@@ -22,7 +22,12 @@ ELOCK = os.path.join(ROOT, "data", "evaluations.lock")
 # audit record would falsify it, and it cannot be cleaned up afterwards without falsifying
 # it further -- so the seam has to exist before the test runs, not after.
 ACTIVITY = os.path.join(ROOT, "logs", "activity.jsonl")
-KEEP_SEC = 7 * 86400           # prune records older than a week; horizon is 2026-10-15
+# Prune verdicts after a week. Originally incidental ("the experiment ends 2026-10-15
+# anyway"); with an OPEN-ENDED horizon (2026-09-25) it is a deliberate choice, so state the
+# reason: a week-old verdict on a market signal is stale evidence about a current signal, and
+# letting ALREADY_EVALUATED persist forever would permanently mute an asset after one look.
+# Expiry is the safer failure mode -- it costs a re-evaluation, not a missed opportunity.
+KEEP_SEC = 7 * 86400
 
 PENDING = "pending"            # escalated, session not yet reported back
 REJECTED = "rejected"          # session evaluated it and declined to trade

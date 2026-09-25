@@ -12,7 +12,9 @@ credentials exist only there.** Nothing here can place an order on its own.
 
 ## The objective, and the benchmark
 
-Maximise the final USD value of the account by **2026-10-15**.
+Maximise the USD value of the account. **The experiment is open-ended** — the original
+2026-10-15 end date was withdrawn on 2026-09-25, so there is no terminal settlement day and
+value is measured continuously.
 
 The account started in **LINK**, not cash, so its USD value moves with LINK whether or not the
 agent does anything. Performance is therefore measured against a passive benchmark: *hold the
@@ -21,10 +23,16 @@ starting quantity to the end date.*
 | | |
 |---|---|
 | Benchmark basis | **4.1944857200 LINK + 0.0000365 USDT = $51.3087** at 2026-09-24T12:36:22Z |
-| Benchmark rule | hold those exact quantities to 2026-10-15; **never re-baselined** |
+| Benchmark rule | hold those exact quantities **indefinitely**; **never re-baselined** |
 | Stored in | `data/benchmark.json` (immutable on the VM via `chattr +i`) |
 
 Beating it is a meaningful result. So is failing to, provided the record says so plainly.
+
+Removing the end date was not cosmetic: the 21-day horizon had been load-bearing in the argument
+*for* holding ("too short for any edge to express"; "capturing a right-skewed mean needs many
+trades"). Those claims are struck as **VOID** in `STRATEGY.md` rather than deleted. What survives
+is a claim about cost versus measurable edge, which never depended on the calendar — and `p =
+0.50` remains the binding constraint. See `STATE.md` §Horizon change.
 
 ## Current state (as of the last commit)
 
@@ -138,12 +146,14 @@ report a non-overlapping or phase-averaged `t` alongside the clustered one.
 A one-way re-allocation is 2 legs. Gross-return results are not evidence — report everything net
 of fees, spread, slippage and realistic fill assumptions.
 
-**4. The binding constraint is not cost — it is `p = 0.50`.** Halving execution cost removed the
+**4. The binding constraint is not cost, and not time — it is `p = 0.50`.** Halving execution cost removed the
 cost constraint and did not create an edge. A permutation test on signal combinations returned
 family-wise **p = 0.971**: randomly selecting assets typically produced a better-looking best
 result than the real signals did. The open question is whether `p` is genuinely 0.50, and the
 shadow and counterfactual ledgers are accumulating the only forward, uncontaminated evidence
-that can answer it.
+that can answer it. Because the horizon is open-ended they accumulate indefinitely, so the
+minimum detectable effect falls over time: an edge invisible at n=19 may be measurable at n=200.
+**That is a reason to wait for better evidence, never a reason to act on less of it.**
 
 Null results carry their minimum detectable effect. "I cannot detect an edge below 3–7%" is the
 defensible claim; "there is no edge" is not.

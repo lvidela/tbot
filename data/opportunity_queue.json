@@ -727,5 +727,116 @@
     "status": "expired",
     "seen_count": 1,
     "expired_reason": "older than 0m without being evaluated"
+  },
+  {
+    "id": "AAAUSD:vol+vol:1790343165",
+    "asset": "AAAUSD",
+    "event_type": "vol+vol",
+    "ts": "2026-09-25T13:32:45Z",
+    "created": 1790343165.8424187,
+    "updated": 1790343165.85031,
+    "detail": "A stronger",
+    "signals": [],
+    "snapshot": null,
+    "magnitude": 9.0,
+    "status": "expired",
+    "seen_count": 2,
+    "expired_reason": "older than 0m without being evaluated"
+  },
+  {
+    "id": "BBBUSD:breakout:1790343165",
+    "asset": "BBBUSD",
+    "event_type": "breakout",
+    "ts": "2026-09-25T13:32:45Z",
+    "created": 1790343165.8453476,
+    "updated": 1790343165.8453476,
+    "detail": "B",
+    "signals": [],
+    "snapshot": {},
+    "magnitude": 5.0,
+    "status": "expired",
+    "seen_count": 1,
+    "expired_reason": "older than 0m without being evaluated"
+  },
+  {
+    "id": "AVAXUSD:volume_spike:1790343277",
+    "asset": "AVAXUSD",
+    "event_type": "volume_spike",
+    "ts": "2026-09-25T13:34:37Z",
+    "created": 1790343277.0497258,
+    "updated": 1790343277.0497258,
+    "detail": "AVAXUSD: 1 concurrent signal(s) [volume_spike] :: AVAXUSD 24h volume 3.0x its 30d average",
+    "signals": [
+      "volume_spike"
+    ],
+    "snapshot": {
+      "bid": 10.444,
+      "ask": 10.446,
+      "spread_bps": 1.9149751053225694,
+      "vwap": 10.3727,
+      "usd_vol": 13563587.734595144,
+      "low": 10.079,
+      "high": 10.739,
+      "trades": 14563
+    },
+    "magnitude": 3.0149517519333138,
+    "status": "expired",
+    "seen_count": 1,
+    "expired_reason": "older than 0m without being evaluated"
+  },
+  {
+    "id": "AAAUSD:vol+vol:1790344303",
+    "asset": "AAAUSD",
+    "event_type": "vol+vol",
+    "ts": "2026-09-25T13:51:43Z",
+    "created": 1790344303.9784715,
+    "updated": 1790344303.9870028,
+    "detail": "A stronger",
+    "signals": [],
+    "snapshot": null,
+    "magnitude": 9.0,
+    "status": "expired",
+    "seen_count": 2,
+    "expired_reason": "older than 0m without being evaluated"
+  },
+  {
+    "id": "BBBUSD:breakout:1790344303",
+    "asset": "BBBUSD",
+    "event_type": "breakout",
+    "ts": "2026-09-25T13:51:43Z",
+    "created": 1790344303.9817128,
+    "updated": 1790344303.9817128,
+    "detail": "B",
+    "signals": [],
+    "snapshot": {},
+    "magnitude": 5.0,
+    "status": "expired",
+    "seen_count": 1,
+    "expired_reason": "older than 0m without being evaluated"
+  },
+  {
+    "id": "LINKUSD:volume_spike:1790345118",
+    "asset": "LINKUSD",
+    "event_type": "volume_spike",
+    "ts": "2026-09-25T14:05:18Z",
+    "created": 1790345118.442147,
+    "updated": 1790345118.442147,
+    "detail": "LINKUSD: 1 concurrent signal(s) [volume_spike] :: LINKUSD 24h volume 3.1x its 30d average",
+    "signals": [
+      "volume_spike"
+    ],
+    "snapshot": {
+      "bid": 13.75308,
+      "ask": 13.76086,
+      "spread_bps": 5.656914669294853,
+      "vwap": 13.422308,
+      "usd_vol": 20347978.066488508,
+      "low": 12.38541,
+      "high": 14.21827,
+      "trades": 25317
+    },
+    "magnitude": 3.0582182855483575,
+    "status": "pending",
+    "seen_count": 1
   }
 ]

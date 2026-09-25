@@ -167,6 +167,33 @@ the account is too small to survive the sampling.
 
 ---
 
+## HORIZON AMENDMENT — 2026-09-25 (researcher directive)
+
+The experiment is now **open-ended**; the 2026-10-15 end date is withdrawn.
+
+**No rejection here is reopened by this.** R1–R11 failed on cross-sectional demeaning, date
+clustering, serial overlap, permutation testing and the fee floor — every one of those is
+horizon-independent. A longer runway does not resurrect a signal that a permutation test scored
+at family-wise **p = 0.971**.
+
+**One ACCEPTED item is weakened.** A2's structural objection — "the mean is paid for by roughly a
+1-in-23 tail; you cannot size a tail at this account size, you must take all 23 trades and pay
+23 × 1.83% of turnover to catch one NILUSD" — was partly an argument about *insufficient time to
+sample*. With no end date the sampling is feasible. The fee drag per trial is unchanged, so the
+objection survives as an arithmetic point about cost, not as an impossibility.
+
+**The substantive gain is power, not permission.** D5's standing rule (every null carries its
+MDE) now cuts the other way: MDE falls as forward observations accumulate, and the shadow and
+counterfactual ledgers accumulate indefinitely. R9's "cannot detect below 2.5–4.4%" is a
+statement about n, and n is no longer bounded. Re-deriving MDE as a function of accumulated
+observations is now a live research task — it tells a future session when the ledgers become
+decisive instead of guessing.
+
+**Standing rule, unchanged and now more important:** do not lower the gate because there is more
+time. More time is a reason to *wait for evidence*, never a reason to trade on less of it.
+
+---
+
 ## OPEN QUESTIONS (current research program, 2026-09-24 → 2026-09-26)
 
 | # | Question | Why it matters |

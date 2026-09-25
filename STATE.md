@@ -1,11 +1,16 @@
 # STATE
 
-**Last updated:** 2026-09-25 13:05 UTC — session `s-2026-09-25T12:45Z-10`
-**Regime:** CONTINUOUS AGGRESSIVE AUTONOMOUS MODE — runs to **2026-10-15**, no auto-revert.
+**Last updated:** 2026-09-25 13:55 UTC — session `s-2026-09-25T1350Z-06` (24h periodic
+review → **HOLD**; reconciled: 4.19657014 LINK, 0 open orders, no new trades; `total_usd`
+$58.6154 @ LINK bid 13.96577, benchmark $58.5793, excess **+$0.0361**. **Safety fix:** two
+test suites were creating and deleting the *real* `STOP` file — now sandboxed, see §Safety fixes)
+**Regime:** CONTINUOUS AGGRESSIVE AUTONOMOUS MODE — **PERMANENT, no end date**, no auto-revert.
 The 24h window ending 2026-09-25T14:46Z is a reporting checkpoint only, not a stop condition.
 Cooldowns and session caps permanently disabled; exploratory trades enabled.
 **LIVE TRADING: ENABLED** (activation checklist 14/14). **Kill switch (`STOP`):** absent.
-**Horizon:** ends **2026-10-15 — 20 days**.
+**Horizon:** **OPEN-ENDED (researcher directive, 2026-09-25).** The experiment no longer
+terminates on 2026-10-15. It runs until the `STOP` kill switch, a hard safety restriction,
+or an explicit researcher instruction. **See §Horizon change for what this invalidates.**
 
 ---
 
@@ -14,11 +19,11 @@ Cooldowns and session caps permanently disabled; exploratory trades enabled.
 | Field | Value |
 |---|---|
 | Holdings | **4.19657014 LINK** + $0.0070 USD + USDT dust |
-| Open orders | **none** (verified against Kraken 2026-09-25T11:45Z) |
-| `total_usd` | **$58.9377** (LINK bid 14.04258) |
-| **Passive benchmark** | **$58.9014** — hold 4.1944857200 LINK to 2026-10-15 (`data/benchmark.json`, `chattr +i`) |
-| Excess vs benchmark | **+$0.0363** — still only the +0.00208442 LINK from the exploratory round trip |
-| vs basis $51.3087 | portfolio **+14.87%**, benchmark **+14.80%** — the gain is LINK, not strategy |
+| Open orders | **none** (verified against Kraken 2026-09-25T13:50Z) |
+| `total_usd` | **$58.6154** (LINK bid 13.96577) |
+| **Passive benchmark** | **$58.5793** — hold 4.1944857200 LINK **indefinitely** (`data/benchmark.json`, `chattr +i`) |
+| Excess vs benchmark | **+$0.0361** — still only the +0.00208442 LINK from the exploratory round trip |
+| vs basis $51.3087 | portfolio **+14.24%**, benchmark **+14.17%** — the gain is LINK, not strategy |
 | Trades executed | **2** (both filled, both maker) · Fees paid **$0.0552** · Turnover ~26% |
 | Holdings vs benchmark | **+0.00208442 LINK** ahead (4.19657014 vs 4.19448572) |
 | Fee tier (measured) | **0.80% taker / 0.40% maker** |
@@ -27,6 +32,18 @@ Cooldowns and session caps permanently disabled; exploratory trades enabled.
 Valuation: quantity × best bid of each asset's USD pair (`scripts/account.py`).
 **Note:** portfolio and benchmark move together while holdings are unchanged; excess return is
 structurally $0 until a trade occurs.
+
+## Safety fixes
+
+**2026-09-25 — tests were operating the real kill switch.** `scripts/test_aggressive.py` (#11)
+and `scripts/test_tactical.py` (#10) wrote `/home/lisandro/STOP`, called `execute.place(...,
+dry_run=False)`, then `os.remove()`d it. Had a researcher's STOP been in place, one test run
+would have overwritten it and **deleted it** — silently re-arming live trading. They also
+wrote `kill_switch` events into the production `logs/activity.jsonl` (26 in 24h, all
+`session_id: "test"` — **those lines are test artefacts, not real halts**; left in place because
+the log is append-only). The tests now redirect `execute.ROOT`/`execute.LOG` to a tempdir,
+assert the sandbox STOP exists before the live-path call, and restore after. Verified: 20/20,
+28/28, production `kill_switch` count unchanged, no STOP left behind.
 
 ## Deposit discrepancy (unresolved, informational)
 
@@ -65,8 +82,8 @@ Event triggers were tested directly and do not clear costs:
 | `scripts/guard_bash.py` | PreToolUse guard enforcing the immutable constraints; **only ever denies** |
 | `scripts/counterfactual.py` | P&L ledger for REJECTED opportunities; benchmark-demeaned |
 | `scripts/shadow.py` | forward paper ledger; **benchmark-relative since D8 fix (2026-09-25)** |
-| `scripts/test_tactical.py` | 21-point tactical + queue suite (21/21) |
-| `scripts/test_aggressive.py` | 19-point aggressive-mode suite (19/19) |
+| `scripts/test_tactical.py` | tactical + queue suite (28/28, 2026-09-25; STOP test sandboxed) |
+| `scripts/test_aggressive.py` | aggressive-mode suite (20/20, 2026-09-25; STOP test sandboxed) |
 
 **Escalation:** NO global cooldown, NO daily cap, NO time-based re-fire. Per-signal state
 transitions (`monitor.classify_signal`), each logged by name:
@@ -91,6 +108,50 @@ heartbeat hourly in `logs/activity.jsonl`.
 
 **To stop everything:** `touch /home/lisandro/STOP` (blocks every order path), or
 `systemctl --user stop trading-monitor`.
+
+## Horizon change — OPEN-ENDED (researcher directive, 2026-09-25)
+
+The experiment no longer ends on 2026-10-15. It has no end date. This is not a cosmetic edit:
+the 21-day horizon was **load-bearing in the argument for holding**, and removing it voids part
+of that argument.
+
+**What survives.** The benchmark basis is untouched — still hold **4.1944857200 LINK +
+0.0000365 USDT**, struck at $51.3087 on 2026-09-24T12:36:22Z. Only the *comparison date* is
+gone: performance is now measured continuously against that same passive position rather than
+settled on one date. `data/benchmark.json` is deliberately **not edited** (it is `chattr +i`,
+and rewriting benchmark records is an immutable constraint); its `experiment_end` field is
+superseded by this entry, not overwritten.
+
+The **2-leg / 0.92%** cost model also survives, for a reason worth stating: it rested on "we are
+valued in USD on 2026-10-15, so the terminal buy-back leg never happens." With no end date we
+are valued in USD *continuously*, so the terminal leg still never happens. The conclusion is
+unchanged; only its justification is reworded.
+
+**What is now VOID.** These were arguments for HOLD and they no longer hold:
+
+| claim | where | status |
+|---|---|---|
+| "21 days is too short for any edge to express — a real signal gets ~1–2 rebalances" | `STRATEGY.md` §weaknesses, §233 | **VOID** — unlimited rebalances are now available |
+| "Capturing a right-skewed mean requires many trades. With 21 days…" | `STRATEGY.md` §215 | **VOID** — the trade count is no longer capped by the calendar |
+| "You must take all 23 trades and pay 23 × turnover to catch one NILUSD — the account is too small to survive the sampling" | `research/REGISTRY.md` A2 | **WEAKENED** — survivable given unlimited time, though the fee drag per trial is unchanged |
+| "LINK 21-day forward return +2.23%, CI [−3.77%, +8.48%] — hold vs cash unresolvable" | `backtests/hold_vs_cash.py` | **WRONG HORIZON** — needs re-running open-ended |
+
+**What this does NOT change.** No gate, threshold, sizing rule or allocation was touched. The
+trade gate remains `net ≥ 0.5%` **and** `net ≥ 0.5 × cost`. R1–R11 stand: none of them depended
+on the horizon — they failed on demeaning, serial overlap, permutation tests and the fee floor,
+all horizon-independent. **`p = 0.50` is still the binding constraint, and a longer horizon does
+not create a directional edge.** It only removes the excuse that there was no time to express one.
+
+**The real consequence is statistical power, and it accrues for free.** R9 recorded a minimum
+detectable effect of **2.5–4.4%** — the honest claim was "cannot detect", not "no edge". With an
+open-ended horizon the shadow and counterfactual ledgers keep accumulating forward,
+benchmark-relative, uncontaminated observations indefinitely, so the MDE falls over time. An edge
+that was invisible at n=19 may be measurable at n=200. **That is the change worth acting on, and
+it requires waiting, not trading.**
+
+**Required next:** re-run `backtests/hold_vs_cash.py` without the 21-day framing, and re-derive
+the MDE curve as a function of accumulated observations, so a future session knows when the
+ledgers become decisive rather than guessing.
 
 ## Claude session permissions (2026-09-25)
 

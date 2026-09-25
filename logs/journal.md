@@ -889,3 +889,137 @@ What I'd watch for in the next few days: whether suppression is now *too* aggres
 prove the intended boundaries hold, but they can't tell me whether `EPISODE_GAP_SEC = 60m` and
 the 40% threshold are the right numbers in live conditions. If the suppression log fills with
 `UNCHANGED` on assets that were genuinely doing something new, that's the signal I got it wrong.
+
+---
+
+## 2026-09-25 — Session 10b — The horizon is now open-ended, and that cuts against me
+
+**Directive:** the experiment no longer ends on 2026-10-15. No end date.
+**Trades:** 0. **Tests:** 166/166. **No gate, threshold, sizing rule or allocation changed.**
+
+### Why this isn't a find-and-replace
+
+The 21-day horizon was not background detail. It was **load-bearing in my argument for holding**,
+and I'd rather say that plainly than quietly swap a date and let the old conclusions coast.
+
+Two of my stated reasons for not trading were, in substance, *there isn't time*:
+
+- "21 days is too short for any edge to express — even a real signal gets ~1–2 rebalances."
+- "Capturing a right-skewed mean requires many trades. With 21 days…"
+
+Both are now **void**. I've struck them in `STRATEGY.md` rather than deleting them, because a
+reader needs to see that the argument existed and why it stopped applying. The related point in
+the registry — A2's "you must take all 23 trades to catch one NILUSD, and the account can't
+survive the sampling" — was *partly* about insufficient time to sample and is weakened to what it
+should always have been: an arithmetic claim about fee drag per trial.
+
+So the honest summary is that removing the deadline **deleted some of my own reasons for HOLD**.
+
+### What survived, including one I expected to lose
+
+The 2-leg / 0.92% cost model rested on "we are valued in USD on 2026-10-15, so the terminal
+buy-back leg never happens." I assumed an open horizon would break that and push me back to 4
+legs. It doesn't — with no settlement date we're valued in USD *continuously*, so we're never
+forced back into LINK at any time. The conclusion holds and is arguably better founded than
+before. Only the wording needed fixing.
+
+R1–R11 all stand. Every one of them failed on cross-sectional demeaning, date clustering, serial
+overlap, permutation testing, or the fee floor. Not one depended on the calendar. A longer runway
+does not resurrect a signal that a permutation test scored at family-wise **p = 0.971**.
+
+And the binding constraint is unchanged: **`p = 0.50`**. More time does not manufacture a
+directional edge. It only removes my excuse that there was no time to express one.
+
+### What actually improves, and it requires doing nothing
+
+Statistical power, and it accrues for free.
+
+D5's standing rule — every null carries its minimum detectable effect — now works in my favour
+instead of against me. R9's "cannot detect an edge below 2.5–4.4%" was never a statement about the
+market; it was a statement about **n**. With an open-ended horizon the shadow and counterfactual
+ledgers accumulate forward, benchmark-relative, uncontaminated observations indefinitely, so the
+MDE falls. Something invisible at n=19 may be measurable at n=200.
+
+That is the change worth acting on, and the action is **waiting**. I've written the obvious trap
+into the records explicitly, because I can feel the pull of it: *more time is a reason to wait for
+better evidence, never a reason to act on less of it.* If a future session cites the removed
+deadline as grounds to trade, or lowers the gate because "there's more time now", that is exactly
+the failure these entries exist to prevent.
+
+### Two things I deliberately did not touch
+
+**`data/benchmark.json`.** It carries `experiment_end: 2026-10-15`, it's `chattr +i`, and
+rewriting benchmark records is one of the immutable constraints. The *basis* is what matters —
+4.1944857200 LINK + 0.0000365 USDT at $51.3087 — and that is unchanged. Only the comparison date
+is gone, so the field is **superseded by `STATE.md`, not overwritten**. Verified untouched by
+hash afterwards.
+
+**`CLAUDE.md`.** Four lines there still say 2026-10-15, and it is the authoritative statement of
+the objective — so the change is not fully applied until they're updated. It's researcher-owned
+under Hard Rule 7 and deny-listed in my permissions. I tried the edit, it was refused, and I did
+not reach around it via a shell script. The patch is in the researcher's hands instead.
+
+### One design decision the change forced
+
+`evaluations.py` prunes verdicts after 7 days, and the comment justifying it said "the horizon is
+2026-10-15 anyway" — i.e. it was incidental. With no end date it becomes a real choice, so I
+stated the actual reason and left the behaviour alone: a week-old verdict on a market signal is
+stale, and letting `ALREADY_EVALUATED` persist forever would permanently mute an asset after a
+single look. Expiry costs a re-evaluation; permanence could cost an opportunity.
+
+---
+
+## 2026-09-25 — Session `s-2026-09-25T1335Z-05` — AVAXUSD volume_spike (escalated) — HOLD
+
+**Account:** 4.19657014 LINK + dust = **$58.907** (LINK bid 14.03527). Benchmark ≈ $58.872;
+excess **+$0.035** (still just the +0.00208 LINK from the exploratory round trip). Kraken
+matched local records; 0 open orders. **Trades: 0.**
+
+**Signal:** AVAXUSD 24h volume at 3.0x its 30-day average (~1.31M AVAX, ~$13.7M). AVAX was
++2.5% on the day (10.20 → 10.46) with a spike to 10.58 that has partly faded. Over 5 days it is
+still down from 11.32.
+
+**Why I held:** volume_spike is the detector with the *least* support in my own evidence. The
+demeaned, date-clustered event study measured its mean forward excess return at −0.00%, with a
+negative median. With an expected move of about zero, a LINK→AVAX rotation costs ~0.92% for
+nothing. No other signal fired alongside it (no breakout, no vol_expansion). It is nowhere near
+the 0.5% net gate, so I didn't run a detailed cost model on it.
+
+**Recorded:** counterfactual ledger `cf-AVAXUSD-1790343336471` (entry bid 10.489, LINK bench
+14.05889), so if AVAX runs we will see it, measured against LINK. Evaluation verdict REJECTED
+@ 3.015 fed back to the monitor. A re-escalation needs a ≥40% stronger or reversed signal.
+
+**Minor oddity:** `session.new_session_id()` produced sequence `-05`, but the previous session
+was labelled `-10`. The counter counts `session_start` lines in the log, and earlier
+hand-labelled sessions evidently didn't all write one. Timestamps are correct; only the ordinal
+is inconsistent. Not fixing it mid-escalation.
+
+## 2026-09-25 13:50Z — session `s-2026-09-25T1350Z-06` (24h periodic review)
+
+**Account:** 4.19657014 LINK + dust = **$58.6154** (LINK bid 13.96577). Benchmark (hold
+4.19448572 LINK) **$58.5793**. Excess **+$0.0361**, unchanged since the exploratory maker round
+trip on 2026-09-24. vs regime basis $51.3087: +14.24% portfolio, +14.17% benchmark. Over the
+24h measurement window (start excess +$0.0095 at 14:46Z yesterday), the strategy added about +$0.027
+of excess, from one round trip, after $0.0552 fees. Kraken matches local records: 0 open
+orders, 2 trades in 48h, both already recorded.
+
+**Decision: HOLD.** `checks.py` fired no trigger. Tactical scan: 0/37 qualify. The only
+confluence-5 name (NEARUSD) can't be sized at this account size, and its expected move still
+rests on p = 0.50, which the gate correctly treats as no edge.
+Forward evidence so far argues against loosening the gate. The first shadow row to close,
+XMRUSD, hit its stop at **−9.56% vs LINK**. The 18 open rows average −0.95% vs LINK (7/18
+ahead). The counterfactual ledger has 31 rows and none resolved. This is still far too little
+data to measure anything, so the correct action remains waiting, not trading.
+
+**Mistake found (mine, from earlier sessions): the tests were operating the real kill switch.**
+Two test suites created `/home/lisandro/STOP`, exercised the order path with `dry_run=False`,
+then deleted STOP. If a researcher had halted the system, the next test run would have
+removed their STOP. That is the single worst failure a kill switch can have, and it went
+unnoticed because the tests *passed*. The same tests also wrote 26 fake `kill_switch` events
+into the production log in 24h, which makes the audit trail misleading to anyone reading it
+without the `session_id: "test"` context. Fixed by sandboxing both tests in a tempdir. Old
+lines left in place (append-only).
+
+**Lesson:** a test for a safety mechanism must not operate the production instance of that
+mechanism. Next: audit the other tests (`test_dedup`, `test_shadow`, `test_counterfactual`,
+`test_permissions`) for writes to production paths.

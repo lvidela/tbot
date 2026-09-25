@@ -84,15 +84,23 @@ t("strong signal correctly ACCEPTED (can act)", strong["passes"],
   f"net {strong['net_pct']:+.2f}% -> {strong['verdict']}")
 
 # 11: STOP blocks orders
-open(f"{ROOT}/STOP","w").write("test\n")
+# Sandboxed: never touch the real STOP (a researcher's kill switch would be overwritten and
+# then deleted) and never write test kill_switch events into the production audit log.
+import tempfile
+_sandbox = tempfile.mkdtemp(prefix="stoptest-")
+_real_root, _real_log = execute.ROOT, execute.LOG
+execute.ROOT, execute.LOG = _sandbox, os.path.join(_sandbox, "activity.jsonl")
+open(f"{_sandbox}/STOP","w").write("test\n")
+assert os.path.exists(f"{_sandbox}/STOP"), "sandbox STOP missing; refusing a live-path call"
 try:
     execute.place("LINKUSD","sell",1.0,"test","stop-agg",dry_run=False); ok=False; d="NOT blocked"
 except execute.Abort as ex: ok=True; d=str(ex)
 except Exception as ex: ok=False; d=f"unexpected {ex}"
 t("STOP still blocks every order", ok, d)
 t("live_enabled() False while STOP present", not execute.live_enabled())
-os.remove(f"{ROOT}/STOP")
+os.remove(f"{_sandbox}/STOP")
 t("live trading still enabled after STOP removed", execute.live_enabled())
+execute.ROOT, execute.LOG = _real_root, _real_log
 
 # 12: spot-only intact
 import kraken
