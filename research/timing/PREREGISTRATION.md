@@ -149,3 +149,12 @@ No data has been seen. Each one fills a gap the original text left open.
   inward one is unchanged at q = 0.767.
 - **A5 (criterion f, S1–S3):** S1–S3 are pure SMA-vs-price signals and have no threshold. Their
   four perturbations are therefore lookback ×0.7, ×0.85, ×1.15 and ×1.3.
+- **A6 (data sources, 2026-09-25T17:00Z, before any download):** from this environment
+  `api.binance.com` and `fapi.binance.com` return HTTP 451, and `api.bybit.com` returns HTTP 403.
+  These are the exchanges' own geo-restrictions and are not routed around.
+  - Binance spot klines and USDⓈ-M funding history come from Binance's official public archive,
+    `data.binance.vision`. It holds the same data, in monthly files.
+  - The funding cross-check uses OKX (`www.okx.com` funding-rate-history) instead of Bybit. OKX
+    exposes only recent months, so the cross-check covers their overlap only.
+  - The archive's funding files are monthly, so S6 may lack the most recent weeks. S6's current
+    state is then reported as unknown rather than filled from another exchange.
