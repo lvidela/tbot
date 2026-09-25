@@ -628,3 +628,14 @@ filename date is an error, explained in the file), `research/x4_lowvol/`.
 - **Tactical rotation LINK → the 3–5 most-crashed names for 3 days:** −1.2% / −3.8% per event at
   maker costs (−17%/yr in the holdout), and significantly negative at stress costs.
 - *Do not use market crashes as a tactical entry signal into crashed or high-beta names.*
+
+### X6. Listing age beyond volatility — POSITIVE (information); NEGATIVE as a filter (no mean-return gain)
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_x6_listing_age.md`.
+- **Process:** pre-registered (`c44cfbc`); discovery committed (`2df2c75`) before the holdout.
+- **Partial IC(log age | vol, momentum, size), fwd 28d:** **+0.074 (t = 2.68) discovery, +0.112
+  (t = 3.45) holdout.** It passes.
+- **Young (< 180d) minus rest, mean return:** −0.1% in both periods (MDE 13–17%).
+- **EW excluding young vs EW all:** −0.4% / +0.1% per 28d, CIs spanning 0.
+- **Rank effect without a mean effect:** right-tail winners among young coins offset the typical
+  loss. This is the same pattern as X4's discovery period.
+- Not a filter for an expected-USD objective. It would be relevant under a median objective.
