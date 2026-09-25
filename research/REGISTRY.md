@@ -639,3 +639,15 @@ filename date is an error, explained in the file), `research/x4_lowvol/`.
 - **Rank effect without a mean effect:** right-tail winners among young coins offset the typical
   loss. This is the same pattern as X4's discovery period.
 - Not a filter for an expected-USD objective. It would be relevant under a median objective.
+
+### X5. BTC variance risk premium (Deribit DVOL) as a crypto exposure state — NEGATIVE (power-limited)
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_x5_dvol_vrp.md`.
+- **Process:** pre-registered (`dd79f67`); discovery committed (`bc420fa`) before the holdout.
+- **Data:** Deribit public DVOL, 2021-03 → 2026-09; 29 + 35 non-overlapping 28-day windows.
+- **LINK fwd 28d on z(VRP):** −4.0% per SD (t = −0.65) in discovery, +1.2% (t = +0.25) in the
+  holdout. The MDE is 13–17%.
+- **BTC, EW and DVOL-level versions:** also null.
+- **VRP timing rule vs static exposure at the same weight:** −2.4% / −1.5% per 28d, losing in
+  both periods.
+- Closes implied volatility as a timing state. Price, trend, realised vol, funding and implied
+  vol have all now failed.
