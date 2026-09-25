@@ -60,3 +60,9 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - **New idea (priority 4):** X12, vol-managed exposure to LINK itself. Scale LINK exposure
     inversely to its trailing volatility (the time-series analogue of X4). It needs the
     static-exposure control from the live agent's S2 request.
+- **2026-09-25 23:35Z — X4b closed: POSITIVE (replication).** Kraken IC −0.195 (t = −4.69). The
+  low-vol effect is venue-robust. The filter recommendation stands; there is no switch
+  recommendation.
+  - **Next: X3,** capitulation rebound. Pre-register first. It uses daily data already in hand:
+    X1's survivorship-free panel and Coinbase for BTC/LINK. An hourly version comes only if the
+    daily result is promising.
