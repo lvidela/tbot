@@ -162,7 +162,7 @@ def main(limit=None):
     jobs = [("funding", p, fetch_funding, p) for p, _ in plan] + \
            [("spot", s, fetch_spot, s) for s in sorted({s for _, s in plan})]
     stats = {}
-    with ThreadPoolExecutor(8) as ex:
+    with ThreadPoolExecutor(16) as ex:
         for i, res in enumerate(ex.map(lambda j: save(*j), jobs)):
             stats[res] = stats.get(res, 0) + 1
             if i % 100 == 0:

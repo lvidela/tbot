@@ -309,6 +309,25 @@ def kraken_bases():
     return out
 
 
+def crosscheck(P, raw_cb=os.path.join(HERE, "..", "data", "raw")):
+    """Binance spot vs Coinbase USD weekly log returns (Monday closes), F5's bases."""
+    out = {}
+    for f in sorted(glob.glob(os.path.join(raw_cb, "coinbase_*_1d.json"))):
+        b = os.path.basename(f).split("_")[1]
+        a = next((x for x in P.assets if P.spot[x]["sym"] == f"{b}USDT"), None)
+        if a is None:
+            continue
+        cb = {int(r[0]): float(r[4]) for r in json.load(open(f))["rows"]}
+        xs, ys = [], []
+        for t in mondays(DISC[0], HOLD[1]):
+            b0, b1 = P.close_at(a, t), P.close_at(a, t + WEEK)
+            c0, c1 = cb.get(t - DAY), cb.get(t + WEEK - DAY)
+            if b0 and b1 and c0 and c1:
+                xs.append(np.log(b1 / b0)); ys.append(np.log(c1 / c0))
+        out[b] = {"n": len(xs), "corr": float(np.corrcoef(xs, ys)[0, 1])}
+    return out
+
+
 def main(stage):
     os.makedirs(RES, exist_ok=True)
     P = Panel()
@@ -327,6 +346,12 @@ def main(stage):
                "economics_kraken_subset_SURVIVORSHIP_BIASED": economics(P, *HOLD, subset=sub),
                "economics_full_period": economics(P, DISC[0], HOLD[1])}
         out = os.path.join(RES, "holdout.json")
+    elif stage == "crosscheck":
+        res = {"meta": meta, "binance_vs_coinbase_weekly_log_return_corr": crosscheck(P)}
+        json.dump(res, open(os.path.join(RES, "crosscheck.json"), "w"), indent=1)
+        for a, v in res["binance_vs_coinbase_weekly_log_return_corr"].items():
+            print(f"  {a:6s} n={v['n']:4d} corr={v['corr']:.4f} {'OK' if v['corr'] >= 0.98 else 'FAIL'}")
+        return res
     else:
         raise SystemExit("unknown stage")
     json.dump(res, open(out, "w"), indent=1)
