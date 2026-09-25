@@ -605,3 +605,13 @@ filename date is an error, explained in the file), `research/x4_lowvol/`.
 - **Supports:** a filter against rotating up the volatility ranking, and a conflict with
   vol_expansion-triggered tactical entries.
 - **Does not support:** leaving LINK.
+
+### X4b. X4 replicated on Kraken daily data — POSITIVE (information); economic use is a filter only
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_x4b_kraken_lowvol_replication.md`.
+- **Process:** pre-registered (`35f10bc`).
+- **Data:** 20 Kraken USD pairs, 22 non-overlapping 4-week periods, 2024-10 → 2026-09.
+- **IC(vol60, fwd 28d):** **−0.195, t = −4.69, one-sided p = 0.00006**. All 4 phases are negative
+  with p < 0.01.
+- **Baskets:** low-5 0.54× vs random-5 0.38× vs high-5 0.35×, but **hold-LINK 0.63×** beats all
+  of them.
+- **Caveats:** survivorship-biased (today's listings), and the window overlaps X4's holdout.
