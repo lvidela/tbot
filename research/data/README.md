@@ -31,3 +31,8 @@ Only unauthenticated public endpoints are used, and no credentials are involved.
   up to exchange-side revisions of past candles.
 - Binance's API (451) and Bybit (403) are geo-blocked from this environment, so Binance data
   comes from `data.binance.vision`. See PREREGISTRATION amendment A6.
+
+**Status 2026-09-25 (later, F5):**
+- Added Coinbase and Binance-archive daily bars for F4's full 19-asset universe
+  (`research/voi/crosscheck.py --fetch`). Coinbase has no TRX-USD (404, logged).
+- The raw directory is now ~6 MB and is committed so F5 is reproducible.
