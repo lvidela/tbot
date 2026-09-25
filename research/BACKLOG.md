@@ -66,3 +66,17 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - **Next: X3,** capitulation rebound. Pre-register first. It uses daily data already in hand:
     X1's survivorship-free panel and Coinbase for BTC/LINK. An hourly version comes only if the
     daily result is promising.
+- **2026-09-25 23:50Z — X3 closed.** INCONCLUSIVE for information; NEGATIVE for the tactical
+  rule.
+  - **Learned:** crash-day rebounds at daily resolution are below the MDE of 4–9%. The
+    most-crashed tilt is directionally consistent but tiny, and 4-leg costs dominate.
+  - **Follow-up, parked:** X3h, an hourly liquidation-cascade version. It needs the 1h archive
+    (~1 GB), and it is worth it only if the daily version had shown signal, which it did not.
+  - **Next: X12,** vol-managed LINK exposure. Scale LINK exposure by target-vol / trailing vol,
+    rebalance weekly, and compare against a **static-exposure control** at the same average
+    weight (the live agent's S2 request) plus hold-LINK/USD.
+    - **Mechanism:** the time-series analogue of X4, with volatility clustering and a lower
+      conditional Sharpe ratio in high-vol states.
+    - **Data:** Coinbase and Binance LINK daily since 2019.
+    - **Why:** it is the only timing idea supported by a mechanism X4 just confirmed
+      cross-sectionally.
