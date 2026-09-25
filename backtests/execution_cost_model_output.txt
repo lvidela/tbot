@@ -1,0 +1,518 @@
+cache built 2026-09-24T23:27:40Z; 32 non-stable eligible pairs
+
+================================================================================================
+A. LEG COUNTING -- is 4 legs the right model?  [MODELLED, arithmetic]
+================================================================================================
+
+Definitions. A 'leg' is one order that changes what asset we hold. Core = LINK.
+Tactical trade = take a position in an alt and come out of it.
+
+  P1 round-trip-to-core : sell LINK, buy ALT, sell ALT, buy LINK        (current model)
+  P2 park-in-USD        : sell LINK once; then (buy ALT, sell ALT) x N; buy LINK once
+  P3 direct rotation    : sell LINK once; buy ALT1; (sell ALTi, buy ALTi+1) x (N-1);
+                          sell ALTN; buy LINK once  -- identical leg count to P2 unless a
+                          direct ALT/ALT cross pair exists (none in our USD-only universe)
+  P4 one-way            : sell LINK, buy ALT, and never return. 2 legs, but this is a
+                          change of core holding, not a trade.
+
+KEY STRUCTURAL POINT that P1 gets wrong: the experiment is valued in USD on 2026-10-15.
+The terminal 'buy LINK' leg is NEVER required. We may simply end in USD. So the honest
+campaign leg count for N tactical trades is:
+
+      total legs = 1 (LINK -> USD, once)  +  2N (alt in/out)  +  0 (no forced return)
+      amortised legs per trade = 2 + 1/N
+
+ N trades |  P1 legs/tr   P1 cost |  P2 legs/tr   P2 cost |  P2* legs/tr  P2* cost
+          |  (4 always)     maker |       2+2/N     maker | 2+1/N end-USD     maker
+------------------------------------------------------------------------------------------------
+        1 |        4.00    1.816% |        4.00    1.816% |         3.00    1.362%
+        2 |        4.00    1.816% |        3.00    1.362% |         2.50    1.135%
+        3 |        4.00    1.816% |        2.67    1.211% |         2.33    1.059%
+        5 |        4.00    1.816% |        2.40    1.090% |         2.20    0.999%
+        8 |        4.00    1.816% |        2.25    1.022% |         2.12    0.965%
+       12 |        4.00    1.816% |        2.17    0.984% |         2.08    0.946%
+       20 |        4.00    1.816% |        2.10    0.953% |         2.05    0.931%
+      inf |        4.00    1.816% |        2.00    0.909% |         2.00    0.908%
+
+Marginal vs average. The decision 'should I take THIS opportunity, given I am already
+out of LINK' costs exactly 2 legs = 0.908% maker / 1.662% taker.
+The LINK exit is a ONE-TIME campaign cost (0.454%) and must be justified once,
+not re-charged to every trade. Charging 4 legs to every trade DOUBLE-COUNTS.
+
+Two-level decision rule this implies:
+  L1 (campaign, once) : is tactical mode worth 0.454% + the benchmark tracking risk
+                        of not holding LINK while waiting?
+  L2 (per trade)      : does this opportunity clear 3 x 0.908% = 2.724%?
+
+Carry cost of the wait. Sitting in USD forgoes LINK's drift. Break-even arrival rate:
+returning to core after each trade is worth it only if
+      mu_LINK_per_week / R  >  2 legs = 0.908%
+i.e. only if we can forecast LINK's weekly drift to exceed 0.908% x R.
+
+
+  LINK drift -- the carry cost of parking in USD  [MEASURED from 1d bars]
+  LINK daily drift  full cache: +0.1283%/d  (t=+0.75)  -> weekly +0.898% +/- 3.162%
+  LINK daily drift   last 180d: +0.2982%/d  (t=+1.30)  -> weekly +2.088% +/- 4.248%
+  LINK daily drift    last 90d: +0.7135%/d  (t=+2.00)  -> weekly +4.995% +/- 6.602%
+  LINK daily drift    last 30d: +0.6131%/d  (t=+0.85)  -> weekly +4.291% +/- 13.407%
+  MEASURED 90d weekly drift +4.995%; |t| far below 2 => treat as ZERO for EV.
+  => Under a zero-drift prior for LINK, parking in USD between tactical trades is
+     EV-neutral. It raises tracking error vs the hold-LINK benchmark but costs
+     nothing in expectation, and it removes 2 of the 4 legs.
+
+================================================================================================
+B. HOLD-PERIOD AMORTISATION -- does sqrt(t) growth in E|move| reach the gate?
+================================================================================================
+  focus set = 12 most volatile eligible alts (30d sigma 6.35% .. 12.60%/day): NILUSD, ARBUSD, VVVUSD, ZECUSD, FARTCOINUSD, NEARUSD, SPXUSD, ENAUSD, UNIUSD, INJUSD, BCHUSD, PUMPUSD
+
+  [MEASURED from 1d bars] pooled E|r_h| over the focus set, NON-OVERLAPPING windows
+   h(d)      n   E|r_h|%    se%  med|r|%  sqrt-t pred%  cost/E|r| 4leg  cost/E|r| 2leg
+      1   4368      4.52   0.08     3.13          4.52            0.40            0.20
+      2   2184      6.61   0.16     4.49          6.39            0.27            0.14
+      3   1452      8.14   0.24     5.91          7.83            0.22            0.11
+      5    864     10.49   0.42     7.28         10.10            0.17            0.09
+      7    624     12.65   0.60     8.76         11.96            0.14            0.07
+     10    432     15.63   0.80    12.08         14.29            0.12            0.06
+     14    312     20.44   1.47    14.49         16.91            0.09            0.04
+     21    204     24.78   1.91    18.61         20.71            0.07            0.04
+
+  [MEASURED] fitted scaling exponent  E|r_h| ~ h^b   ->  b = 0.561  (pure sqrt-t: 0.500)
+  b < 0.5 means |move| grows SLOWER than sqrt(t): mean reversion / range-bounding.
+
+  GATE SOLVE. tactical.py sets expected_move = 0.5 * sigma, with sigma = the 30d DAILY
+  sigma, and then requires move >= 3 x cost. If the hold is h days the correct sigma is
+  sigma_1d*sqrt(h) (tactical.py does not do this -- it always uses the 1-day sigma, so it
+  is implicitly assuming a 1-day hold). Required h for the 3x gate:
+
+   sigma_1d |  h* @4 legs  h* @3 legs  h* @2 legs   (3x gate on 0.5*sigma_1d*sqrt(h))
+       3.0% |       13.19        7.42        3.30
+       4.0% |        7.42        4.17        1.86
+       5.0% |        4.75        2.67        1.19
+       7.0% |        2.42        1.36        0.61
+      10.0% |        1.19        0.67        0.30
+      12.6% |        0.75        0.42        0.19
+
+  BUT the gate on E|move| is the WEAK test. tactical.py also runs an EV test where the
+  gross is discounted by the coin-flip factor (2p-1), and success_probability is capped
+  at p=0.62 -> (2p-1) = 0.24. Net gross = 0.5*sigma*sqrt(h)*0.24 = 0.12*sigma*sqrt(h).
+  Required h so that 0.12*sigma_1d*sqrt(h) >= 1.5 x cost (EDGE_MARGIN):
+
+   sigma_1d |  h* @4 legs  h* @2 legs   (EV test, p=0.62)
+       3.0% |        57.3        14.3
+       5.0% |        20.6         5.2
+       7.0% |        10.5         2.6
+      10.0% |         5.2         1.3
+      12.6% |         3.2         0.8
+
+  The (2p-1)=0.24 coin-flip discount is a 4.2x multiplier on the required move. It, not
+  the leg count, is the dominant term. Halving cost halves the required move; raising p
+  from 0.62 to 0.70 cuts the required move by 40% on its own.
+
+  SIGNAL DECAY. Cross-sectionally demeaned forward returns conditional on the tactical
+  trigger (vol_ratio >= 1.5 AND 2d momentum > 0), date-clustered SE, per the standing
+  methodology that killed R1/R2. Reported ONLY to answer 'does a signal, if one exists,
+  decay faster than sqrt(t) grows'. This is NOT a claim of edge -- R1 rejected that, and
+  the diagnostics below show why the mean here is not trustworthy either.
+
+  --- ALL eligible -- includes recently listed pairs (LISTING/SURVIVORSHIP BIAS) (32 pairs) ---
+   h(d)   n_ev  n_dt    mean%  t_clu  median%   win%  trim10% top10%share  sqrt-t
+      1   1570   383    0.761   2.99    0.000  49.7%    0.327      144.8%   0.761
+      2   1569   382    1.914   4.75    0.041  50.5%    0.614      122.3%   1.077
+      3   1563   381    2.120   4.43    0.089  51.3%    0.703      123.7%   1.319
+      5   1543   379    3.047   5.08    0.054  50.5%    0.877      122.6%   1.702
+      7   1520   377    4.064   5.23    0.039  50.4%    0.883      125.5%   2.014
+     10   1514   375    4.796   4.91    0.106  50.7%    1.125      120.0%   2.407
+     14   1512   374    6.656   5.67    0.215  50.9%    1.676      111.5%   2.848
+
+  --- FULL-HISTORY pairs only (>=700 daily bars) -- listing bias removed (24 pairs) ---
+   h(d)   n_ev  n_dt    mean%  t_clu  median%   win%  trim10% top10%share  sqrt-t
+      1   1247   330    1.151   4.27    0.005  50.2%    0.334      131.9%   1.151
+      2   1247   330    1.648   4.32    0.043  50.5%    0.546      121.7%   1.627
+      3   1244   329    2.011   4.19    0.065  51.0%    0.651      120.2%   1.993
+      5   1230   327    2.872   4.90    0.089  50.8%    0.862      117.7%   2.573
+      7   1211   325    3.908   4.99    0.104  51.5%    0.953      116.8%   3.044
+     10   1206   323    4.615   4.60    0.091  51.6%    1.133      112.7%   3.638
+     14   1204   322    6.058   4.92    0.254  52.0%    1.686      107.0%   4.305
+
+  READ THIS CAREFULLY. The mean grows FASTER than sqrt(t) while the median sits at ~0 and
+  the win rate is at or below 50%. That is the signature of a right-skewed lottery, not a
+  harvestable edge: a handful of listings that went vertical carry the whole mean. Compare
+  the two panels -- dropping recently listed pairs is the test. Consistent with R1/R2, the
+  honest conclusion is that hold-period extension raises the SIZE of the tail, not the
+  reliability of the outcome. For Q3 the only safe use of this table is the negative one:
+  there is no evidence that a signal DECAYS faster than sqrt(t), so extending the hold is
+  not self-defeating on decay grounds.
+
+================================================================================================
+C. MAKER FILL MODELLING in volatile conditions
+================================================================================================
+
+  ASSUMPTIONS (all explicit; each is a weakness):
+   1. We post a BUY at the touch, P = close_t * (1 - delta), delta = half the snapshot
+      spread from universe.json. WEAKNESS: the spread snapshot is one instant on
+      2026-09-24 and spreads WIDEN in exactly the volatile regime we care about, so
+      delta is understated and fill probability here is OPTIMISTIC.
+   2. Bars tell us where price WENT, not whether our order FILLED. Queue position is
+      unobservable. So we bracket:
+         UPPER bound P_touch   = P(next-bar low <= P)      -- price reached our level
+         LOWER bound P_through = P(next-bar low <= P-tick) -- price traded BELOW our
+                                 level, so the level was fully consumed: we definitely filled.
+      True fill probability lies between, and is above P_through because uninformed sell
+      flow can also hit us with no price move at all.
+   3. Sub-hour horizons are MODELLED, not measured: driftless random walk, reflection
+      principle, P(touch within N min) = 2*Phi(-delta / (sigma_min*sqrt(N))), with
+      sigma_min from the Parkinson high-low estimator on 1h bars of the same regime.
+      WEAKNESS: real price paths are not driftless RWs and the signal we trade on is a
+      directional one, which biases the walk AWAY from a buy order.
+   4. Regime = the SAME definition execution_stats.vol_regime uses: |1d return| / 30d
+      daily sigma, volatile at >= 1.5. Applied to the calendar day each 1h bar sits in.
+
+  [MEASURED from 1h bars, pooled over 32 eligible alts]
+  regime       n bars   P_touch  P_through  sigma_1h(Park)  sigma_1min  adv@1h(bps)   med adv
+  calm          19706     90.6%      88.8%          0.831%       10.7bp          7.8       6.4
+  volatile       3334     91.8%      90.4%          1.309%       16.9bp        -16.4      -3.8
+
+  [MEASURED] volatile / calm per-minute volatility ratio = 1.57x
+
+  [MODELLED] P(fill within N minutes) for a post-only order at the touch, reflection
+  principle on a driftless RW, using the regime sigma above. Shown for the MEDIAN
+  eligible alt half-spread and for a WIDE one, because spread is what blocks fills.
+
+  median eligible half-spread 2.59 bps | 85th pct 5.52 bps | LINK 2.44 bps
+
+   N min | calm/med | calm/wide | vola/med | vola/wide
+       1 |    80.9% |    60.7% |    87.8% |    74.4%
+       2 |    86.5% |    71.6% |    91.4% |    81.7%
+       5 |    91.4% |    81.8% |    94.5% |    88.4%
+      10 |    93.9% |    87.1% |    96.1% |    91.8%
+      15 |    95.0% |    89.4% |    96.8% |    93.3%
+      30 |    96.5% |    92.5% |    97.8% |    95.2%
+      60 |    97.5% |    94.7% |    98.4% |    96.6%
+     120 |    98.2% |    96.3% |    98.9% |    97.6%
+
+  These RW numbers are close to 100% because the half-spread (a few bps) is tiny next to
+  per-minute volatility (16.9 bps volatile). That says the price WILL reach our
+  level almost surely -- it does NOT say we fill, because reaching the level only puts us
+  at the back of a queue. The binding constraint is queue depth, which bars cannot see.
+  The bar-implied P_through above (90% volatile / 89% calm at a 1h horizon) is the
+  defensible LOWER bound: the level was fully consumed, so we filled for certain.
+
+  ADVERSE SELECTION SCALING.
+  MEASURED (n=2, CALM, LINKUSD, ~25-30s latency): 5.4 bps/leg.
+  For reference LINK's half-spread is 2.44 bps -- so the two real fills gave back
+  2.2x the spread they saved. Passive execution captured NEGATIVE spread edge.
+  The reason maker still wins is the FEE: 40 bps/leg saved vs taker, which dwarfs
+  a ~5-20 bps adverse term.
+
+  MODELLED volatile adverse selection, scaling the measured calm figure by the measured
+  per-minute vol ratio (adverse ~ sigma * sqrt(latency)):
+        5.4 bps x 1.57 = 8.5 bps/leg     <-- MODELLED, n=0 real volatile fills
+  Bar-implied 1h-horizon adverse conditional on a through-fill is far larger
+  (-16 bps volatile) but that is a 1-hour mark, not a 30-second fill latency;
+  it is the right number only if our orders rest for an hour before filling.
+
+
+================================================================================================
+C2. SIGNAL-CONDITIONAL passive fill -- the number that actually matters
+================================================================================================
+
+  Trigger, defined on 1h bars so it matches an intraday entry decision:
+      bar t return >= 1.5 x trailing 720h sigma of 1h returns, AND positive.
+  We then decide at the close of bar t to BUY passively at the touch and ask whether bar
+  t+1 (and t+2) ever traded down to our price. Everything here is a BAR STATISTIC, not a
+  realised fill: price reaching a level is necessary, not sufficient.
+
+  condition                            n  touch<=1h  touch<=2h  E[2h move]  E[2h move | NO fill]
+  unconditional                    16608      91.1%      93.9%      0.123%                1.641%
+  signal-fired (momentum buy)       1172      96.2%      97.4%      0.053%                2.678%
+
+  INTERPRETATION -- and this went AGAINST my prior, so read it carefully.
+  I expected the momentum trigger to LOWER the touch rate (price runs away from a passive
+  buy). It does the opposite: 96.2% vs 91.1% unconditional. The reason is that the
+  trigger also selects for high volatility, and a 2-6 bps half-spread offset is trivially
+  small next to a 0.8-1.3% hourly range. At the TOUCH, price reaching our level is nearly
+  a certainty in any regime.
+
+  CONCLUSION: bar data CANNOT resolve maker fill probability for an order at the touch.
+  The price-path question is settled (>90% everywhere, 96% conditional on signal); the
+  entire remaining uncertainty is QUEUE POSITION, which bars cannot see. Section C3 models
+  that directly. This is a negative result about the method, and it is the honest one.
+
+  What C2 DOES establish quantitatively is the MISS COST. In the 3.8% of signal cases
+  where price never returned to the touch within 1h, the 2h forward move averaged
+  +2.68%. Expected forgone move from passive entry = 0.038 x 2.68% = 0.103% of notional.
+  That is an order of magnitude smaller than the 40 bps/leg fee saving from posting
+  passively, so PASSIVE ENTRY IS STILL CORRECT -- but the miss is concentrated in exactly
+  the trades that would have worked, so realised win-rate will look worse than modelled.
+
+
+================================================================================================
+C3. QUEUE-CLEARING MODEL -- the actual binding constraint on a maker fill
+================================================================================================
+
+  MODEL (explicit, and each step is an assumption, not a measurement):
+    a) one-sided flow hitting the bid = 0.5 * usd_vol_24h / 1440 USD per minute
+       [MEASURED usd_vol_24h; MODELLED 50/50 buy/sell split and uniform-in-time arrival --
+        real flow is bursty, which makes short-window fills MORE variable, not less]
+    b) queue resting at the touch = depth_bid_usd(+-0.5%) * (spread_bps / 50 bps)
+       [MODELLED uniform order density across the 0.5% band. Real books are denser at the
+        touch, so this UNDERSTATES the queue and OVERSTATES fill speed. Treat the resulting
+        time-to-clear as a lower bound.]
+    c) we join at the BACK of the touch queue, so we fill only after the whole queue ahead
+       clears. Our own $8-17 is 0.1-0.5% of a typical queue, so our size is irrelevant.
+    d) P(fill within N min) ~ P(price is at/below the touch long enough for the queue to
+       clear) -- approximated as min(1, N / time_to_clear) * P_touch(N).
+
+  pair          vol24h$M  spr_bps    queue$  flow$/min clear(min) P(fill|15m) P(fill|60m)
+  XBTUSD           313.1     0.01      1254     108717        0.0         91%         95%
+  ZECUSD            63.8     0.14      1758      22166        0.1         91%         95%
+  XLMUSD             6.6     0.05       237       2307        0.1         91%         95%
+  HYPEUSD           25.6     1.10     15565       8882        1.8         91%         95%
+  XRPUSD            78.4     1.09     50633      27227        1.9         91%         95%
+  NILUSD             5.3     8.17      3627       1848        2.0         91%         95%
+  SPXUSD             4.6    11.72      3508       1585        2.2         91%         95%
+  XDGUSD            18.8     1.39     18944       6515        2.9         91%         95%
+  SOLUSD            58.2     0.88     63131      20219        3.1         91%         95%
+  SUIUSD            18.4     2.10     22763       6376        3.6         91%         95%
+  VVVUSD             5.1    10.36      6803       1765        3.9         91%         95%
+  ETHUSD           111.3     1.78    179660      38634        4.7         91%         95%
+  ONDOUSD            6.1     4.57     10119       2127        4.8         91%         95%
+  BCHUSD            11.3     6.59     21046       3907        5.4         91%         95%
+  PENGUUSD           4.8     4.12      9151       1670        5.5         91%         95%
+  ADAUSD            10.1     2.51     23504       3504        6.7         91%         95%
+  TAOUSD            16.2     5.75     42348       5631        7.5         91%         95%
+  NEARUSD           35.5    11.42    119605      12312        9.7         91%         95%
+  AVAXUSD            8.1     3.00     29086       2812       10.3         91%         95%
+  UNIUSD            15.0     7.58     57903       5191       11.2         91%         95%
+  FARTCOINUSD        3.5     5.47     14254       1222       11.7         91%         95%
+  HBARUSD            3.4     4.44     14069       1181       11.9         91%         95%
+  INJUSD             3.8     6.26     16106       1306       12.3         91%         95%
+  PEPEUSD            6.1     4.68     26611       2133       12.5         91%         95%
+  ENAUSD             5.1     9.67     23367       1787       13.1         91%         95%
+  XMRUSD             4.1    11.04     27327       1434       19.1         72%         95%
+  LINKUSD            7.5     4.88     54175       2615       20.7         66%         95%
+  ZROUSD             4.3    20.70     32933       1495       22.0         62%         95%
+  AAVEUSD            4.0     8.03     33105       1395       23.7         58%         95%
+  ARBUSD             3.9     9.43     36255       1340       27.1         50%         95%
+  PUMPUSD            3.7    15.85     37322       1300       28.7         48%         95%
+  LTCUSD            27.9     9.08   1250074       9675      129.2         11%         44%
+
+  MEDIAN time-to-clear = 7.1 min. Quartiles 3.1 / 7.1 / 13.1 min.
+
+  Combining C2 (price reaches the touch ~96% of the time within 1h conditional on signal)
+  with this queue model:
+
+     P(maker fill | volatile, momentum entry, 15 min patience)  ~  0.75   [MODELLED]
+     P(maker fill | volatile, momentum entry, 60 min patience)  ~  0.90   [MODELLED]
+
+  UNCERTAINTY. Assumption (b) is the weak link -- real books are front-loaded, so the true
+  queue is larger and clear times longer. Assumption (a) ignores that in a volatile move
+  the flow is one-directional, so a passive BUY in an up-move sees LESS sell flow than the
+  50/50 split assumes. Both biases point the same way: these are OPTIMISTIC. Applying a
+  uniform haircut for both, the defensible working figure is
+
+     P(maker fill | volatile, momentum entry) = 0.55, plausible range 0.35 - 0.80
+
+  CALIBRATION CHECK AGAINST THE ONLY REAL DATA WE HAVE -- and it fails, in our favour.
+  The model above predicts LINKUSD time-to-clear = 20.7 min. The two real
+  post-only LINKUSD fills (data/execution_log.json) completed in 25s and 30s -- roughly
+  45x faster than modelled. So assumption (b) is wrong in the opposite
+  direction to what I guessed: the touch queue is far THINNER than uniform-density implies.
+  A single real observation beats an armchair assumption, and I am recording that my prior
+  was wrong rather than keeping the flattering model.
+
+  CAVEATS on that calibration point, which is why it does not simply settle the question:
+    - n=2, CALM, LINKUSD only, no directional signal. Easiest possible case.
+    - latency_sec of exactly 30 and 25 look like POLL BOUNDARIES, not measured fill times.
+      The true fill may have been much faster; it cannot have been much slower.
+    - In a volatile one-directional up-move, sell flow into the bid is REDUCED, and the
+      spread widens so a resting order goes stale behind the new touch. Neither effect is
+      present in the calm calibration sample.
+
+  NET WORKING ESTIMATE, weighing the bar evidence (touch ~96%), the queue model (median
+  7 min, but demonstrably pessimistic by ~40x on the one real check), and the two
+  volatile-regime biases that push the other way:
+
+     P(maker fill | volatile, momentum entry, 15-30 min patience)
+            point estimate 0.65     plausible range 0.40 - 0.85      [MODELLED]
+
+  We have ZERO real volatile fills. This number is MODELLED end to end. The only thing
+  measured about maker fills in this whole system is 2/2 in calm conditions, whose exact
+  binomial 95% CI is [0.16, 1.00] -- i.e. it constrains essentially nothing.
+
+  HIGHEST-VALUE NEXT MEASUREMENT, by a wide margin: place 5-10 small post-only orders
+  ($7-8, at or just inside the touch) on eligible alts while vol_regime()=='volatile',
+  record fill/no-fill and latency, and replace this 0.65 with a measured number. That is
+  a ~$0 experiment (post-only orders that do not fill cost nothing) and it collapses the
+  single largest uncertainty in the tactical EV calculation.
+
+
+================================================================================================
+D. PARTIAL FILLS at $8-17 clips  [MEASURED depth snapshot + MODELLED consequence]
+================================================================================================
+  Account ~$55. Position 15-30% => $8.25-$16.50 clip. LINKUSD min notional
+  $6.74.
+
+  1) DEPTH-DRIVEN partial fill: a $17 clip against the thinnest eligible book
+     ($15k bid) is 0.1136% of near-touch depth. Depth is NOT
+     the constraint. A marketable order of this size fills in full, instantly, at the
+     touch. MEASURED est_slippage_bps across the universe is 0.01-10.42 bps.
+
+  2) The real partial-fill risk is a TIME/QUEUE partial on a passive order, and its cost
+     is the MIN-NOTIONAL RESIDUAL: if a $C clip fills fraction f, the residual $(1-f)*C
+     must still be tradeable. If (1-f)*C < min_notional the remainder is STRANDED --
+     it can neither be cancelled-and-resized usefully nor exited later on its own.
+
+  Residual-stranding threshold: fill fraction f above which the remainder is untradeable.
+
+  pair          minNot$            $8.25 clip           $16.50 clip
+                        strand if f >max useful strand if f >max useful
+  NEARUSD         17.51  ANY(too big)          ANY(too big)        
+  ZECUSD          14.80  ANY(too big)                   10%        
+  UNIUSD          13.45  ANY(too big)                   18%        
+  NILUSD          12.24  ANY(too big)                   26%        
+  ARBUSD          10.60  ANY(too big)                   36%        
+  HYPEUSD          9.11  ANY(too big)                   45%        
+  VVVUSD           8.69  ANY(too big)                   47%        
+  INJUSD           7.99            3%                   52%        
+  ZROUSD           7.25           12%                   56%        
+  ONDOUSD          6.89           17%                   58%        
+  AAVEUSD          6.85           17%                   59%        
+  SOLUSD           6.79           18%                   59%        
+  PENGUUSD         6.79           18%                   59%        
+  LINKUSD          6.74           18%                   59%        
+  LTCUSD           6.61           20%                   60%        
+  PEPEUSD          6.41           22%                   61%        
+  ENAUSD           6.20           25%                   62%        
+  XLMUSD           5.99           27%                   64%        
+  TAOUSD           5.60           32%                   66%        
+  FARTCOINUSD      5.48           34%                   67%        
+  XMRUSD           5.43           34%                   67%        
+  AVAXUSD          5.00           39%                   70%        
+  HBARUSD          4.95           40%                   70%        
+  SUIUSD           4.75           42%                   71%        
+  ADAUSD           4.71           43%                   71%        
+  XDGUSD           4.61           44%                   72%        
+  XBTUSD           4.17           49%                   75%        
+  PUMPUSD          4.16           50%                   75%        
+  SPXUSD           3.84           53%                   77%        
+  BCHUSD           3.34           60%                   80%        
+  ETHUSD           2.64           68%                   84%        
+  XRPUSD           2.42           71%                   85%        
+
+  7 of 32 eligible alts CANNOT take an $8.25 clip at all (min notional
+  exceeds the clip): NEARUSD, ZECUSD, UNIUSD, NILUSD, ARBUSD, HYPEUSD, VVVUSD
+  On the rest, ANY partial fill below ~34% of an $8.25 clip strands the remainder.
+
+  COST OF A STRANDED RESIDUAL (MODELLED): you must either (a) top the position back up
+  with a second order -- which at $6.74 minimum may overshoot the intended size, or
+  (b) take the residual out later with a TAKER order bundled into another trade. Charge
+  the pessimistic case: the residual exits taker instead of maker, costing
+  (0.0043) extra on that slice. At a 20% residual that is
+  0.086% of notional per affected leg -- small, but not zero.
+
+  PRACTICAL MITIGATION, and this one is large: size tactical clips at >= 2x the pair's
+  min_notional so a 50% partial still leaves a tradeable remainder. At $55 that means
+  min_notional <= $8.25 for a 30% clip -- which already excludes 7 pairs.
+
+
+================================================================================================
+E. BEST ACHIEVABLE COST PER TACTICAL ROUND TRIP  [MODELLED from measured inputs]
+================================================================================================
+  per-leg building blocks:
+    maker leg, CALM      = 0.400% fee [MEASURED] + 5.4bps adverse [MEASURED n=2] = 0.454%
+    maker leg, VOLATILE  = 0.400% fee [MEASURED] + 8.5bps adverse [MODELLED]      = 0.485%
+    taker leg            = 0.831% [MEASURED, incl. spread crossing]
+    impact at $8-17      = <0.01% [MEASURED depth] -- negligible, drop it
+
+  policy                                                    cost/RT  gate 3x  gate 1.5x EV @p=.62
+  ----------------------------------------------------------------------------------------------
+  P1 current model: 4 legs, all maker (calm adverse)         1.816%    5.45%               11.35%
+  P1 honest: 4 legs all maker, VOLATILE adverse              1.940%    5.82%               12.13%
+  P1b 4 legs: maker entries, taker exits                     2.632%    7.90%               16.45%
+  P2 park-in-USD, N=3 trades, all maker                      1.132%    3.40%                7.07%
+  P2 park-in-USD, N=5 trades, all maker                      1.067%    3.20%                6.67%
+  P2 marginal (already in USD): 2 legs all maker             0.970%    2.91%                6.06%
+  P2* realistic: maker entry + taker exit (2 legs)           1.316%    3.95%                8.23%
+  P2** maker entry, 70/30 maker-target/taker-stop exit       1.074%    3.22%                6.71%
+
+  BEST REALISTIC (does not assume an unfilled exit is acceptable):
+    P2* realistic: maker entry + taker exit (2 legs)  =  1.316% per round trip
+    3x gate -> expected move must be >= 3.95%
+    EV test at p=0.62 -> expected move must be >= 8.23%
+    EV test at p=0.70 -> expected move must be >= 4.94%
+
+  FILL-PROBABILITY DISCOUNT. A maker entry that does not fill is not a cost, it is a
+  missed trade. SIGNAL-CONDITIONAL bar-implied touch rate (section C2) is 96% within
+  1h and 97% within 2h -- and touching is necessary, not sufficient. Haircut for
+  queue position (we sit at the back of the touch and a mere touch often clears only the
+  front) gives a working estimate of
+
+        maker fill probability, VOLATILE, momentum entry, 15-30 min patience
+              point estimate 0.65   plausible range 0.40 - 0.85      [MODELLED, see C3]
+
+  execution_stats.maker_fill_prob defaults to 0.50 for volatile. This study says 0.65 is
+  the better central value but the range is wide enough that 0.50 is a defensible
+  conservative choice. Raise it to 0.65 only alongside a SOURCE label that says MODELLED,
+  and replace it the moment we have >=5 real volatile post-only orders.
+
+  edge.py bug: it multiplies BOTH gross and cost by fill_prob, then compares net_pct to
+  the absolute MIN_ABS_EDGE_PCT floor of 0.5%. Scaling both sides is right for the SIGN of
+  EV per attempt, but it makes net_pct an expected-value-per-attempt number that is no
+  longer comparable to an absolute per-trade floor. Separate the two: gate on
+  net-per-completed-trade, and use fill_prob only to rank opportunities by throughput.
+
+================================================================================================
+F. WHO ACTUALLY CLEARS THE GATE -- concrete effect of the two proposed changes
+================================================================================================
+  Two changes under test:
+    (1) charge 2 marginal legs (0.970%) instead of 4 (1.940%)
+    (2) scale expected_move by sqrt(hold_days) instead of always using the 1-day sigma
+  Gate A (tactical.py MOVE_TO_COST_MIN): 0.5*sigma*sqrt(h) >= 3 * cost
+  Gate B (edge.py EV, the binding one):  0.24*0.5*sigma*sqrt(h) >= 1.5 * cost
+  Confluence uplift assumed 1.0 (exactly 3 conditions). Excludes min-notional-blocked pairs.
+
+  pair          sig1d% A 4leg 1d A 2leg 1d A 2leg 3d B 4leg 1d B 2leg 3d B 2leg 7d  note
+  NILUSD         12.60      PASS      PASS      PASS      fail      PASS      PASS  MIN-NOTIONAL BLOCKED
+  ARBUSD         10.92      fail      PASS      PASS      fail      PASS      PASS  MIN-NOTIONAL BLOCKED
+  VVVUSD          9.77      fail      PASS      PASS      fail      PASS      PASS  MIN-NOTIONAL BLOCKED
+  ZECUSD          7.93      fail      PASS      PASS      fail      PASS      PASS  MIN-NOTIONAL BLOCKED
+  FARTCOINUSD     7.07      fail      PASS      PASS      fail      PASS      PASS  
+  NEARUSD         7.07      fail      PASS      PASS      fail      PASS      PASS  MIN-NOTIONAL BLOCKED
+  SPXUSD          6.98      fail      PASS      PASS      fail      fail      PASS  
+  ENAUSD          6.89      fail      PASS      PASS      fail      fail      PASS  
+  UNIUSD          6.83      fail      PASS      PASS      fail      fail      PASS  MIN-NOTIONAL BLOCKED
+  INJUSD          6.71      fail      PASS      PASS      fail      fail      PASS  
+  BCHUSD          6.43      fail      PASS      PASS      fail      fail      PASS  
+  PUMPUSD         6.35      fail      PASS      PASS      fail      fail      PASS  
+  ONDOUSD         6.12      fail      PASS      PASS      fail      fail      PASS  
+  TAOUSD          6.10      fail      PASS      PASS      fail      fail      PASS  
+  PEPEUSD         5.74      fail      fail      PASS      fail      fail      PASS  
+  ZROUSD          5.62      fail      fail      PASS      fail      fail      PASS  
+  AVAXUSD         5.56      fail      fail      PASS      fail      fail      PASS  
+  PENGUUSD        4.87      fail      fail      PASS      fail      fail      PASS  
+  SUIUSD          4.86      fail      fail      PASS      fail      fail      PASS  
+  XDGUSD          4.24      fail      fail      PASS      fail      fail      fail  
+  ADAUSD          4.15      fail      fail      PASS      fail      fail      fail  
+  XLMUSD          3.99      fail      fail      PASS      fail      fail      fail  
+  LINKUSD         3.97      fail      fail      PASS      fail      fail      fail  
+  LTCUSD          3.91      fail      fail      PASS      fail      fail      fail  
+  XRPUSD          3.90      fail      fail      PASS      fail      fail      fail  
+  HYPEUSD         3.80      fail      fail      PASS      fail      fail      fail  MIN-NOTIONAL BLOCKED
+  AAVEUSD         3.77      fail      fail      PASS      fail      fail      fail  
+  SOLUSD          3.73      fail      fail      PASS      fail      fail      fail  
+  XMRUSD          3.66      fail      fail      PASS      fail      fail      fail  
+  HBARUSD         3.62      fail      fail      PASS      fail      fail      fail  
+  ETHUSD          2.43      fail      fail      fail      fail      fail      fail  
+  XBTUSD          2.26      fail      fail      fail      fail      fail      fail  
+
+  tradeable pairs passing (min-notional-blocked excluded): 0  8  23  0  1  13
+
+  Reading across: under the CURRENT model (4 legs, 1-day sigma) 0 pair(s) clear the
+  binding EV gate. Charging 2 marginal legs and holding 3 days takes that to 1; holding
+  7 days takes it to 13. So YES -- the combination of correct leg counting and hold-period
+  extension makes the gate achievable, where neither change alone does.
+
+  This says NOTHING about whether those trades are profitable. It says the gate stops being
+  vacuous. Whether there is any edge to put through it is Q1/Q2, not Q3.
+

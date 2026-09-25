@@ -1,0 +1,8 @@
+{
+  "enabled": true,
+  "activated_at": "2026-09-24T12:49:19Z",
+  "authorized_by": "researcher directive 'ACTIVATE LIVE TRADING NOW'",
+  "activation_check": "14/14 passed (scripts/activation_check.py)",
+  "constraints": "spot only; no margin/leverage/futures/shorts/options/staking/borrowing; no withdrawals/transfers/deposits; STOP is absolute",
+  "note": "Live orders use real funds. HOLD remains a valid decision; trade only on sufficient expected edge."
+}

@@ -1,0 +1,70 @@
+{
+  "theme": "dark",
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Bash(python3:*)",
+      "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)", "Bash(git show:*)",
+      "Bash(git add:*)", "Bash(git commit:*)", "Bash(git ls-files:*)",
+      "Bash(git check-ignore:*)", "Bash(git rev-parse:*)",
+      "Bash(systemctl --user status:*)", "Bash(systemctl --user is-active:*)",
+      "Bash(systemctl --user restart trading-monitor:*)",
+      "Bash(systemctl --user start trading-monitor:*)",
+      "Bash(systemctl --user stop trading-monitor:*)",
+      "Bash(systemctl --user daemon-reload)",
+      "Bash(journalctl --user:*)",
+      "Bash(pgrep:*)", "Bash(ps:*)", "Bash(ls:*)", "Bash(cat:*)", "Bash(head:*)",
+      "Bash(tail:*)", "Bash(wc:*)", "Bash(grep:*)", "Bash(rg:*)", "Bash(find:*)",
+      "Bash(sed -n:*)", "Bash(awk:*)", "Bash(sort:*)", "Bash(uniq:*)", "Bash(cut:*)",
+      "Bash(jq:*)", "Bash(date:*)", "Bash(du:*)", "Bash(df:*)", "Bash(free:*)",
+      "Bash(echo:*)", "Bash(printf:*)", "Bash(test:*)", "Bash(true)", "Bash(for:*)",
+      "Bash(mkdir -p:*)", "Bash(touch:*)", "Bash(cp:*)", "Bash(chmod:*)", "Bash(diff:*)",
+      "Read(//home/lisandro/**)",
+      "Edit(//home/lisandro/STATE.md)",
+      "Edit(//home/lisandro/STRATEGY.md)",
+      "Edit(//home/lisandro/RECONNAISSANCE.md)",
+      "Edit(//home/lisandro/logs/**)",
+      "Edit(//home/lisandro/data/**)",
+      "Edit(//home/lisandro/research/**)",
+      "Edit(//home/lisandro/scripts/**)",
+      "Edit(//home/lisandro/backtests/**)",
+      "Edit(//home/lisandro/strategies/**)",
+      "Edit(//home/lisandro/metrics/**)",
+      "Edit(//home/lisandro/systemd/**)",
+      "Edit(//home/lisandro/.gitignore)"
+    ],
+    "deny": [
+      "Read(//home/lisandro/env)",
+      "Read(//home/lisandro/.env)",
+      "Read(//home/lisandro/.ssh/**)",
+      "Edit(//home/lisandro/env)",
+      "Edit(//home/lisandro/.env)",
+      "Edit(//home/lisandro/CLAUDE.md)",
+      "Edit(//home/lisandro/researcher/**)",
+      "Edit(//home/lisandro/data/benchmark.json)",
+      "Edit(//home/lisandro/.claude/settings.json)",
+      "Edit(//home/lisandro/.config/systemd/user/trading-monitor.service)",
+      "Bash(curl:*)", "Bash(wget:*)", "Bash(nc:*)", "Bash(ncat:*)", "Bash(socat:*)",
+      "Bash(ssh:*)", "Bash(scp:*)", "Bash(sftp:*)", "Bash(rsync:*)", "Bash(telnet:*)",
+      "Bash(sudo:*)", "Bash(su:*)", "Bash(chattr:*)", "Bash(shred:*)",
+      "Bash(git push:*)", "Bash(git reset:*)", "Bash(git checkout:*)",
+      "Bash(git rebase:*)", "Bash(git filter-branch:*)",
+      "Bash(claude:*)", "Bash(crontab:*)",
+      "Bash(systemctl --user disable trading-monitor:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 /home/lisandro/scripts/guard_bash.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

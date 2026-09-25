@@ -1,0 +1,31 @@
+{
+  "mode": "continuous-aggressive-autonomous",
+  "start_ts": "2026-09-24T14:46:38Z",
+  "start_portfolio_usd": 52.9494,
+  "start_balances": {
+    "LINK": 4.19448572,
+    "USDT": 3.65e-05
+  },
+  "start_prices": {
+    "LINK": 12.62356,
+    "USDT": 0.9997
+  },
+  "open_orders": 0,
+  "fees": {
+    "taker_pct": 0.8,
+    "maker_pct": 0.4
+  },
+  "passive_benchmark_usd_at_start": 52.9399,
+  "benchmark_quantities": {
+    "LINK": 4.19448572,
+    "USDT": 3.65e-05
+  },
+  "exploratory_trades_enabled": true,
+  "cooldowns_disabled": true,
+  "session_cap_disabled": true,
+  "first_measurement_window_end": "2026-09-25T14:46:38Z",
+  "auto_revert": false,
+  "operates_until": "2026-10-15",
+  "note": "24h is a MEASUREMENT WINDOW, not a stop condition. No reversion to conservative mode. Cooldowns and session caps stay disabled. Stops only on STOP, a hard safety restriction, explicit researcher instruction, or 2026-10-15.",
+  "report_checkpoint": "2026-09-25T14:46:38Z"
+}

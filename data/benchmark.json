@@ -1,0 +1,20 @@
+{
+  "regime": "v2-continuous-monitoring",
+  "recorded_at": "2026-09-24T12:36:22Z",
+  "note": "PASSIVE BENCHMARK: hold these exact asset quantities until 2026-10-15. Never modify.",
+  "quantities": {
+    "LINK": 4.19448572,
+    "USDT": 3.65e-05
+  },
+  "prices_used": {
+    "LINK": 12.23241,
+    "USDT": 0.99962
+  },
+  "price_source": "Kraken best bid of each asset's USD pair at recorded_at",
+  "routes": {
+    "LINK": "LINKUSD",
+    "USDT": "USDTUSD"
+  },
+  "total_usd": 51.3087,
+  "experiment_end": "2026-10-15"
+}

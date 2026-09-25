@@ -1,0 +1,38 @@
+[
+  {
+    "ts": "2026-09-24T14:57:12Z",
+    "txid": "OUVZC2-25QVD-2HBD5A",
+    "pair": "LINKUSD",
+    "side": "sell",
+    "post_only": true,
+    "status": "closed",
+    "requested_vol": "0.55000000",
+    "vol_exec": "0.55000000",
+    "fill_frac": 1.0,
+    "fee": "0.027732",
+    "cost": "6.932882",
+    "fee_rate_pct": 0.4,
+    "latency_sec": 30,
+    "regime": "calm",
+    "vol_ratio": 0.25,
+    "adverse_bps": 4.7
+  },
+  {
+    "ts": "2026-09-24T14:57:13Z",
+    "txid": "OU2RTA-OVY4J-APZ7ZJ",
+    "pair": "LINKUSD",
+    "side": "buy",
+    "post_only": true,
+    "status": "closed",
+    "requested_vol": "0.55208442",
+    "vol_exec": "0.55208442",
+    "fill_frac": 1.0,
+    "fee": "0.027483",
+    "cost": "6.870674",
+    "fee_rate_pct": 0.4,
+    "latency_sec": 25,
+    "regime": "calm",
+    "vol_ratio": 0.25,
+    "adverse_bps": 6.1
+  }
+]
