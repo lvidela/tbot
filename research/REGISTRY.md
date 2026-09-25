@@ -167,6 +167,33 @@ the account is too small to survive the sampling.
 
 ---
 
+## HORIZON AMENDMENT — 2026-09-25 (researcher directive)
+
+The experiment is now **open-ended**; the 2026-10-15 end date is withdrawn.
+
+**No rejection here is reopened by this.** R1–R11 failed on cross-sectional demeaning, date
+clustering, serial overlap, permutation testing and the fee floor — every one of those is
+horizon-independent. A longer runway does not resurrect a signal that a permutation test scored
+at family-wise **p = 0.971**.
+
+**One ACCEPTED item is weakened.** A2's structural objection — "the mean is paid for by roughly a
+1-in-23 tail; you cannot size a tail at this account size, you must take all 23 trades and pay
+23 × 1.83% of turnover to catch one NILUSD" — was partly an argument about *insufficient time to
+sample*. With no end date the sampling is feasible. The fee drag per trial is unchanged, so the
+objection survives as an arithmetic point about cost, not as an impossibility.
+
+**The substantive gain is power, not permission.** D5's standing rule (every null carries its
+MDE) now cuts the other way: MDE falls as forward observations accumulate, and the shadow and
+counterfactual ledgers accumulate indefinitely. R9's "cannot detect below 2.5–4.4%" is a
+statement about n, and n is no longer bounded. Re-deriving MDE as a function of accumulated
+observations is now a live research task — it tells a future session when the ledgers become
+decisive instead of guessing.
+
+**Standing rule, unchanged and now more important:** do not lower the gate because there is more
+time. More time is a reason to *wait for evidence*, never a reason to trade on less of it.
+
+---
+
 ## OPEN QUESTIONS (current research program, 2026-09-24 → 2026-09-26)
 
 | # | Question | Why it matters |
@@ -357,3 +384,109 @@ exchange/data APIs from the cloud research environment).
 - **Recommendation:** stop LINK-vs-USD timing research for this experiment. The only candidate
   for any future pre-registration is S2 alone at h = 5 with a fresh forward holdout.
 - **Not actionable as an edge**, and not evidence that LINK will beat USD.
+## ADDED 2026-09-25 (live agent, session `s-2026-09-25T1427Z-08`)
+
+### R12. Weekly time-series momentum (TSMOM) — trend timing LINK vs USD
+**Rejected for live use 2026-09-25.** Full decision record:
+`research/findings/2026-09-25-tsmom-adoption-decision.md`. 366 weekly bars × 20 assets — the
+longest history used in this project, and the first test of *market timing* (all prior work was
+cross-sectional, which removes the market factor by construction). The code is clean: no
+look-ahead, incomplete bar dropped, benchmark-relative, costs charged at 0.45%/switch.
+
+Rejected on four independent grounds:
+- **Arithmetic (= expected final USD, the stated objective): every one of 9 rules is negative
+  vs hold.** Pooled mom4 −1.010%/wk (t=−1.36).
+- **Family-wise corrected log statistic: best p_FWER = 0.055** (mom2, mom4). The headline
+  single-rule p=0.009 was a 1-of-9 selection.
+- **Exposure control is decisive (V4): a static ~45% position with zero timing captures +0.61
+  to +0.74 of mom4's ~+1.10 log ratio.** Four of nine rules do *worse* than the static control.
+  The effect is mostly de-risking, which raises the median and lowers the mean.
+- **Attribution: 2022 and 2025 carry it**; every rule is negative pre-2021 and positive after.
+  20 correlated assets sharing one bear market ≈ 1–2 effective observations (R1's error at
+  regime scale).
+
+**New standing warning — the circular-shift permutation is a weak bar.** Its null (random
+timing at equal exposure) is strongly negative, so passing it does not imply profitability.
+**Counterexample from the data: `mom1` passes at p=0.017 while ending at W=0.44 vs hold's 2.63
+— it destroys 83% of terminal wealth and still "beats random".** Never report this permutation
+without the vs-hold and vs-static-exposure comparisons beside it.
+
+*Note: all 9 rules signalled IN LINK at decision time, so nothing was forgone by rejecting.*
+
+### R13. "Hold a different asset" — not resolvable, and the variance-drag argument for BTC fails
+**Tested and not supported 2026-09-25.** Record: `research/findings/2026-09-25-which-asset-to-hold.md`.
+First direct test of *what to hold* rather than *when to trade* — a one-off 0.81% decision that
+dominates the open-ended outcome, and one the registry had never examined (Q5 tested LINK vs
+cash only).
+
+Paired weekly log-drift differences over LINK's full 366-week history:
+**LINK − BTC = −5.8%/yr (t = −0.20); LINK − ETH = −12.3%/yr (t = −0.50).** LINK's own annual
+log drift carries a standard error of **±37 pp**. Not resolvable, and not close.
+
+Start-date dependence is the real finding: over 2019-09→now LINK is **+27.2%/yr**; over the
+20-asset common window from 2021-12-16 it is **−10.0%/yr**, ranking 9/20 with a median asset at
+W=0.57. **The two windows disagree in sign.**
+
+**The variance-drag argument for switching to BTC is rejected, not merely unproven.** LINK vol
+98.2%/yr vs BTC 59.3%/yr is precisely estimated and real, and if arithmetic drifts were equal
+BTC's median would compound ~30%/yr faster. But adding σ²/2 back gives implied arithmetic drift
+of **LINK ≈ +75%/yr vs BTC ≈ +50%/yr** — the high-vol asset had the *higher* arithmetic drift,
+as risk-premium reasoning predicts. "Equal arithmetic drift" is an assumption that favours the
+desired conclusion and the data contradict it. This is **R8 in different clothing**: realised
+returns already contain the drag.
+
+Measured but deliberately not acted on: **6 of 20 liquid Kraken assets lost >90% in 4.8 years.**
+Real left-tail base rate for single-alt concentration, but those assets share one 2022 bear, so
+it is ~1–2 independent observations, not 20.
+
+**Only route that should flip this quickly: an asset-specific non-price fact about LINK**
+(delisting, protocol failure, liquidity/minimum change). That is a monitoring task, not a
+statistical one.
+
+### R11-CONFIRMED. Spread capture re-tested live on four hits — R11 holds, and the detector was wrong
+**2026-09-25, live agent.** The standing micro-arb watcher fired four times in one day
+(FETUSD 94 and 119 bps, PHAUSD 92 bps, GRASSUSD 99 bps) — the first hits since R11 rejected
+the class. Every one was validated and **every one fails**, but the reason is not the one R11
+gave, and that matters.
+
+**R11's depth objection does NOT apply at this account size.** GRASSUSD at validation showed a
+**127 bps spread with $404 on the bid and $298 on the ask at top of book** — our ~$58 clip fits
+several times over. R11's "152 pairs above the hurdle and zero of them liquid" was measured
+against a liquidity standard far above what a $58 account needs. *That part of R11 should not be
+cited at this size again.*
+
+**The real reason, measured from public trade flow (1,000 trades/pair, 60s and 300s horizons):
+a wide snapshot spread is the SYMPTOM of a one-sided move, not a two-sided market.**
+
+| pair | quoted spread | flow imbalance | price move | **round-trip drift vs 80 bps hurdle** |
+|---|---|---|---|---|
+| GRASSUSD | 127 bps | **69–84% lifting the ask** | +23.7%/24h | **−67.5 bps** (−127.9 at 300s) |
+| FETUSD | 24–119 bps | 7% | +2.7%/24h | **+17.3 bps** |
+| PHAUSD | 39–92 bps | 13% | **+62%/24h** | **+6.3 bps** |
+| LINKUSD (control) | ~5 bps | 18% | +0.8% | −2.3 bps |
+
+On GRASSUSD, 844 of 1,000 trades lifted the ask and **a passive seller was run over by +150 bps
+in 60 seconds** (+263 bps at 300s). The spread is wide precisely because the book is thin while
+flow chases one way — exactly when a resting quote is picked off. A spot market maker there
+would sell inventory into a rising market and be unable to re-buy, i.e. **underperform simply
+holding the asset, after paying 80 bps for the privilege.**
+
+This is registry **R11's "passive-fill reversion has the wrong sign" confirmed out-of-sample on
+a fresh instance**, and the LINKUSD control at −2.3 bps is consistent with the 5.4 bps/leg
+adverse selection measured in A1.
+
+**Defect found in our own detector (fixed).** `micro_arb.scan()` screened on snapshot spread,
+volume and trade count only — nothing tested whether the market was two-sided, so it flagged
+momentum bursts as market-making opportunities. Four false positives in one day, each costing
+analysis time and each eroding trust in a watcher whose whole job is to keep a negative result
+live. `confirm_spread_capture()` now measures the realised round-trip drift a passive quoter
+would actually have captured and requires it to clear two maker legs; rejections are logged with
+their numbers so the filter can never silently suppress a real hit. Pinned by
+`scripts/test_micro_arb.py` (15/15), whose central case is the GRASSUSD pattern.
+
+**The transferable lesson: the quoted spread is not the tradeable quantity.** The tradeable
+quantity is the drift a passive fill actually realises. Any future spread-based idea must be
+measured that way.
+
+**Unchanged:** micro-arbitrage stays REJECTED. Reconsideration still requires a material
+fee-tier change, stated explicitly.

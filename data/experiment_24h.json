@@ -25,7 +25,12 @@
   "session_cap_disabled": true,
   "first_measurement_window_end": "2026-09-25T14:46:38Z",
   "auto_revert": false,
-  "operates_until": "2026-10-15",
-  "note": "24h is a MEASUREMENT WINDOW, not a stop condition. No reversion to conservative mode. Cooldowns and session caps stay disabled. Stops only on STOP, a hard safety restriction, explicit researcher instruction, or 2026-10-15.",
-  "report_checkpoint": "2026-09-25T14:46:38Z"
+  "operates_until": "open-ended (no end date; researcher directive 2026-09-25)",
+  "note": "24h is a MEASUREMENT WINDOW, not a stop condition. No reversion to conservative mode. Cooldowns and session caps stay disabled. Stops only on STOP, a hard safety restriction, or explicit researcher instruction. The former 2026-10-15 end date is withdrawn.",
+  "report_checkpoint": "2026-09-25T14:46:38Z",
+  "operates_until_superseded": {
+    "previous": "2026-10-15",
+    "changed": "2026-09-25",
+    "reason": "researcher directive: experiment horizon made permanent with no end"
+  }
 }

@@ -10,11 +10,17 @@
 ## 1. Hypothesis
 
 > Across the eligible Kraken Spot universe, no signal I can measure produces an expected
-> return large enough to overcome a 1.60% round-trip cost over a 21-day horizon. Therefore the
-> allocation that maximizes expected final USD value is the one that pays no transaction costs.
+> return large enough to overcome a 1.60% round-trip cost. Therefore the allocation that
+> maximizes expected USD value is the one that pays no transaction costs.
 
-This is a claim about **this account at this size on this horizon**, not a claim that markets are
-efficient or that rotation never works. It is re-tested continuously (§7).
+**HORIZON AMENDED 2026-09-25 — the experiment is now OPEN-ENDED (no end date).** The hypothesis
+above originally read "…over a 21-day horizon", and the horizon clause did real work in the
+argument. It is struck, and the claims that depended on it are marked **VOID** below rather than
+deleted. What remains is a claim about *cost versus measurable edge at this account size*, which
+never depended on the calendar. See `STATE.md` §Horizon change.
+
+This is a claim about **this account at this size**, not a claim that markets are efficient or
+that rotation never works. It is re-tested continuously (§7).
 
 ## 2. Evidence
 
@@ -135,7 +141,9 @@ continuously verified rather than periodically assumed.
 - **Matching the benchmark means never beating it.** This is the honest consequence: the benchmark is
   hold-LINK and I hold LINK, so excess return will be ~$0 minus nothing. I cannot manufacture excess
   return from a signal that does not exist without paying 1.60% to find out.
-- **21 days is too short for any edge to express.** Even a real signal would get ~1–2 rebalances —
+- **~~21 days is too short for any edge to express.~~ VOID (horizon now open-ended, 2026-09-25.)**
+  Retained for the record; it must no longer be cited as a reason to hold. Original text:
+  Even a real signal would get ~1–2 rebalances —
   a single draw from a wide distribution. Sample size, not just edge size, argues against trading.
 - **Overfitting risk in my own tests.** Mitigated by leading with the parameter-free IC test and
   reporting the full grid rather than its best cell.
@@ -212,7 +220,10 @@ I am not taking it, for three reasons I want on the record:
 
 1. **t = 1.19.** The data is consistent with zero edge. The +0.94% is a point estimate whose
    confidence interval comfortably spans zero.
-2. **The median is −1.29%.** Capturing a right-skewed mean requires many trades. With 21 days
+2. **The median is −1.29%.** Capturing a right-skewed mean requires many trades. **(The
+   "with 21 days" limit below is VOID as of 2026-09-25 — the horizon is open-ended, so the
+   trade count is no longer capped by the calendar. The fee drag per trial is unchanged, so
+   this is now a question of whether the mean is real, not whether there is time.)** With 21 days
    left I get perhaps 3–6, so I would most likely realise the median, not the mean.
 3. **Adverse selection is unmodeled and points the wrong way.** A post-only order rests until
    someone crosses it — which in a fast market means you get filled precisely when price is
@@ -230,7 +241,9 @@ point estimate survives a 4-leg cost, or a volatility regime where moves dwarf f
 - 240 common bars over a net-bullish window; short history on newer listings.
 - Adverse selection and fill probability are not yet empirically measured — they are argued.
   If I trade a maker order, the realised fill rate becomes the first thing to record.
-- The 21-day horizon is the hardest constraint: too few trades for any edge to express.
+- ~~The 21-day horizon is the hardest constraint: too few trades for any edge to express.~~
+  **VOID 2026-09-25 — horizon is open-ended.** The hardest constraint is now `p = 0.50`: no
+  measured directional edge. Time was never the real blocker, and removing it proves nothing.
 
 
 ---
@@ -328,7 +341,7 @@ one of which biased toward the conclusion I had reached.** Everything below is n
 |---|---|
 | "Tactical gate requires ~5.5% expected move" | **WRONG by ~2.5×.** True requirement was 11.8–15.7%. Four haircuts stacked multiplicatively: `(2p−1)=0.24`, fill prior 0.5, the 3× rule, the 1.5× margin — uncertainty charged four times for one doubt. |
 | "0 of 37 assets qualify" | **Not a market finding.** It was a property of my code. Now labelled as such in the output. |
-| "A tactical round trip is 4 legs / 1.83%" | **WRONG.** Leaving LINK is a one-time campaign cost, and the terminal "buy back LINK" leg does not exist — we are valued in USD on 2026-10-15. **2 legs, 0.92%.** |
+| "A tactical round trip is 4 legs / 1.83%" | **WRONG.** Leaving LINK is a one-time campaign cost, and the terminal "buy back LINK" leg does not exist — we are valued in USD **continuously** (open-ended horizon; originally "on 2026-10-15", and the conclusion is unchanged because an open horizon means we are never forced back into LINK either). **2 legs, 0.92%.** |
 | "≥3 *independent* conditions" | **False.** Momentum, breakout and relative strength are all monotone in the same 4–12h price change. `VOL_EXPANSION_MIN=1.5` is *identical* to `CALM_VOL_RATIO=1.5`, so condition #1 is definitionally "regime == volatile". |
 | "IC ≈ 0, there is no signal" | **Overstated.** MDE is +3.31% to +7.51%. The defensible claim is "I cannot detect an edge smaller than 3–7%". |
 | Volatility-drag argument (Test 3) | **Void — double-counting.** Realised returns already include drag. |

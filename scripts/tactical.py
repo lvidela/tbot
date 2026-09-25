@@ -26,7 +26,9 @@ MOVE_TO_COST_MIN  = 3.0     # expected gross move >= 3x all-in round-trip cost
 #   (a) leaving LINK is a ONE-TIME campaign cost, not a per-trade cost -- charging it to
 #       every trade double-counts;
 #   (b) the terminal "buy back LINK" leg does not exist: the experiment is valued in USD
-#       on 2026-10-15 and we are never required to end in LINK.
+#       CONTINUOUSLY (open-ended horizon, 2026-09-25) and we are never required to end in
+#       LINK. With no settlement date the forced-return leg does not exist at any time,
+#       so the 2-leg count is if anything better founded than it was under a fixed date.
 # Honest campaign arithmetic: legs = 1 + 2N, i.e. amortised 2 + 1/N per trade.
 TACTICAL_LEGS = 2
 CAMPAIGN_ENTRY_COST = 0.485     # % -- charged ONCE on the LINK->USD transition, not per trade

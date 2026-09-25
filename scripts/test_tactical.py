@@ -124,13 +124,19 @@ t("policy guard runs BEFORE feasibility checks",
   "so a missing stop is never masked by a balance error")
 t("deliberate core holding can opt out explicitly", "force_no_stop" in _src)
 
-# 10 STOP
-open(f"{ROOT}/STOP","w").write("t\n")
+# 10 STOP -- sandboxed, never the real kill switch or the production audit log
+import tempfile
+_sandbox = tempfile.mkdtemp(prefix="stoptest-")
+_real_root, _real_log = execute.ROOT, execute.LOG
+execute.ROOT, execute.LOG = _sandbox, os.path.join(_sandbox, "activity.jsonl")
+open(f"{_sandbox}/STOP","w").write("t\n")
+assert os.path.exists(f"{_sandbox}/STOP"), "sandbox STOP missing; refusing a live-path call"
 try:
     execute.place("LINKUSD","sell",1.0,"test","tactical-stop",dry_run=False); ok2=False; d="NOT blocked"
 except execute.Abort as ex: ok2=True; d=str(ex)
 except Exception as ex: ok2=False; d=str(ex)
-os.remove(f"{ROOT}/STOP")
+os.remove(f"{_sandbox}/STOP")
+execute.ROOT, execute.LOG = _real_root, _real_log
 t("STOP blocks tactical execution", ok2, d)
 
 print(f"\n{sum(P)}/{len(P)} tactical tests passed")

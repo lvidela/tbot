@@ -39,3 +39,4 @@ logs/claude_sessions/
 # Local agent state (only .claude/settings.json is intentionally versioned)
 .claude/*
 !.claude/settings.json
+.research.env
