@@ -40,7 +40,7 @@ under `meta`; see also `research/data/raw/_fetch_log.jsonl`.
 - These reflect the USDT basis, not errors in the primary USD data. Coinbase vs Kraken: 0 flags
   and p99 ≤ 19 bps.
 - Funding: Binance vs OKX over 71 common days has correlation 0.79 and a median absolute
-  difference of 0.
+  difference of 1.6e-5 per 8h (0.0016%), against daily funding levels of order 1e-4.
 
 ## Methodology
 As pre-registered: `python3 research/timing/run.py --perm 2000`. All outputs are in
