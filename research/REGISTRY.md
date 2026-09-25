@@ -615,3 +615,16 @@ filename date is an error, explained in the file), `research/x4_lowvol/`.
 - **Baskets:** low-5 0.54× vs random-5 0.38× vs high-5 0.35×, but **hold-LINK 0.63×** beats all
   of them.
 - **Caveats:** survivorship-biased (today's listings), and the window overlaps X4's holdout.
+
+### X3. Rebound after market-wide capitulation days — INCONCLUSIVE (information); tactical rotation NEGATIVE
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_x3_capitulation_rebound.md`.
+- **Process:** pre-registered (`c2f21c7`); discovery committed (`cb4ca00`) before the holdout.
+- **Events:** EW-universe day return ≤ −2.5σ with BTC down. 23 discovery events and 12 holdout
+  events (survivorship-free Binance panel).
+- **3-day EW excess:** +1.9% (t = 1.35) / +1.4% (t = 0.68).
+- **IC(crash, rebound):** −0.07 / −0.08, not significant.
+- **LINK excess:** +0.6% / +3.0%, not significant.
+- The MDEs are 4–9% per event, and the signs are unstable across h and thresholds.
+- **Tactical rotation LINK → the 3–5 most-crashed names for 3 days:** −1.2% / −3.8% per event at
+  maker costs (−17%/yr in the holdout), and significantly negative at stress costs.
+- *Do not use market crashes as a tactical entry signal into crashed or high-beta names.*
