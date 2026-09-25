@@ -244,6 +244,15 @@ def main():
         res["v1b"][f"m={m}"] = row
         print(f"  m={m:2d}: MDE " + ", ".join(f"{d}d {v:.1%}" for d, v in row["mde_at"].items())
               + f" | days to MDE<=1.83%: {row['days_to_mde_1.83%']:.0f}, <=2.83%: {row['days_to_mde_2.83%']:.0f}")
+    # SUPPLEMENTARY, added after the first run and NOT pre-registered: the registered targets
+    # (1.83%, 2.83%) test against zero GROSS edge. Acting needs the NET edge separated from
+    # zero, i.e. MDE <= the net edge itself.
+    res["v1b_supplementary_not_preregistered"] = {
+        f"m={m}": {f"days_to_mde_{t:.1%}": days_to(t, p["sigma_x"], p["rho"], m) for t in (0.005, 0.01)}
+        for m in (1, 3, 10)}
+    print("  supplementary (not pre-registered), days until MDE <= net edge:")
+    for k, row in res["v1b_supplementary_not_preregistered"].items():
+        print(f"    {k}: " + ", ".join(f"{a[12:]} {b:.0f}d" for a, b in row.items()))
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w") as f:
         json.dump(res, f, indent=1)
