@@ -88,9 +88,20 @@ new" while 15 commits and a complete pre-registered study sat on the remote.
   fetches through a read-only remote (`github-ro`) with the credential helper disabled — no
   credentials are sent, offered or stored — and its push URL set to an invalid value. It tracks
   every remote branch and never pulls, merges, checks out or resets automatically.
-- **Writes from the live VM: NOT AVAILABLE TO THE AGENT.** `origin` is SSH with no authorised
-  key here, and `git push` is denied in the live workspace's permission settings. Installing a
-  credential is a Hard Rule 3 operation the agent must not perform.
-- **In practice the researcher has been pushing the live agent's commits**, which is how live
-  work has reached `main`. That is a manual step, not an automatic one: **a live-agent commit
-  is queued, not delivered, until someone pushes it.**
+- **Writes from the live VM: WORKING since 2026-09-25.** The researcher supplied a dedicated
+  **passphrase-less** deploy key for this repository, and the live guard was updated to permit
+  non-destructive pushes to it. The live agent no longer needs anything relayed by hand — the
+  loop is closed in both directions.
+
+  Scope of that permission, so nobody assumes more than was granted:
+  - Only pushes whose target resolves to **this** repository are permitted. Any other
+    repository is refused.
+  - **Force, force-with-lease, mirror, delete, `+refspec` and `:refspec` pushes are refused**,
+    as are `reset --hard`, `rebase`, `filter-branch`, `filter-repo`, `update-ref -d` and
+    `reflog expire`. Every push segment of a command is checked, not just the first.
+  - `core.sshCommand` is scoped `--local` to this repo; the global config is untouched. The
+    general remote-shell, file-copy and key-generation executables remain blocked, and private
+    key material cannot be read, copied or re-permissioned (a `.pub` file can, being public).
+
+  **Practical consequence for you:** history on `main` is append-only from the live side. If
+  the live agent ever needs a branch rewritten, it cannot do it and will ask.
