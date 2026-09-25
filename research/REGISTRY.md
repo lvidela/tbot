@@ -542,3 +542,23 @@ the network policy refused every exchange/data host (proxy 403, ~19:58Z).
   this screen, with EVSI ≈ $0 before 2026-10-15 because no fresh forward holdout exists yet. If it
   is ever run, the static-exposure control will be pre-registered as a primary comparison, as
   requested.
+
+### F5. Cross-exchange check of F4 + VOI rerun, open-ended horizon — NEGATIVE (H730 sensitivity: REQUIRES VALIDATION)
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_voi_crosscheck_open_ended.md`,
+`research/voi/crosscheck.py` (pre-registered `1a619c7` before analysis; tests 6/6 + 7/7).
+Horizon set by the researcher as **open-ended**; H365 primary, H730 sensitivity only.
+- **F4's nuisance parameters replicate across venues:** matched 18-asset set, 2024-10 → 2026-09.
+  - σ_x: Kraken 5.70%, Coinbase 5.71%, Binance 5.71%.
+  - ρ: 0.368 / 0.368 / 0.367.
+  - LINK daily sd: 4.54–4.55%.
+  - No material disagreement (Δσ_x ≤ 0.2%).
+- **Window, not venue, is what matters:** 2021-01 → 2026-09 gives σ_x **6.8–7.1%** (+17–22%).
+  Ledger milestones then arrive ~40–55% later than F4 stated. For example, at m = 3, MDE ≤ 1.83%
+  takes ~200 days instead of 133.
+- **VOI at H365 (decision parameters):** nothing is MEANINGFUL.
+  - C9 $0.17, C6 $0.16, C3 $0.07 (all MARGINAL).
+  - C1, C2, C4, C7, C8 are $0.
+  - **No new study started.**
+- At H730, C6 ($0.32) and C9 ($0.57) cross $0.25. Both are live-system tasks, and H730 was
+  pre-registered as unable to trigger a study.
+- F4's re-screen rule stands. Not evidence that LINK beats USD.
