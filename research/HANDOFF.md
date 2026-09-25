@@ -56,27 +56,41 @@ R1–R13 are settled, and re-deriving one costs a cycle that could have gone som
    to a control, a demeaning, an overlap correction or a single outlier. The TSMOM study was
    rejected mainly on its *own* V4 exposure control — which was excellent that it existed.
 
-## ⚠ GitHub transport is DOWN — this repo is local-only right now
+## Branching: everyone works on `main` (2026-09-25)
 
-`origin` is `git@github.com:lvidela/tbot.git` (SSH). **Authentication fails: `Permission
-denied (publickey)`.** `origin/main` is stuck at `7114f9e`, several commits behind local.
+The `claude/*` branch workflow is retired — PR #1 merged `claude/exciting-feynman-g2z3fc` into
+`main`, and both agents now commit to `main`. The live agent's watcher tracks **every** remote
+branch, so this needed no change on its side; it simply sees `main` now.
 
-This does **not** break the loop, because both agents run on this same machine and share this
-working tree, so handoff happens through the local repository. It does mean:
+## Corrections to two earlier claims in this file
 
-- **Nothing either agent commits is reaching GitHub.** There is no off-machine backup.
-- The live agent will **not** attempt to fix this. Installing a deploy key or credential is a
-  credential operation and an explicit researcher decision; `git push` is also denied in the
-  live workspace's permission settings. `research_watch.fetch()` retries harmlessly every
-  cycle and records the outcome, so **the moment access is restored it starts working with no
-  code change.**
+Both were written by the live agent on 2026-09-25 and both were wrong. Recorded rather than
+quietly edited, because a wrong assumption about the channel is exactly what broke the channel.
 
-### Coordination hazard, please read
+**1. "Both agents share one working tree" — FALSE.** The Research Agent runs in an isolated
+cloud container (`/home/user/tbot`) and is explicitly blocked from reading `/home/lisandro`.
+It has no visibility into the live workspace at all. **The only channel between us is this
+GitHub repository.** A file written into the live VM's checkout does not reach the Research
+Agent until it is pushed.
 
-We share one working tree. On 2026-09-25 the live agent committed `research/tsmom/` while you
-may still have been iterating on it. That was appropriate — the study was complete and being
-adopted or rejected — but the general case is a real risk: **either agent can commit the
-other's half-finished work, and `git checkout`/`reset`/`pull` could destroy uncommitted work.**
+**2. "Detection covers the working tree, so a commit is not required" — TRUE LOCALLY, FALSE
+ACROSS THE CHANNEL.** Saving a file is enough for the *live agent* to notice work in its own
+checkout. It is **not** enough for anything to cross between the two agents. Since the agents do
+not share a filesystem: **commit and push, or it did not happen.**
 
-The live agent's watcher is therefore strictly read-only against this repo: it runs `git fetch`
-and `git log` only, **never** pull, merge, checkout or reset.
+The consequence of getting this wrong was concrete. The live agent's first watcher read the
+local tree plus `origin/main` only, and was blind to `claude/*` branches — it reported "nothing
+new" while 15 commits and a complete pre-registered study sat on the remote.
+
+## Transport status
+
+- **Reads: WORKING.** The repository is publicly readable over anonymous HTTPS. The live agent
+  fetches through a read-only remote (`github-ro`) with the credential helper disabled — no
+  credentials are sent, offered or stored — and its push URL set to an invalid value. It tracks
+  every remote branch and never pulls, merges, checks out or resets automatically.
+- **Writes from the live VM: NOT AVAILABLE TO THE AGENT.** `origin` is SSH with no authorised
+  key here, and `git push` is denied in the live workspace's permission settings. Installing a
+  credential is a Hard Rule 3 operation the agent must not perform.
+- **In practice the researcher has been pushing the live agent's commits**, which is how live
+  work has reached `main`. That is a manual step, not an automatic one: **a live-agent commit
+  is queued, not delivered, until someone pushes it.**

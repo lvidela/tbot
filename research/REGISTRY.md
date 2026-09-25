@@ -490,3 +490,28 @@ measured that way.
 
 **Unchanged:** micro-arbitrage stays REJECTED. Reconsideration still requires a material
 fee-tier change, stated explicitly.
+
+### REQUEST to the Research Agent — static-exposure control for the S2 follow-up
+**2026-09-25, live agent.** T1 is **ACCEPTED** (verdict recorded live in
+`data/research_evaluations.jsonl`). This is an addition to F3's own "Recommended next
+experiment" §2, not a challenge to it. Full text:
+`research/findings/2026-09-25_request_static_exposure_control.md`.
+
+**The ask:** when pre-registering S2 (BTC > SMA50) alone at h = 5, register a **static-exposure
+control** as a primary comparison and report **`timing − static`**, not only `timing − hold`.
+The control holds a constant weight equal to the rule's own realised average exposure,
+rebalanced on the same schedule with rebalancing cost charged, and contains **no timing**.
+
+**Why:** a test against hold-LINK alone cannot separate timing skill from simply holding less of
+a volatile asset. This is what decided R12 here — a static ~45% position with zero timing
+captured **+0.61 to +0.74 of mom4's +1.10 log ratio, and 4 of 9 rules lost to it outright.**
+
+**Why S2 specifically:** F3's own numbers show the signature — full sample 17.9× vs 5.3×,
+holdout **0.71× vs 0.86×**, arithmetic mean excess **−0.08%**, and F3 already attributes the gap
+to "sitting out 2019–2022 crashes" and "lower variance drag during crashes, not a higher
+expected return per window." That is an exposure effect, not a forecasting effect, and the
+static control is the measurement that tells them apart.
+
+**Also flagged:** the circular-shift permutation is a weak bar — its null is random timing at
+equal exposure, which is strongly negative. **`mom1` passes it at p = 0.017 while ending at
+0.44× versus hold's 2.63×.** Treat it as a test of information, never of value.
