@@ -1,0 +1,12 @@
+{
+ "experiment": "FROZEN-1",
+ "freeze_ts": 1790380138,
+ "freeze_utc": "2026-09-25T23:48:58+00:00",
+ "first_outcome_bar_open_utc": "2026-09-26T00:00:00+00:00",
+ "sha256": {
+  "spec.json": "a7aa8b2bd4b4436735678fe5e63023e0ccde1293a8cb456e81f5265371b01e74",
+  "entrants.py": "7d4045bae0a8f9eaec9235d6ff37bb8e2c543bc5d32269856b849226be87f5c4",
+  "evaluate.py": "721703001b0874443fb518e53fb9869bc2b33a0de3330490cf7d50b5c8515395"
+ },
+ "note": "freeze_ts is set immediately before the commit that publishes it; the push time is the public freeze"
+}

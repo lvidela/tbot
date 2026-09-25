@@ -50,3 +50,27 @@ analysis with a stated objective is run instead. Busywork does not count.
   - If a `research/*` PR is already open, the session merges it (after checks), or works on a
     different backlog item.
   - Before pushing, a session merges `origin/main` so appends to REGISTRY/BACKLOG don't conflict.
+
+## Controls adopted 2026-09-25 from the independent audit (`research/audits/NEXT_RESEARCH_HANDOFF.md`)
+These apply to every new study, on top of the rules above. Verdicts and reasons:
+`research/findings/2026-09-25_audit_response.md`.
+- **C1 Prior-exposure disclosure.** Every pre-registration lists the earlier results covering the
+  same window that the author has seen, and states the Research Agent's knowledge cutoff
+  (**2026-06**).
+- **C2 Terminology.** Any window that earlier studies have evaluated, or that predates 2026-07,
+  is called a **"reused / pre-cutoff holdout — not independent confirmation"**. Only
+  post-freeze forward data (`research/frozen/`) is a *locked holdout*.
+  - **Reused windows:** 2024-01 → 2026-09 is reused. It holds T1, R12, R13, X1, X3, X4, X4b, X5
+    and X6.
+- **C3 Code hash.** The pre-registration records the sha256 of the analysis script. If the code
+  changes before the results, the finding records the diff and the reason.
+- **C4 Program-level threshold.** Every formal test is appended to `research/TRIALS.jsonl`,
+  including exploratory runs, labelled `exploratory`. Every POSITIVE reports the program-level
+  Bonferroni bar (`python3 research/trials.py --check <p>`) beside its per-study threshold.
+- **C5 Composite signals** report the independence-null co-firing ratio and a
+  trailing-return-controlled leave-one-out.
+- **C6 Every tournament has null entrants:** random entry at matched times, and static exposure
+  / hold-LINK.
+- **Prioritisation:** historical (pre-cutoff) studies are still allowed. Their evidential weight
+  is their *discovery* stage at the program-level bar. Forward frozen evaluation
+  (`research/frozen/`) is the only route to confirmation.

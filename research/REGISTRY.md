@@ -714,3 +714,20 @@ measured or verifiable facts. The recommendations stay in `research/audits/NEXT_
   the repository.
 - **Status:** recorded as fact. The remedy (a decision-snapshot schema) is a recommendation in
   the handoff, not an accepted change.
+
+### AUDIT-1. Response to the independent audit (`research/audits/`) — controls adopted, results re-labelled, FROZEN-1 frozen
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_audit_response.md`.
+- **AU1 accepted.** The 2024–26 window is a *reused / pre-cutoff holdout*, not independent
+  confirmation. X4 was chosen after X1's holdout had been seen, and X4's pre-registration
+  disclosure was inaccurate on one point (X1's S-c was volatility-controlled).
+- **Program trial ledger** `research/TRIALS.jsonl`: K = 262, program Bonferroni bar
+  p < 1.91e-4.
+- **Re-labelled:**
+  - **X4** information clears the bar on its discovery stage alone (p = 8.4e-5). Its holdout
+    and **X4b** are not independent confirmation.
+  - **X6 is downgraded to INCONCLUSIVE:** its primary, discovery p = 0.0099, does not clear.
+  - Negatives are unchanged.
+- **Controls C1–C6 adopted** (PROGRAM.md).
+- **FROZEN-1 frozen** (`research/frozen/FROZEN-1/`): a forward-only tournament with 4 entrants
+  (S2 vs static, X4 low-vol-5 vs LINK, tactical candidates all / low-vol-filtered) plus nulls.
+  Access-logged, 8-query budget, first review 2026-12-26.
