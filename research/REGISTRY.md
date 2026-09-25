@@ -326,6 +326,64 @@ inflated by roughly sqrt(14) = 3.7x.
 
 ---
 
+## CLOUD RESEARCH AGENT ENTRIES (appended 2026-09-25)
+
+### F1. Stakes analysis — INCONCLUSIVE (decision analysis)
+`research/findings/2026-09-25_stakes_and_forward_evidence.md`, `research/stakes/stakes.py`.
+Over the 20 days left, the LINK-vs-USD exposure lever is about ±$9–16 at 1σ. A TRUE 1% net
+tactical edge × 10 trades is worth about +$1.30. Validating a 1% edge at t = 2 needs about
+324 independent trades, far more than the time left allows. The counterfactual ledger's 30
+records are one 58-second snapshot, so count decision times, not records. Supports HOLD. The
+only lever worth researching is the exposure/regime decision, and that needs multi-year data.
+**Constraint on this finding:** no fresh market data was reachable (network policy 403 on all
+exchange/data APIs from the cloud research environment).
+
+### F2. LINK/USD market-timing test T1: pre-registered and built; power analysis — INCONCLUSIVE (not run)
+`research/findings/2026-09-25_timing_preregistration_and_power.md`, `research/timing/`.
+- **Pre-registered before any data**, commit `16cbda7`, amendments A1–A5 also pre-data: 6
+  market-level signals (BTC SMA200/50, LINK SMA50, LINK crash, LINK vol regime, LINK funding
+  crowding) × 5/10/20-day horizons = 18 tests.
+- **Pipeline:** complete and tested (11/11, including null calibration and an end-to-end
+  synthetic run).
+- **Empirical test not run:** every exchange host still returns proxy 403 from this environment
+  (2026-09-25T15:44Z and 15:55Z).
+- **Design result:** with ~7 years of daily data the 20-day spread SE is ~3.8%, the Bonferroni
+  MDE ~14%/20d, and holdout SE ~5.9%. The effect that would flip the live decision is 1–5%/20d.
+  - Trend-type (persistent) signals have ≤ 16% power there, ≤ 5% in the holdout.
+  - Only a large, fast-decaying state effect (~10-day regime, 300–400%/yr drift gap) is
+    detectable, at 44–74% via the 5-day horizon.
+  - Significant 20-day hits overstate the effect ~2–3× (winner's curse).
+- **Value of information:** T1's value for the remaining decision on the $59 account is
+  $0.02–$1.15. Its signal component is ≤ $0.13 unless one assumes ±6%/20d regime spreads are
+  typical. Most of the value is in re-estimating LINK's unconditional drift.
+- **Implication:** no available data can resolve which way to pull the exposure lever F1 found
+  to dominate. HOLD remains the zero-cost default. That is not evidence LINK beats USD.
+- **Rule for future work:** do not read a null from T1 as NEGATIVE. The pre-registered rule
+  makes that impossible at this MDE. Read T1 output only through its pre-registered shrinkage
+  analysis.
+
+### F3. T1 empirical results — INCONCLUSIVE (all six signals); decision analysis supports HOLD LINK
+`research/findings/2026-09-25_timing_T1_results.md`, `research/timing/results/`.
+- **Data:** multi-year daily data became reachable after the network-policy change. Coinbase is
+  primary; `data.binance.vision` and Kraken are cross-checks; funding comes from the Binance
+  archive and OKX. The Binance API and Bybit are geo-blocked (A6). LINK covers 2019-06-27 →
+  2026-09-24, and Coinbase agrees with Binance and Kraken to within ~2 bps median.
+- **Results:** no cell of 18 passes Bonferroni (max |t| 1.77, S2 BTC>SMA50, h = 5). The
+  family-wise permutation p = 0.47, i.e. the best signal equals the null median.
+- **Costs:** all 18 cells have negative mean excess vs hold-LINK after maker costs.
+- **Holdout (2024–26):** max |t| 1.23.
+- **Robustness:** S4–S6 point opposite to their registered direction, none significantly.
+- **Only consistent pattern:** S2 has the same sign across sub-periods, ETH/SOL and
+  perturbations. But it loses in the holdout (0.71× vs 0.86× wealth), and its full-sample
+  compounding gain comes from lower variance drag in 2019–22 crashes, not higher mean return.
+- **Current state (2026-09-24):** S1–S5 all ON; S6 unknown, since the funding archive ends
+  2026-08-31. The shrunk 20-day forecast is +3.9% to +5.0%, so **no exit**. The unconditional
+  drift (+3.7%, t = 1.83) dominates, and it is not a forecast.
+- **Power check:** the realised h = 20 SE was 4.4% (F2 assumed 3.8%), and the Bonferroni MDE at
+  h = 20 was ~17%. The F2 prediction held.
+- **Recommendation:** stop LINK-vs-USD timing research for this experiment. The only candidate
+  for any future pre-registration is S2 alone at h = 5 with a fresh forward holdout.
+- **Not actionable as an edge**, and not evidence that LINK will beat USD.
 ## ADDED 2026-09-25 (live agent, session `s-2026-09-25T1427Z-08`)
 
 ### R12. Weekly time-series momentum (TSMOM) — trend timing LINK vs USD
