@@ -1,0 +1,434 @@
+{
+ "params": {
+  "A": 58.62,
+  "c1": 0.0046,
+  "rt4": 0.0183,
+  "notional": 13.0
+ },
+ "ledger": {
+  "sigma_x": 0.05791479708004752,
+  "rho": 0.36936561807472973,
+  "link_daily_sd": 0.045392470300728884,
+  "n_assets": 19,
+  "horizon_days": 3,
+  "bars": 720,
+  "per_phase_sigma": [
+   0.05620534234205347,
+   0.05791479708004752,
+   0.06080089435237836
+  ],
+  "per_phase_rho": [
+   0.3366588133255839,
+   0.36936561807472973,
+   0.37760941395236153
+  ]
+ },
+ "candidates": {
+  "C1 LINK vs USD (drift/timing)": {
+   "H20": {
+    "low": {
+     "evpi": 0.006746028318791628,
+     "evsi": 0.0,
+     "note": "only ~1 new day since T1"
+    },
+    "central": {
+     "evpi": 0.19712314096821815,
+     "evsi": 1.651301741529605e-174,
+     "note": "only ~1 new day since T1"
+    },
+    "high": {
+     "evpi": 0.8601069190847994,
+     "evsi": 4.855854309863686e-09,
+     "note": "only ~1 new day since T1"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MARGINAL"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.3259901171809713,
+     "evsi": 0.0,
+     "note": "only ~1 new day since T1"
+    },
+    "central": {
+     "evpi": 4.945634830050861,
+     "evsi": 9.810650129671554e-78,
+     "note": "only ~1 new day since T1"
+    },
+    "high": {
+     "evpi": 17.85876550553134,
+     "evsi": 0.27975612130736677,
+     "note": "only ~1 new day since T1"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MEANINGFUL"
+   }
+  },
+  "C2 hold another asset": {
+   "H20": {
+    "low": {
+     "evpi": 0.006181487494812958,
+     "evsi": 0.0,
+     "note": "no unused history; hypothetical extra history would be worth $0.00"
+    },
+    "central": {
+     "evpi": 0.071990210617323,
+     "evsi": 0.0,
+     "note": "no unused history; hypothetical extra history would be worth $0.01"
+    },
+    "high": {
+     "evpi": 0.22948477430739864,
+     "evsi": 0.0,
+     "note": "no unused history; hypothetical extra history would be worth $0.14"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MARGINAL"
+   },
+   "H365": {
+    "low": {
+     "evpi": 2.0788376266749324,
+     "evsi": 0.0,
+     "note": "no unused history; hypothetical extra history would be worth $0.52"
+    },
+    "central": {
+     "evpi": 4.412494899884144,
+     "evsi": 0.0,
+     "note": "no unused history; hypothetical extra history would be worth $2.39"
+    },
+    "high": {
+     "evpi": 7.918274305253167,
+     "evsi": 0.0,
+     "note": "no unused history; hypothetical extra history would be worth $6.04"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MEANINGFUL"
+   }
+  },
+  "C3 new tactical signal": {
+   "H20": {
+    "low": {
+     "evpi": 0.008666666666666668,
+     "evsi": -0.006052294339817359,
+     "note": "power 0.04 at e=0.5%, MDE 7.5%"
+    },
+    "central": {
+     "evpi": 0.04333333333333334,
+     "evsi": 0.003602178744711821,
+     "note": "power 0.10 at e=1.0%, MDE 4.0%"
+    },
+    "high": {
+     "evpi": 0.26,
+     "evsi": 0.15862692750343255,
+     "note": "power 0.61 at e=2.0%, MDE 2.5%"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.1581666666666667,
+     "evsi": -0.11045437170166682,
+     "note": "power 0.04 at e=0.5%, MDE 7.5%"
+    },
+    "central": {
+     "evpi": 0.7908333333333334,
+     "evsi": 0.06573976209099074,
+     "note": "power 0.10 at e=1.0%, MDE 4.0%"
+    },
+    "high": {
+     "evpi": 4.745,
+     "evsi": 2.8949414269376446,
+     "note": "power 0.61 at e=2.0%, MDE 2.5%"
+    },
+    "label": "MARGINAL",
+    "evpi_label": "MEANINGFUL"
+   }
+  },
+  "C4 volatile-regime fills": {
+   "H20": {
+    "low": {
+     "evpi": 0.017333333333333336,
+     "evsi": 0.0,
+     "note": "live-only data"
+    },
+    "central": {
+     "evpi": 0.08666666666666667,
+     "evsi": 0.0,
+     "note": "live-only data"
+    },
+    "high": {
+     "evpi": 0.3466666666666667,
+     "evsi": 0.0,
+     "note": "live-only data"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MARGINAL"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.31633333333333336,
+     "evsi": 0.0,
+     "note": "live-only data"
+    },
+    "central": {
+     "evpi": 1.5816666666666668,
+     "evsi": 0.0,
+     "note": "live-only data"
+    },
+    "high": {
+     "evpi": 6.326666666666667,
+     "evsi": 0.0,
+     "note": "live-only data"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MEANINGFUL"
+   }
+  },
+  "C5 switch execution timing": {
+   "H20": {
+    "low": {
+     "evpi": 0.0011724,
+     "evsi": 0.0005862,
+     "note": "order-book sampling; also blocked by network policy here"
+    },
+    "central": {
+     "evpi": 0.005862,
+     "evsi": 0.002931,
+     "note": "order-book sampling; also blocked by network policy here"
+    },
+    "high": {
+     "evpi": 0.035171999999999995,
+     "evsi": 0.017585999999999997,
+     "note": "order-book sampling; also blocked by network policy here"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.0035172000000000007,
+     "evsi": 0.0017586000000000004,
+     "note": "order-book sampling; also blocked by network policy here"
+    },
+    "central": {
+     "evpi": 0.017586,
+     "evsi": 0.008793,
+     "note": "order-book sampling; also blocked by network policy here"
+    },
+    "high": {
+     "evpi": 0.105516,
+     "evsi": 0.052758,
+     "note": "order-book sampling; also blocked by network policy here"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   }
+  },
+  "C6 LINK tail-event monitoring": {
+   "H20": {
+    "low": {
+     "evpi": 0.016060273972602738,
+     "evsi": 0.000803013698630137,
+     "note": "monitoring task (live agent), not research"
+    },
+    "central": {
+     "evpi": 0.05781698630136986,
+     "evsi": 0.008672547945205479,
+     "note": "monitoring task (live agent), not research"
+    },
+    "high": {
+     "evpi": 0.1541786301369863,
+     "evsi": 0.04625358904109589,
+     "note": "monitoring task (live agent), not research"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "MARGINAL"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.29309999999999997,
+     "evsi": 0.014655,
+     "note": "monitoring task (live agent), not research"
+    },
+    "central": {
+     "evpi": 1.0551599999999999,
+     "evsi": 0.15827399999999997,
+     "note": "monitoring task (live agent), not research"
+    },
+    "high": {
+     "evpi": 2.81376,
+     "evsi": 0.844128,
+     "note": "monitoring task (live agent), not research"
+    },
+    "label": "MARGINAL",
+    "evpi_label": "MEANINGFUL"
+   }
+  },
+  "C7 partial exposure": {
+   "H20": {
+    "low": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "zero by linearity of the objective"
+    },
+    "central": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "zero by linearity of the objective"
+    },
+    "high": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "zero by linearity of the objective"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "zero by linearity of the objective"
+    },
+    "central": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "zero by linearity of the objective"
+    },
+    "high": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "zero by linearity of the objective"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   }
+  },
+  "C8 derivatives/hedging": {
+   "H20": {
+    "low": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "not actionable without a researcher rule change"
+    },
+    "central": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "not actionable without a researcher rule change"
+    },
+    "high": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "not actionable without a researcher rule change"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "not actionable without a researcher rule change"
+    },
+    "central": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "not actionable without a researcher rule change"
+    },
+    "high": {
+     "evpi": 0.0,
+     "evsi": 0.0,
+     "note": "not actionable without a researcher rule change"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   }
+  },
+  "C9 forward ledgers": {
+   "H20": {
+    "low": {
+     "evpi": 0.004333333333333334,
+     "evsi": 0.00015488660530578677,
+     "note": "power 0.04 by day 10"
+    },
+    "central": {
+     "evpi": 0.02166666666666667,
+     "evsi": 0.0013230337001428445,
+     "note": "power 0.06 by day 10"
+    },
+    "high": {
+     "evpi": 0.13,
+     "evsi": 0.020587067716623417,
+     "note": "power 0.16 by day 10"
+    },
+    "label": "NEGLIGIBLE",
+    "evpi_label": "NEGLIGIBLE"
+   },
+   "H365": {
+    "low": {
+     "evpi": 0.07908333333333335,
+     "evsi": 0.007838025679692315,
+     "note": "power 0.10 by day 182"
+    },
+    "central": {
+     "evpi": 0.3954166666666667,
+     "evsi": 0.16775921442329095,
+     "note": "power 0.42 by day 182"
+    },
+    "high": {
+     "evpi": 2.3725,
+     "evsi": 2.3337284657032735,
+     "note": "power 0.98 by day 182"
+    },
+    "label": "MARGINAL",
+    "evpi_label": "MEANINGFUL"
+   }
+  }
+ },
+ "v1b": {
+  "m=1": {
+   "mde_at": {
+    "20": 0.06280485248520168,
+    "60": 0.036260398488745925,
+    "180": 0.020934950828400557,
+    "365": 0.014701503968703513
+   },
+   "days_to_mde_1.83%": 235.5668724469494,
+   "days_to_mde_2.83%": 98.50165430178785
+  },
+  "m=3": {
+   "mde_at": {
+    "20": 0.04781330898249499,
+    "60": 0.02760502681189023,
+    "180": 0.01593776966083166,
+    "365": 0.011192249069108536
+   },
+   "days_to_mde_1.83%": 136.52915977518205,
+   "days_to_mde_2.83%": 57.08930104897142
+  },
+  "m=10": {
+   "mde_at": {
+    "20": 0.04130005536212021,
+    "60": 0.023844598080866548,
+    "180": 0.013766685120706735,
+    "365": 0.009667611717692506
+   },
+   "days_to_mde_1.83%": 101.86596034006355,
+   "days_to_mde_2.83%": 42.59497741048569
+  }
+ },
+ "v1b_supplementary_not_preregistered": {
+  "m=1": {
+   "days_to_mde_0.5%": 3155.5595965503535,
+   "days_to_mde_1.0%": 788.8898991375884
+  },
+  "m=3": {
+   "days_to_mde_0.5%": 1828.8900126844287,
+   "days_to_mde_1.0%": 457.2225031711072
+  },
+  "m=10": {
+   "days_to_mde_0.5%": 1364.5556583313555,
+   "days_to_mde_1.0%": 341.1389145828389
+  }
+ }
+}

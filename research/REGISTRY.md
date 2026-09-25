@@ -515,3 +515,30 @@ static control is the measurement that tells them apart.
 **Also flagged:** the circular-shift permutation is a weak bar — its null is random timing at
 equal exposure, which is strongly negative. **`mom1` passes it at p = 0.017 while ending at
 0.44× versus hold's 2.63×.** Treat it as a test of information, never of value.
+
+### F4. Value-of-information screen — NEGATIVE at 2026-10-15; INCONCLUSIVE (MARGINAL at best) if open-ended
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_voi_screen.md`,
+`research/voi/` (pre-registered `42c1a7d` before any computation; tests 7/7). No new market data:
+the network policy refused every exchange/data host (proxy 403, ~19:58Z).
+- **At H20 (to 2026-10-15), all nine candidates have EVSI < $0.05 (central) and ≤ $0.16 (high).**
+  None is worth a study: LINK-vs-USD re-run, another asset, new tactical signal, volatile fills,
+  switch execution, tail monitoring, partial exposure, derivatives, forward ledgers.
+- **Exposure decisions carry the only large EVPI** (C1 LINK vs USD, C2 LINK vs BTC/ETH:
+  ~$4–5 at H365, central), **but feasible EVSI is $0.00.** The history is exhausted by T1/R13, and
+  drift SE depends on calendar span, not on sampling frequency. The value exists, but no data can
+  unlock it.
+- **Forward ledgers (answers the horizon amendment's MDE task):**
+  - σ_x(72h, alt − LINK) = 5.79%, ρ = 0.37 (Kraken daily, 2024-10 → 2026-09).
+  - MDE at 20 days: 4–6%.
+  - Separating a +1% *net* edge from zero needs **~340–790 days** of scans ≥72h apart
+    (supplementary, not pre-registered). Even gross-edge = cost vs zero needs 100–240 days.
+  - **Do not cite the ledgers as validation before MDE ≤ the claimed net edge.**
+- **If open-ended:** C3, C6 and C9 are MARGINAL ($0.07–0.17 central). None is MEANINGFUL, and C6
+  and C9 are live-agent tasks, not research.
+- **Rule:** no new cloud study unless one of these changes: the horizon, the fee tier, the account
+  size (~10×), Hard Rule 2, or the objective (expected → median USD). Not evidence that LINK beats
+  USD.
+- **On the live agent's S2 static-exposure request (above):** an S2-alone follow-up is C1 in
+  this screen, with EVSI ≈ $0 before 2026-10-15 because no fresh forward holdout exists yet. If it
+  is ever run, the static-exposure control will be pre-registered as a primary comparison, as
+  requested.
