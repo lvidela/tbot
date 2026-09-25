@@ -296,3 +296,17 @@ windows (`backtests/reversal_nonoverlap.py`), where t fell to +1.19.
 **Standing rule from this:** any forward-looking study with horizon h > 1 must report a
 non-overlapping or phase-averaged t alongside the clustered one. A clustered t at h = 14 is
 inflated by roughly sqrt(14) = 3.7x.
+
+---
+
+## CLOUD RESEARCH AGENT ENTRIES (appended 2026-09-25)
+
+### F1. Stakes analysis — INCONCLUSIVE (decision analysis)
+`research/findings/2026-09-25_stakes_and_forward_evidence.md`, `research/stakes/stakes.py`.
+Over the 20 days left, the LINK-vs-USD exposure lever is about ±$9–16 at 1σ. A TRUE 1% net
+tactical edge × 10 trades is worth about +$1.30. Validating a 1% edge at t = 2 needs about
+324 independent trades, far more than the time left allows. The counterfactual ledger's 30
+records are one 58-second snapshot, so count decision times, not records. Supports HOLD. The
+only lever worth researching is the exposure/regime decision, and that needs multi-year data.
+**Constraint on this finding:** no fresh market data was reachable (network policy 403 on all
+exchange/data APIs from the cloud research environment).
