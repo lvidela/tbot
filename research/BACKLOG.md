@@ -28,3 +28,20 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - is the only candidate combining new data, a mechanism untested here, low turnover, and a
     survivorship-free universe (delisted perps are in the archive, e.g. LUNAUSDT);
   - builds the infrastructure that X2, X4 and X6 reuse.
+- **2026-09-25 23:20Z — X1 closed: NEGATIVE.** Finding `2026-09-25_x1_funding_crowding.md`.
+  - **Evidence:** strong against the spot-actionable form (holdout CIs exclude 0 on the harmful
+    side). The information test is unstable: the IC sign flips between 2020–23 and 2024–26.
+  - **Learned:**
+    1. Positioning signals are regime-dependent in sign.
+    2. Extreme negative funding marks distressed coins.
+    3. The survivorship-free liquid-alt basket was 0.16× vs LINK 0.84× in 2024–26, so broad
+       rotation priors should be pessimistic.
+  - **Invalidation:** a new regime with a negative IC on a fresh holdout.
+  - **Re-prioritisation:**
+    - X2 (OI / long-short ratio) is demoted to priority 5. It measures the same crowding
+      mechanism, and X1 shows that mechanism's sign is unstable.
+    - **X4 (low-vol / low-beta cross-section, monthly) is next.** It reuses X1's survivorship-free
+      panel. It is the only rotation idea whose mechanism predicts the 2024–26 pattern (high-vol
+      alts bleeding) ex ante. At monthly turnover it could clear 0.92% switches. It also answers
+      R13's "hold another asset" question with far more assets than a single pair.
+    - X3 (capitulation rebound) follows.

@@ -562,3 +562,25 @@ Horizon set by the researcher as **open-ended**; H365 primary, H730 sensitivity 
 - At H730, C6 ($0.32) and C9 ($0.57) cross $0.25. Both are live-system tasks, and H730 was
   pre-registered as unable to trigger a study.
 - F4's re-screen rule stands. Not evidence that LINK beats USD.
+
+### X1. Cross-sectional perp-funding crowding — NEGATIVE (sign flips across regimes; long-only "least crowded" is ruinous)
+**Cloud Research Agent, 2026-09-25.** `research/findings/2026-09-25_x1_funding_crowding.md`,
+`research/x1_funding/`.
+- **Process:** pre-registered (`338de53`) before data; discovery committed (`87df027`) before
+  the holdout.
+- **Data:** survivorship-free Binance archive: 865 USDT perps incl. delisted, 471 with a spot
+  pair, top-50 by volume weekly. Cross-checked against Coinbase (weekly return corr ≥ 0.989).
+- **Primary weekly IC:**
+  - discovery (2020–23) −0.026, t = −1.94, p = 0.053, fails α = 0.01;
+  - holdout (2024–26) **+0.034**, t = +2.24, the **opposite sign**.
+- **The 24h-funding discovery pass (t = −3.46) did not replicate.** Holdout +0.021.
+- **The holdout's positive IC is momentum/volatility:** partial IC +0.005.
+- **Economics:**
+  - Holdout long-only lowest-funding k = 1, 3, 5: **0.0003–0.006×** vs random-k 0.02–0.05×.
+    The excess-vs-random CIs exclude 0 on the negative side.
+  - Hold-LINK 0.84×.
+  - Extreme negative funding marks distressed coins.
+- **Also measured (descriptive):** the survivorship-free top-50 alt basket went to 0.16× in
+  2024–26, vs LINK 0.84×.
+- *Do not revive funding-level cross-sectional selection without a new regime and a fresh
+  pre-registered holdout.*
