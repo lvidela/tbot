@@ -80,3 +80,11 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     - **Data:** Coinbase and Binance LINK daily since 2019.
     - **Why:** it is the only timing idea supported by a mechanism X4 just confirmed
       cross-sectionally.
+- **2026-09-25 23:55Z — X12 dropped before pre-registration.** Vol-managed LINK exposure is a
+  continuous re-parameterisation of T1's S5 (LINK calm-vol state), which was INCONCLUSIVE with
+  the direction mostly opposite to the registered one.
+  - **Reopen only with** a materially different method (e.g. intraday realised vol, or
+    implied-vol inputs via X5) or new data.
+  - **Next: X6,** listing age / post-listing drift. It uses listing dates already in the
+    survivorship-free panel, is decision-relevant to the live agent's dynamic universe, and
+    carries a mechanism (unlock/hype decay) distinct from volatility, which it must control for.
