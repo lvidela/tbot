@@ -88,3 +88,16 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - **Next: X6,** listing age / post-listing drift. It uses listing dates already in the
     survivorship-free panel, is decision-relevant to the live agent's dynamic universe, and
     carries a mechanism (unlock/hype decay) distinct from volatility, which it must control for.
+- **2026-09-26 00:05Z — X6 closed.** POSITIVE for information (age beyond volatility, both
+  periods); NEGATIVE as a filter.
+  - **Cross-study lesson (X4, X6):** cross-sectional characteristics predict *ranks* and medians
+    robustly, but mean-return spreads are often undetectable because of lottery right tails.
+    Under the stated objective (expected final USD), such filters have ~0 value. Whether the
+    objective should be expected or median is a researcher question, already flagged by F4.
+  - **Next: X5,** Deribit DVOL (BTC/ETH implied vol) as a state variable for crypto exposure.
+    - **Mechanism:** the variance risk premium. High implied-minus-realised vol predicts higher
+      forward returns.
+    - **Why:** it is the only remaining queued item with a new dataset and a mechanism not
+      tested here.
+    - **Must include:** T1-style power analysis and the static-exposure control.
+  - **Then:** X2 (OI), demoted.
