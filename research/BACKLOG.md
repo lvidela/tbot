@@ -101,3 +101,22 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
       tested here.
     - **Must include:** T1-style power analysis and the static-exposure control.
   - **Then:** X2 (OI), demoted.
+- **Correction (appended, 2026-09-25 23:40Z):** the entry above stamped "2026-09-26 00:05Z" and
+  X5's pre-registration date "2026-09-26" are wrong. The system clock read 2026-09-25 ~23:25Z at
+  the time. The order of events is unaffected.
+- **2026-09-25 23:40Z — X5 closed: NEGATIVE** (power-limited, MDE 13–17% per 28d). The VRP timing
+  rule lost to its static-exposure control in both periods.
+  - **Learned:** every kind of market-timing state tried (price, trend, realised vol, funding,
+    implied vol) has failed or is below the MDE at 28-day horizons. The binding constraint is
+    calendar span, not signal choice.
+  - **Next session:** X2, cross-sectional OI growth and the long/short ratio.
+    - Use `futures/um/daily/metrics`, sampled **only on Mondays** (~20k requests), so it stays
+      cheap.
+    - The prior is low after X1, but it is new data. It must control for vol60, age and funding,
+      because X4, X6 and X1 all found those relevant.
+  - **After that,** in this order:
+    - X7 (stablecoin depegs, Coinbase USDT-USD / USDC);
+    - X3h (hourly liquidation cascades), only if a cheap event source exists;
+    - a new-hypothesis scan: expected-vs-median, i.e. do rank effects (X4/X6) translate into
+      *mean* gains at 2-leg cost under any objective the researchers endorse. This one is a
+      question for the researchers, not a study.
