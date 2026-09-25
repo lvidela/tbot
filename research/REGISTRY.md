@@ -384,3 +384,51 @@ it is ~1–2 independent observations, not 20.
 **Only route that should flip this quickly: an asset-specific non-price fact about LINK**
 (delisting, protocol failure, liquidity/minimum change). That is a monitoring task, not a
 statistical one.
+
+### R11-CONFIRMED. Spread capture re-tested live on four hits — R11 holds, and the detector was wrong
+**2026-09-25, live agent.** The standing micro-arb watcher fired four times in one day
+(FETUSD 94 and 119 bps, PHAUSD 92 bps, GRASSUSD 99 bps) — the first hits since R11 rejected
+the class. Every one was validated and **every one fails**, but the reason is not the one R11
+gave, and that matters.
+
+**R11's depth objection does NOT apply at this account size.** GRASSUSD at validation showed a
+**127 bps spread with $404 on the bid and $298 on the ask at top of book** — our ~$58 clip fits
+several times over. R11's "152 pairs above the hurdle and zero of them liquid" was measured
+against a liquidity standard far above what a $58 account needs. *That part of R11 should not be
+cited at this size again.*
+
+**The real reason, measured from public trade flow (1,000 trades/pair, 60s and 300s horizons):
+a wide snapshot spread is the SYMPTOM of a one-sided move, not a two-sided market.**
+
+| pair | quoted spread | flow imbalance | price move | **round-trip drift vs 80 bps hurdle** |
+|---|---|---|---|---|
+| GRASSUSD | 127 bps | **69–84% lifting the ask** | +23.7%/24h | **−67.5 bps** (−127.9 at 300s) |
+| FETUSD | 24–119 bps | 7% | +2.7%/24h | **+17.3 bps** |
+| PHAUSD | 39–92 bps | 13% | **+62%/24h** | **+6.3 bps** |
+| LINKUSD (control) | ~5 bps | 18% | +0.8% | −2.3 bps |
+
+On GRASSUSD, 844 of 1,000 trades lifted the ask and **a passive seller was run over by +150 bps
+in 60 seconds** (+263 bps at 300s). The spread is wide precisely because the book is thin while
+flow chases one way — exactly when a resting quote is picked off. A spot market maker there
+would sell inventory into a rising market and be unable to re-buy, i.e. **underperform simply
+holding the asset, after paying 80 bps for the privilege.**
+
+This is registry **R11's "passive-fill reversion has the wrong sign" confirmed out-of-sample on
+a fresh instance**, and the LINKUSD control at −2.3 bps is consistent with the 5.4 bps/leg
+adverse selection measured in A1.
+
+**Defect found in our own detector (fixed).** `micro_arb.scan()` screened on snapshot spread,
+volume and trade count only — nothing tested whether the market was two-sided, so it flagged
+momentum bursts as market-making opportunities. Four false positives in one day, each costing
+analysis time and each eroding trust in a watcher whose whole job is to keep a negative result
+live. `confirm_spread_capture()` now measures the realised round-trip drift a passive quoter
+would actually have captured and requires it to clear two maker legs; rejections are logged with
+their numbers so the filter can never silently suppress a real hit. Pinned by
+`scripts/test_micro_arb.py` (15/15), whose central case is the GRASSUSD pattern.
+
+**The transferable lesson: the quoted spread is not the tradeable quantity.** The tradeable
+quantity is the drift a passive fill actually realises. Any future spread-based idea must be
+measured that way.
+
+**Unchanged:** micro-arbitrage stays REJECTED. Reconsideration still requires a material
+fee-tier change, stated explicitly.
