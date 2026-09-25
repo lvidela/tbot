@@ -125,4 +125,27 @@ not the right decision tool.
 
 ## 7. Amendments
 
-(none)
+These amendments were made on 2026-09-25 while writing the code, before any data was obtained.
+No data has been seen. Each one fills a gap the original text left open.
+
+- **A1 (criterion e):** S1 and S2 are BTC signals, so for replication they are evaluated against
+  ETH and SOL returns unchanged. S3–S5 are recomputed on ETH's and SOL's own prices. S6 depends
+  on LINK funding, and no multi-year ETH/SOL funding is fetched, so (e) is waived for S6. S6
+  therefore needs (a)–(d) and (f), and a POSITIVE S6 must be reported as carrying weaker
+  replication evidence.
+- **A2 (section 6, combining signals):**
+  - The six signals are strongly correlated because they describe one market state, so their
+    shrunk tilts are **not summed**.
+  - The forecast is the unconditional non-overlapping 20-day mean plus the single largest
+    shrunk tilt, by absolute value.
+  - For signal i, the tilt is the shrunk spread × (1 − P(ON)) when the signal is ON, and
+    −(shrunk spread) × P(ON) when it is OFF.
+- **A3 (unconditional mean):** the unconditional mean is the mean of non-overlapping 20-day LINK
+  returns over the full sample, with no shrinkage. Its SE is reported alongside it, since it
+  dominates the forecast uncertainty.
+- **A4 (criterion f, S6):** moving S6's threshold outward by 1/3 of its distance from neutral
+  gives an invalid quantile (0.9 + 0.133 > 1). The end-to-end synthetic smoke test found this.
+  The outward S6 perturbation is therefore 1/3 of the way from 0.90 to 1, i.e. q = 0.933. The
+  inward one is unchanged at q = 0.767.
+- **A5 (criterion f, S1–S3):** S1–S3 are pure SMA-vs-price signals and have no threshold. Their
+  four perturbations are therefore lookback ×0.7, ×0.85, ×1.15 and ×1.3.
