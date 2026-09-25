@@ -130,3 +130,21 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - **For X2 (next in the queue) and later studies:** any 2024–26 window is a *reused,
     pre-cutoff* holdout (AU1; eight studies share it). Label it so, add the prior-exposure
     disclosure (C1) to the pre-registration, and report the program-level threshold (C4).
+- **2026-09-25 — audit received (`research/audits/NEXT_RESEARCH_HANDOFF.md`) and applied.**
+  - **Verdicts:** `findings/2026-09-25_audit_response.md`.
+  - **Done:**
+    - P2 trial ledger (`TRIALS.jsonl`, `trials.py`);
+    - C1–C6 appended to PROGRAM.md;
+    - P1 FROZEN-1 frozen, first review 2026-12-26. **Do not evaluate before then.**
+  - **Re-prioritised queue:**
+    1. **P3, the virtual maker-fill and markout study** on Kraken public trades and order book.
+       It covers the largest unmeasured cost term and involves no orders. Pre-register it next,
+       with a sampler that runs in bursts during each routine session, and state the sparseness
+       limitation.
+    2. **P5 regime labels,** for FROZEN-1 forward rows once they exist.
+    3. **FROZEN-1 reviews,** on the scheduled dates only.
+    4. **X2 (historical OI):** demoted. Pre-cutoff, so its value is discovery-stage only at the
+       program bar.
+    5. **X7 stablecoin depegs:** demoted likewise.
+  - **Standing rule from the audit:** a historical study is worth running only if its discovery
+    stage could clear p < 0.05/K and it would feed a new FROZEN entrant.

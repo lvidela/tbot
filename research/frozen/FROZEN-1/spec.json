@@ -1,0 +1,59 @@
+{
+ "id": "FROZEN-1",
+ "title": "Forward frozen-spec mini-tournament (audit P1)",
+ "author": "Research Agent (cloud)",
+ "created": "2026-09-25",
+ "status": "FROZEN at freeze_ts in FREEZE.json; any edit to spec.json, entrants.py or research/frozen/evaluate.py voids the run",
+ "evidence_class": "locked forward holdout: outcome bars open at or after the first UTC midnight after freeze_ts, all after the Research Agent's knowledge cutoff (2026-06)",
+ "venue_data": "Kraken public OHLC interval 1440 (unauthenticated); close(t) = close of the bar opened at t - 1 day",
+ "universe_kraken_pairs": ["AAVEUSD", "ADAUSD", "ALGOUSD", "ATOMUSD", "AVAXUSD", "BCHUSD", "DOTUSD", "ETCUSD", "ETHUSD", "FILUSD", "LINKUSD", "LTCUSD", "SOLUSD", "TRXUSD", "UNIUSD", "XBTUSD", "XDGUSD", "XLMUSD", "XRPUSD", "XTZUSD"],
+ "universe_note": "the 20 Kraken USD pairs of research/tsmom/ohlc_long.json, fixed now; survivorship relative to future delistings is handled by dropping a pair only when its bars stop (its last close is not used)",
+ "cost_model": {"maker_leg": 0.0046, "taker_leg": 0.0083, "tactical_round_trip_4_legs": 0.0183, "source": "REGISTRY A1"},
+ "benchmark": "hold-LINK (LINKUSD)",
+ "entrants": {
+  "A1_S2_h5_timing_minus_static": {
+   "hypothesis": "T1/F3 S2 alone: holding LINK only when BTC close > SMA50(BTC) beats a STATIC position at the rule's own average LINK weight (live agent's request, 2026-09-25)",
+   "decision": "every 5 days from t0; w = 1 if BTC close(t) > mean of the 50 closes ending at close(t), else 0",
+   "statistic": "mean over non-overlapping 5-day windows of (timing net - static net); maker cost on |dw| after drift for both",
+   "p": "one-sided t-test of mean > 0",
+   "null_controls": ["static exposure at the same average weight (built into the statistic)", "hold-LINK (reported by the live agent's own ledger)"]
+  },
+  "A2_X4_lowvol5_excess_vs_LINK": {
+   "hypothesis": "X4/X4b: an equal-weight basket of the 5 lowest-vol60 pairs of the frozen universe beats hold-LINK after costs",
+   "decision": "every 28 days from t0; vol60 = sd of 60 daily log returns ending at close(t); pairs with vol60 < 0.5% excluded",
+   "statistic": "mean over non-overlapping 28-day periods of (basket net - LINK); first period charged 2 maker legs, later periods maker cost on basket turnover",
+   "p": "max(one-sided t-test > 0, share of random-5 baskets from the same universe with mean excess >= observed)",
+   "null_controls": ["random-5 selection at matched times", "hold-LINK"]
+  },
+  "B1_tactical_candidates_all": {
+   "hypothesis": "the live tactical detector stream (tactical_v4 candidates, gate outcome ignored) has positive 3-day excess vs LINK net of the 4-leg round trip",
+   "data": "rows of the mirrored live ledgers with decision_ts_epoch (or opened_ts) > freeze_ts",
+   "entry": "close of the first UTC midnight after the decision (no intraday data)",
+   "statistic": "mean over decision days of the day's mean (3-day candidate return - 3-day LINK return - 1.83%)",
+   "p": "max(one-sided t-test > 0, share of random-entry draws (random frozen-universe pairs, same days and counts) >= observed)",
+   "null_controls": ["random entry at matched times", "hold-LINK"]
+  },
+  "B2_tactical_candidates_X4_lowvol": {
+   "hypothesis": "audit P1(a): the same stream restricted to candidates whose vol60 <= the frozen universe median at entry",
+   "statistic": "as B1 on the filtered subset",
+   "p": "as B1",
+   "null_controls": ["random entry at matched times", "hold-LINK"]
+  }
+ },
+ "ledger_files": ["data/counterfactual_ledger.json"],
+ "ledger_note": "B1/B2 depend on the live agent mirroring data/counterfactual_ledger.json to main; if it is not mirrored they stay INSUFFICIENT_N. shadow_trades.json is not used (its rows are a subset chosen by the same detector and would double count).",
+ "multiplicity": "Holm across the entrants that reach min_n at a review; the audit's max-stat permutation across entrants is replaced by Holm because entrants have different nulls",
+ "min_n": 10,
+ "null_draws": 2000,
+ "decision_rule": {
+  "SUCCESS": "Holm p < 0.05 AND mean >= MDE (2.8 x SE) at that review",
+  "RETIRE": "upper 95% bound < 0 AND MDE <= retire_mde_max",
+  "CONTINUE": "otherwise",
+  "INSUFFICIENT_N": "fewer than min_n non-overlapping observations"
+ },
+ "retire_mde_max": 0.01,
+ "review_dates": ["2026-12-26", "2027-03-26", "2027-06-26", "2027-09-26", "2027-12-26", "2028-03-26"],
+ "query_budget": 8,
+ "honest_expectation": "F4/F5: 200-790 days before a 1% net edge is resolvable; expect INSUFFICIENT_N/CONTINUE at the first reviews. The value is that any future positive is uncontaminated.",
+ "not_actionable_note": "Spot only. A SUCCESS is evidence for the live agent to validate, not an instruction."
+}
