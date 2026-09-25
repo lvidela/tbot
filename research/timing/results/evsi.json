@@ -1,0 +1,224 @@
+{
+ "account": 58.94,
+ "cost_leg": 0.0046,
+ "se_d": 0.038,
+ "se_mu": 0.01821996742902561,
+ "rows": [
+  {
+   "mu0": 0.0,
+   "s_mu": 0.02,
+   "tau": 0.015,
+   "evsi_total_usd": 0.23566069318315794,
+   "evsi_signals_only_usd": 0.0050145497970460065,
+   "evsi_drift_only_usd": 0.2287736932542309
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.02,
+   "tau": 0.03,
+   "evsi_total_usd": 0.3008744412263258,
+   "evsi_signals_only_usd": 0.12877451716189128,
+   "evsi_drift_only_usd": 0.2287736932542309
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.02,
+   "tau": 0.06,
+   "evsi_total_usd": 0.6143224081086569,
+   "evsi_signals_only_usd": 0.528879131415068,
+   "evsi_drift_only_usd": 0.2287736932542309
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.03,
+   "tau": 0.015,
+   "evsi_total_usd": 0.4811649210218631,
+   "evsi_signals_only_usd": 0.0050145497970460065,
+   "evsi_drift_only_usd": 0.47703887788723043
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.03,
+   "tau": 0.03,
+   "evsi_total_usd": 0.5225160484864345,
+   "evsi_signals_only_usd": 0.12877451716189128,
+   "evsi_drift_only_usd": 0.47703887788723043
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.03,
+   "tau": 0.06,
+   "evsi_total_usd": 0.7616426483605481,
+   "evsi_signals_only_usd": 0.528879131415068,
+   "evsi_drift_only_usd": 0.47703887788723043
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.05,
+   "tau": 0.015,
+   "evsi_total_usd": 0.9766404005387919,
+   "evsi_signals_only_usd": 0.0050145497970460065,
+   "evsi_drift_only_usd": 0.9743574315839126
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.05,
+   "tau": 0.03,
+   "evsi_total_usd": 1.000094501992902,
+   "evsi_signals_only_usd": 0.12877451716189128,
+   "evsi_drift_only_usd": 0.9743574315839126
+  },
+  {
+   "mu0": 0.0,
+   "s_mu": 0.05,
+   "tau": 0.06,
+   "evsi_total_usd": 1.1534866085714994,
+   "evsi_signals_only_usd": 0.528879131415068,
+   "evsi_drift_only_usd": 0.9743574315839126
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.02,
+   "tau": 0.015,
+   "evsi_total_usd": 0.07882548499940396,
+   "evsi_signals_only_usd": 2.4694160004478644e-08,
+   "evsi_drift_only_usd": 0.07434644665032039
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.02,
+   "tau": 0.03,
+   "evsi_total_usd": 0.12463895285025421,
+   "evsi_signals_only_usd": 0.020769159584287825,
+   "evsi_drift_only_usd": 0.07434644665032039
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.02,
+   "tau": 0.06,
+   "evsi_total_usd": 0.3897812749853782,
+   "evsi_signals_only_usd": 0.3131679699250049,
+   "evsi_drift_only_usd": 0.07434644665032039
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.03,
+   "tau": 0.015,
+   "evsi_total_usd": 0.27141018975163267,
+   "evsi_signals_only_usd": 2.4694160004478644e-08,
+   "evsi_drift_only_usd": 0.2678410791327746
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.03,
+   "tau": 0.03,
+   "evsi_total_usd": 0.3075511155046835,
+   "evsi_signals_only_usd": 0.020769159584287825,
+   "evsi_drift_only_usd": 0.2678410791327746
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.03,
+   "tau": 0.06,
+   "evsi_total_usd": 0.5257381814819544,
+   "evsi_signals_only_usd": 0.3131679699250049,
+   "evsi_drift_only_usd": 0.2678410791327746
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.05,
+   "tau": 0.015,
+   "evsi_total_usd": 0.7294726240605612,
+   "evsi_signals_only_usd": 2.4694160004478644e-08,
+   "evsi_drift_only_usd": 0.7272866360633202
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.05,
+   "tau": 0.03,
+   "evsi_total_usd": 0.751952703869453,
+   "evsi_signals_only_usd": 0.020769159584287825,
+   "evsi_drift_only_usd": 0.7272866360633202
+  },
+  {
+   "mu0": 0.01,
+   "s_mu": 0.05,
+   "tau": 0.06,
+   "evsi_total_usd": 0.8998398851012113,
+   "evsi_signals_only_usd": 0.3131679699250049,
+   "evsi_drift_only_usd": 0.7272866360633202
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.02,
+   "tau": 0.015,
+   "evsi_total_usd": 0.019254676424731686,
+   "evsi_signals_only_usd": 4.9321768084115455e-18,
+   "evsi_drift_only_usd": 0.017393686034794135
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.02,
+   "tau": 0.03,
+   "evsi_total_usd": 0.04162218799861578,
+   "evsi_signals_only_usd": 0.001609617419274363,
+   "evsi_drift_only_usd": 0.017393686034794135
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.02,
+   "tau": 0.06,
+   "evsi_total_usd": 0.23175251348837267,
+   "evsi_signals_only_usd": 0.17042363014668938,
+   "evsi_drift_only_usd": 0.017393686034794135
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.03,
+   "tau": 0.015,
+   "evsi_total_usd": 0.13861456825586646,
+   "evsi_signals_only_usd": 4.9321768084115455e-18,
+   "evsi_drift_only_usd": 0.13596002965579523
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.03,
+   "tau": 0.03,
+   "evsi_total_usd": 0.1660696368750429,
+   "evsi_signals_only_usd": 0.001609617419274363,
+   "evsi_drift_only_usd": 0.13596002965579523
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.03,
+   "tau": 0.06,
+   "evsi_total_usd": 0.3471836896161716,
+   "evsi_signals_only_usd": 0.17042363014668938,
+   "evsi_drift_only_usd": 0.13596002965579523
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.05,
+   "tau": 0.015,
+   "evsi_total_usd": 0.5297469885496838,
+   "evsi_signals_only_usd": 4.9321768084115455e-18,
+   "evsi_drift_only_usd": 0.5277463998955204
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.05,
+   "tau": 0.03,
+   "evsi_total_usd": 0.5503622461800044,
+   "evsi_signals_only_usd": 0.001609617419274363,
+   "evsi_drift_only_usd": 0.5277463998955204
+  },
+  {
+   "mu0": 0.02,
+   "s_mu": 0.05,
+   "tau": 0.06,
+   "evsi_total_usd": 0.6876190941960437,
+   "evsi_signals_only_usd": 0.17042363014668938,
+   "evsi_drift_only_usd": 0.5277463998955204
+  }
+ ]
+}

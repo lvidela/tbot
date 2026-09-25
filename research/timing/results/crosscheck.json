@@ -1,0 +1,102 @@
+{
+ "coinbase_vs_binance_LINK": {
+  "n_common": 2647,
+  "first": "2019-06-27",
+  "last": "2026-09-24",
+  "median_log_ratio_bps": 1.5761683380393274,
+  "p99_abs_log_ratio_bps": 55.127684789371585,
+  "n_flagged": 3,
+  "daily_return_corr": 0.9989853453502422,
+  "flagged_days": [
+   "2019-06-28",
+   "2019-06-29",
+   "2020-03-12"
+  ]
+ },
+ "coinbase_vs_kraken_LINK": {
+  "n_common": 721,
+  "first": "2024-10-05",
+  "last": "2026-09-25",
+  "median_log_ratio_bps": 0.44215543272353225,
+  "p99_abs_log_ratio_bps": 18.835326617865395,
+  "n_flagged": 0,
+  "daily_return_corr": 0.9998010916785283,
+  "flagged_days": []
+ },
+ "coinbase_vs_binance_BTC": {
+  "n_common": 2824,
+  "first": "2019-01-01",
+  "last": "2026-09-24",
+  "median_log_ratio_bps": 1.5101013150922775,
+  "p99_abs_log_ratio_bps": 104.45580652026352,
+  "n_flagged": 5,
+  "daily_return_corr": 0.9990702665298749,
+  "flagged_days": [
+   "2019-04-26",
+   "2019-04-27",
+   "2019-04-28",
+   "2019-05-03",
+   "2019-05-11"
+  ]
+ },
+ "coinbase_vs_kraken_BTC": {
+  "n_common": 721,
+  "first": "2024-10-05",
+  "last": "2026-09-25",
+  "median_log_ratio_bps": 0.19786425325661344,
+  "p99_abs_log_ratio_bps": 7.893145131918538,
+  "n_flagged": 0,
+  "daily_return_corr": 0.9998757674833817,
+  "flagged_days": []
+ },
+ "coinbase_vs_binance_ETH": {
+  "n_common": 2824,
+  "first": "2019-01-01",
+  "last": "2026-09-24",
+  "median_log_ratio_bps": 1.2888593725052997,
+  "p99_abs_log_ratio_bps": 109.47759694258222,
+  "n_flagged": 4,
+  "daily_return_corr": 0.9994046802811665,
+  "flagged_days": [
+   "2019-04-26",
+   "2019-04-27",
+   "2019-04-28",
+   "2020-03-12"
+  ]
+ },
+ "coinbase_vs_kraken_ETH": {
+  "n_common": 721,
+  "first": "2024-10-05",
+  "last": "2026-09-25",
+  "median_log_ratio_bps": 0.14885050200226346,
+  "p99_abs_log_ratio_bps": 9.174523402334598,
+  "n_flagged": 0,
+  "daily_return_corr": 0.999938167909322,
+  "flagged_days": []
+ },
+ "coinbase_vs_binance_SOL": {
+  "n_common": 1926,
+  "first": "2021-06-17",
+  "last": "2026-09-24",
+  "median_log_ratio_bps": 0.0,
+  "p99_abs_log_ratio_bps": 22.787396688401838,
+  "n_flagged": 0,
+  "daily_return_corr": 0.999921039625004,
+  "flagged_days": []
+ },
+ "coinbase_vs_kraken_SOL": {
+  "n_common": 721,
+  "first": "2024-10-05",
+  "last": "2026-09-25",
+  "median_log_ratio_bps": 0.0,
+  "p99_abs_log_ratio_bps": 10.35545906192709,
+  "n_flagged": 0,
+  "daily_return_corr": 0.999938610017207,
+  "flagged_days": []
+ },
+ "funding_binance_vs_okx": {
+  "n_common": 71,
+  "corr": 0.7849722401884925,
+  "median_abs_diff": 1.5664861277266657e-05
+ }
+}
