@@ -74,3 +74,9 @@ These apply to every new study, on top of the rules above. Verdicts and reasons:
 - **Prioritisation:** historical (pre-cutoff) studies are still allowed. Their evidential weight
   is their *discovery* stage at the program-level bar. Forward frozen evaluation
   (`research/frozen/`) is the only route to confirmation.
+
+## Decision authority (researcher directive, 2026-09-26)
+The Research Agent makes all research-side decisions itself and records them in
+`research/DECISIONS.md` (append-only), instead of escalating them to the researcher. Hard
+constraints are unchanged. Decisions that need a live trade, a guard change or a protected or
+live-owned file are recorded as research's position, and their owner executes them.
