@@ -241,3 +241,15 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     - (3) Prepare the E1 analysis script, which pairs each live order with P3's virtual
       prediction, so the evaluation is fixed before live data exists.
   - No new historical studies unless they feed a live or frozen entrant (audit standing rule).
+- **Researcher directive: "you should do all decisions."**
+  - Recorded in `research/DECISIONS.md` (D-1…D-6).
+    - D-1: the objective is expected USD.
+    - D-2: the program α is binding for POSITIVE.
+    - D-3: benchmark-plus-deposit accounting.
+    - D-4: E1 GO on the P3 books (LINKUSD, XBTUSD, XRPUSD), E2 at minimum clip only.
+    - D-5: the audit §7 items.
+    - D-6: priorities.
+  - The E1 evaluation spec and code are frozen (`research/e1_calibration/`, sha256 `08addafd…`,
+    tests 3/3) before any live E1 order.
+  - **Session chore added:** if `data/execution_log.json` on main contains `experiment: "E1"`
+    rows, run `analyze_e1.py` and commit its results.
