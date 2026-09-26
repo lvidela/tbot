@@ -173,3 +173,13 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     regime-conditional re-slices, A3 wide-divergence relative value.
   - **Taken next:** A1 as **X8**, a LINK hourly spike reversal. Pre-registered with its discovery
     stage judged at the program bar. If it passes, it becomes a FROZEN-2 forward entrant.
+- **2026-09-26 ~05:05Z — X8 closed: NEGATIVE** (live-agent A1, up-spike direction).
+  - **Result:** precise null, MDE 0.15–1.3%. Up-spikes show no reversal (slight continuation),
+    and exiting costs about the full 0.92% or more. K = 268.
+  - **Next candidates:**
+    - (a) **A3 wide-divergence relative value.** Pre-register only the ≥ Xσ divergence
+      conditional, with the X4 veto respected (no rotating up the vol ranking). The discovery
+      stage must be able to clear the program bar.
+    - (b) **A2 regime-conditional re-slices.** Low priority: the audit (AU5, ~12 episodes) and
+      the trial count argue against it.
+    - (c) **P3 continues;** resolve and restart the sampler each session.
