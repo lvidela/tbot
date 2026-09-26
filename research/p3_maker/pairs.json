@@ -1,0 +1,39 @@
+{
+ "source": "research/audits/data/vol_cost_snapshot.json (fetched 2026-09-25T23:30:54Z)",
+ "filter": "usd_vol_24h>=250k, sigma30>=0.5%, excluding LINKUSD (anchor)",
+ "sigma30_quintile_cuts_pct": [
+  4.0607619823925765,
+  4.726452988726514,
+  5.846402395451351,
+  6.992578077645453
+ ],
+ "seed": 20260926,
+ "by_quintile": {
+  "1": [
+   "TRXUSD",
+   "XBTUSD",
+   "XRPUSD"
+  ],
+  "2": [
+   "ALGOUSD",
+   "PENDLEUSD",
+   "SKYUSD"
+  ],
+  "3": [
+   "AKTUSD",
+   "AVAXUSD",
+   "DOTUSD"
+  ],
+  "4": [
+   "ENAUSD",
+   "PUMPUSD",
+   "XCNUSD"
+  ],
+  "5": [
+   "DASHUSD",
+   "PEAQUSD",
+   "ZECUSD"
+  ]
+ },
+ "anchor": "LINKUSD"
+}
