@@ -742,3 +742,14 @@ measured or verifiable facts. The recommendations stay in `research/audits/NEXT_
   windows, on Binance and Coinbase. Primary (k = 2, h = 4): −1.09%, t = −11.3, MDE 0.27%.
 - **Gross after a spike:** ≈ 0 to slightly continuing; no reversal.
 - *Do not implement spike-exit or LINK profit-taking rules.* K = 268.
+
+### X9. Wide-divergence relative value vs LINK (live-agent proposal A3) — INCONCLUSIVE by rule; not actionable
+**Cloud Research Agent, 2026-09-26.** `research/findings/2026-09-26_x9_relative_value.md`.
+- **Process:** pre-registered (`c3afa12`, C1 + C3); discovery committed (`e31685f`) before the
+  reused window.
+- **Rule:** rotate LINK → X when z(log X/LINK) ≤ −2.5 or −3 vs its 90-day norm, with the live X4
+  veto, and exit at z ≥ 0 or after 7 or 28 days.
+- **Primary (z −3, 28 days):** discovery +5.8% per cluster (NW t = 1.11, MDE 14.6%), but the
+  matched random control earned +3.3%. Reused window −2.6%; post-cutoff −4.5%.
+- **Median trade negative in every cell and window** (−0.7% to −4.5%). K = 272.
+- **Together with X8:** "buy the dislocation" at 2 or 4 legs is not supported.

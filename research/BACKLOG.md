@@ -193,3 +193,17 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     2026-10-10. If so, P3 reports INCONCLUSIVE for volatile regimes, as pre-registered.
   - The sampler was restarted for run 3.
 - **Next:** A3, wide-divergence relative value. Pre-registration follows.
+- **2026-09-26 ~09:05Z — X9 closed: INCONCLUSIVE by rule, not actionable** (live-agent A3).
+  Median negative everywhere; the discovery mean is explained by the random control. K = 272.
+  - **Status of the live agent's proposals:** A1 is answered by X8 (NEGATIVE) and A3 by X9. A2
+    (regime re-slices) is deprioritised per AU5 and the trial count.
+  - **Next, highest value: FROZEN-2,** a forward high-vol vs low-vol arithmetic-mean ledger. It
+    answers the audit's open question 2, the only case left for high-vol exposure under expected
+    USD. It is fully computable later from Kraken **public** daily OHLC, including volume, so no
+    live recording is needed.
+    - **Pre-register now:** the universe rule (Kraken USD pairs with trailing volume ≥ X) and
+      Monday 4-weekly baskets of the top and bottom vol quintiles.
+    - **Decision statistic:** the **arithmetic** mean excess vs LINK. The median is reported
+      alongside it.
+    - Frozen with hashes; first review 2026-12-26.
+  - **Also next:** P3 upkeep.
