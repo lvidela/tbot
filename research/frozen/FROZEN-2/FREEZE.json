@@ -1,0 +1,13 @@
+{
+ "experiment": "FROZEN-2",
+ "freeze_ts": 1790412965,
+ "freeze_utc": "2026-09-26T08:56:05+00:00",
+ "first_period_start_utc": "2026-09-28T00:00:00+00:00",
+ "sha256": {
+  "spec.json": "b89694fe5c54354ecb8f2dd4e76486f4de846924343640fec613287ed96087df",
+  "entrants.py": "b58cb186a04c0e6fd2de41fe8fdd830aac20a2e1090ba36d7df5ff65583ea819",
+  "evaluate2.py": "4834199feef5796a021ccbc8f5ebdb58221f87671fbd6b0ab0d0a3f3532dc1fd",
+  "universe.json": "11a5bfbce7c84975ff9673bbb59eea2bc0a1bd9112941577bf14b8becc78202c"
+ },
+ "note": "freeze_ts is set immediately before the commit that publishes it"
+}

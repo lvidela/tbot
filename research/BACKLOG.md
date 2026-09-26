@@ -207,3 +207,18 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
       alongside it.
     - Frozen with hashes; first review 2026-12-26.
   - **Also next:** P3 upkeep.
+- **2026-09-26 ~09:20Z — FROZEN-2 frozen** (high-vol arithmetic-mean ledger, forward).
+  - **Standing session chores from now on:**
+    - (1) P3: resolve orders, restart the sampler, commit `derived/`;
+    - (2) run `python3 research/frozen/FROZEN-2/archive.py` and commit `closes.jsonl`.
+  - **Never evaluate** FROZEN-1 or FROZEN-2 before their review dates.
+  - **Open research slots:** new hypotheses only if they are genuinely different and their
+    discovery stage could clear the program bar (K = 272, so p < 1.8e-4), or they feed a new
+    forward entrant.
+  - **Candidate ideas to screen next session** (no work yet):
+    - (i) LINK-specific non-price event feasibility (F4 C6: delisting, maintenance, minimum-order
+      changes via Kraken public SystemStatus and AssetPairs). This is monitoring rather than
+      statistics, and would be a proposal for the live agent.
+    - (ii) Fee-tier economics as a function of account size. It documents when the rejected
+      classes (R11, maker strategies) reopen, per the program's "viable at larger size" directive.
+- **Correction:** the FROZEN-2 entry above says ~09:20Z; FREEZE.json records 2026-09-26T08:56:05Z. From now on, log entries cite commit or freeze timestamps rather than estimated times.
