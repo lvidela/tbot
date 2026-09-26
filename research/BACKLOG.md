@@ -253,3 +253,15 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     tests 3/3) before any live E1 order.
   - **Session chore added:** if `data/execution_log.json` on main contains `experiment: "E1"`
     rows, run `analyze_e1.py` and commit its results.
+- **Session of the 12:46Z routine firing:**
+  - **Sampler:** found dead. The last tick was at ~10:41Z, followed by an SSL error with no stop
+    event, consistent with a container restart. It was restarted.
+  - **P3 interim 4 (descriptive):** 852 resolved; 585 used after the gap filter. Only 11 of the
+    93 new orders passed, because restart gaps are frequent.
+    - Still **0 volatile-regime orders**.
+    - Calm, 5-min: fill bid 72% / ask 66%; strict markout bid −5.6 bps / ask −8.5 bps.
+  - **FROZEN-2 archive:** no new complete bar.
+  - **E1:** no `experiment: "E1"` rows on main yet.
+  - **Decision (per DECISIONS D-6):** no new historical study this session. Nothing queued meets
+    the "clears the program bar and feeds a frozen/live entrant" rule, and the binding evidence
+    gaps are now the forward and live data streams, which only time fills.
