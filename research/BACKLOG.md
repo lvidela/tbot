@@ -183,3 +183,13 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     - (b) **A2 regime-conditional re-slices.** Low priority: the audit (AU5, ~12 episodes) and
       the trial count argue against it.
     - (c) **P3 continues;** resolve and restart the sampler each session.
+- **2026-09-26 ~08:50Z — P3 interim 2 (descriptive).**
+  - 575 resolved orders, **still all calm**. The volatile label (|1d return| / 30d σ ≥ 1.5) has
+    not fired on any sampled pair since the start.
+  - **5-min fill:** bid 67%, ask 68%.
+  - **5-min strict markout:** bid −1.8 bps (n = 475), ask −10.9 bps (n = 495).
+  - By quintile, fill ranges 51–82%, and the ask markout is worst in Q4 (−25.9 bps).
+  - **Risk to the pre-registered target:** volatile-regime precision may not be reached by
+    2026-10-10. If so, P3 reports INCONCLUSIVE for volatile regimes, as pre-registered.
+  - The sampler was restarted for run 3.
+- **Next:** A3, wide-divergence relative value. Pre-registration follows.
