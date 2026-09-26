@@ -21,6 +21,7 @@ FILL_T = (60, 300, 1800)          # seconds
 MARK_H = (60, 300, 1800)
 TICK_TOL = 45                     # seconds: nearest tick after target must be within this
 WINDOW = max(FILL_T) + max(MARK_H) + TICK_TOL
+MAX_GAP = 120                     # AMENDMENT 1 (2026-09-26): exclude orders whose window has a sampler gap > 120 s
 
 
 def jl(path):
@@ -36,6 +37,19 @@ def mid_after(ticks, target):
     return None
 
 
+def max_gap(ticks, a, b):
+    """Largest gap between consecutive ticks covering [a, b] (the sampler's heartbeat; trades are polled in the
+    same cycle, so a tick gap is also a trade-coverage gap)."""
+    ts = ticks["ts"]
+    i, j = bisect_left(ts, a), bisect_right(ts, b)
+    pts = [a] + ts[i:j] + [b]
+    return float(max(y - x for x, y in zip(pts, pts[1:])))
+
+
+def gap_of(r, flags):
+    return r.get("max_tick_gap_s", flags.get(r["id"]))
+
+
 def resolve(order, trades, ticks):
     """Virtual post-only BID at order['bid'] and ASK at order['ask'], placed at t0.
     strict fill: a trade prints strictly through the price (bid: price < B; ask: price > A).
@@ -48,6 +62,7 @@ def resolve(order, trades, ticks):
            "regime": order["regime"], "vol_ratio": order["vol_ratio"],
            "spread_bps": (order["ask"] - order["bid"]) / ((order["ask"] + order["bid"]) / 2) * 1e4}
     m0 = mid_after(ticks, t0)
+    out["max_tick_gap_s"] = max_gap(ticks, t0, t0 + WINDOW)
     for h in MARK_H:
         mh = mid_after(ticks, t0 + h)
         out[f"drift_{h}_bps"] = (mh / m0 - 1) * 1e4 if (m0 and mh) else None   # unconditional control
@@ -146,9 +161,30 @@ def summarize(rows, fill_key, t_s, mark_key):
     return out
 
 
+def backfill_gap_flags():
+    """AMENDMENT 1: rows resolved before max_tick_gap_s existed get their gap from raw ticks, appended to
+    derived/gapflags.jsonl (append-only). Rows whose raw ticks are gone stay unknown and are excluded."""
+    path = os.path.join(DER, "gapflags.jsonl")
+    have = {r["id"] for r in jl(path)}
+    _, K = load_raw()
+    new = []
+    for f in sorted(glob.glob(os.path.join(DER, "orders_*.jsonl"))):
+        for r in jl(f):
+            if "max_tick_gap_s" in r or r["id"] in have or r["pair"] not in K:
+                continue
+            new.append({"id": r["id"], "max_tick_gap_s": max_gap(K[r["pair"]], r["t0"], r["t0"] + WINDOW)})
+    with open(path, "a") as fh:
+        for x in new:
+            fh.write(json.dumps(x) + "\n")
+    return len(new)
+
+
 def report():
-    rows = [r for f in sorted(glob.glob(os.path.join(DER, "orders_*.jsonl"))) for r in jl(f)]
-    res = {"n_resolved": len(rows), "by_regime": {}, "by_quintile": {}}
+    flags = {r["id"]: r["max_tick_gap_s"] for r in jl(os.path.join(DER, "gapflags.jsonl"))}
+    all_rows = [r for f in sorted(glob.glob(os.path.join(DER, "orders_*.jsonl"))) for r in jl(f)]
+    rows = [r for r in all_rows if gap_of(r, flags) is not None and gap_of(r, flags) <= MAX_GAP]
+    res = {"n_resolved": len(all_rows), "n_used_after_gap_filter": len(rows),
+           "n_excluded_gap_or_unknown": len(all_rows) - len(rows), "by_regime": {}, "by_quintile": {}}
     for reg in ("calm", "volatile"):
         sub = [r for r in rows if r["regime"] == reg]
         res["by_regime"][reg] = {f"T{t}": summarize(sub, None, t, 300) for t in FILL_T}
@@ -156,11 +192,12 @@ def report():
         sub = [r for r in rows if r["quintile"] == q]
         res["by_quintile"][str(q)] = summarize(sub, None, 300, 300)
     json.dump(res, open(os.path.join(HERE, "results.json"), "w"), indent=1)
-    print(json.dumps({"n_resolved": res["n_resolved"],
+    print(json.dumps({"n_resolved": res["n_resolved"], "n_used": res["n_used_after_gap_filter"],
                       "regime_T300": {k: v["T300"] for k, v in res["by_regime"].items()}}, indent=1)[:4000])
     return res
 
 
 if __name__ == "__main__":
     print("resolved new:", resolve_all())
+    print("gap flags backfilled:", backfill_gap_flags())
     report()

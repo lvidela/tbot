@@ -45,6 +45,14 @@ def test_touch_by_wrong_side_is_not_a_fill():
     assert r["bid_touch_fill_s"] is None
 
 
+def test_gap_detection():
+    tk = ticks([(1000 + 20 * i, 100.0, 100.2) for i in range(50)] + [(3000 + 20 * i, 100.0, 100.2) for i in range(300)])
+    r = a.resolve(ORDER, trades([]), tk)
+    assert r["max_tick_gap_s"] >= 1000          # 1980 -> 3000 hole inside the window
+    tk2 = ticks([(1000 + 20 * i, 100.0, 100.2) for i in range(300)])
+    assert a.resolve(ORDER, trades([]), tk2)["max_tick_gap_s"] <= 20
+
+
 if __name__ == "__main__":
     tests = [(n, f) for n, f in dict(globals()).items() if n.startswith("test_")]
     for n, f in tests:

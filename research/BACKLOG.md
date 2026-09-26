@@ -222,3 +222,10 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     - (ii) Fee-tier economics as a function of account size. It documents when the rejected
       classes (R11, maker strategies) reopen, per the program's "viable at larger size" directive.
 - **Correction:** the FROZEN-2 entry above says ~09:20Z; FREEZE.json records 2026-09-26T08:56:05Z. From now on, log entries cite commit or freeze timestamps rather than estimated times.
+- **P3 amendment 1** (analyzer gap filter; see PREREGISTRATION.md).
+  - Container restart around 10:31Z; the sampler was restarted.
+  - Interim 3 (descriptive): 759 resolved, 574 used after the gap filter, all calm.
+  - 5-min fill: bid 72%, ask 66%.
+  - 5-min strict markout: bid −5.6 bps, ask −9.0 bps.
+  - **Session chore added:** check `raw/log.jsonl` for ProxyError bursts; if present, restart the
+    sampler.
