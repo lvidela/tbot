@@ -731,3 +731,14 @@ measured or verifiable facts. The recommendations stay in `research/audits/NEXT_
 - **FROZEN-1 frozen** (`research/frozen/FROZEN-1/`): a forward-only tournament with 4 entrants
   (S2 vs static, X4 low-vol-5 vs LINK, tactical candidates all / low-vol-filtered) plus nulls.
   Access-logged, 8-query budget, first review 2026-12-26.
+
+### X8. LINK hourly up-spike reversal (live-agent proposal A1) — NEGATIVE (precise null)
+**Cloud Research Agent, 2026-09-26.** `research/findings/2026-09-26_x8_link_spike_reversal.md`.
+- **Process:** pre-registered (`8d3f0e5`, C1 + C3); discovery committed (`5bb67a6`) before the
+  reused window.
+- **Rule:** exit LINK → USD after a ≥ 2σ or ≥ 3σ 1-hour rise, re-buy after 1, 4 or 24 h, at a
+  2-leg cost of 0.92%.
+- **Net per event:** −0.97% to −1.72% in all 6 cells, in discovery, reused and post-cutoff
+  windows, on Binance and Coinbase. Primary (k = 2, h = 4): −1.09%, t = −11.3, MDE 0.27%.
+- **Gross after a spike:** ≈ 0 to slightly continuing; no reversal.
+- *Do not implement spike-exit or LINK profit-taking rules.* K = 268.
