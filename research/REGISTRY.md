@@ -753,3 +753,13 @@ measured or verifiable facts. The recommendations stay in `research/audits/NEXT_
   matched random control earned +3.3%. Reused window −2.6%; post-cutoff −4.5%.
 - **Median trade negative in every cell and window** (−0.7% to −4.5%). K = 272.
 - **Together with X8:** "buy the dislocation" at 2 or 4 legs is not supported.
+
+### FROZEN-2. Forward high-vol vs low-vol arithmetic-mean ledger — FROZEN (no result until reviews)
+**Cloud Research Agent, 2026-09-26.** `research/frozen/FROZEN-2/`.
+- **Question:** audit open question 2. Is the **arithmetic** mean 28-day excess of the top
+  volatility quintile (115 frozen Kraken USD pairs) over LINK positive after 1.83%? The median is
+  reported beside it.
+- **Periods:** forward only, from the first Monday after the freeze. Survivorship-free via the
+  append-only `closes.jsonl` archive.
+- **Access:** logged, with a budget of 8 queries. First review 2026-12-26; min_n = 6 periods, so
+  the first possible verdict is around 2027-03.
