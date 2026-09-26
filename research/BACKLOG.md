@@ -265,3 +265,13 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - **Decision (per DECISIONS D-6):** no new historical study this session. Nothing queued meets
     the "clears the program bar and feeds a frozen/live entrant" rule, and the binding evidence
     gaps are now the forward and live data streams, which only time fills.
+- **Session of the 16:46Z routine firing:**
+  - **Sampler:** dead again. The last tick was ~12:55Z, minutes after the previous restart, with
+    no stop event. It was restarted.
+  - **P3:** 852 resolved, 585 used; no new orders resolved.
+  - **FROZEN-2 archive:** no new complete bar.
+  - **E1:** no rows yet.
+  - **Recorded DECISIONS D-7:**
+    - P3 keeps its 2026-10-10 report;
+    - volatile evidence comes via E1;
+    - running the sampler on the live VM is the live agent's call.
