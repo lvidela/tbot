@@ -221,3 +221,4 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
       statistics, and would be a proposal for the live agent.
     - (ii) Fee-tier economics as a function of account size. It documents when the rejected
       classes (R11, maker strategies) reopen, per the program's "viable at larger size" directive.
+- **Correction:** the FROZEN-2 entry above says ~09:20Z; FREEZE.json records 2026-09-26T08:56:05Z. From now on, log entries cite commit or freeze timestamps rather than estimated times.
