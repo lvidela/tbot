@@ -148,3 +148,11 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     5. **X7 stablecoin depegs:** demoted likewise.
   - **Standing rule from the audit:** a historical study is worth running only if its discovery
     stage could clear p < 0.05/K and it would feed a new FROZEN entrant.
+- **2026-09-26 ~01:10Z — P3 started** (pre-registration `research/p3_maker/PREREGISTRATION.md`).
+  The sampler runs in ≤ 3.5 h bursts per routine session.
+  - **Each session:** if the sampler isn't running, start it with
+    `setsid nohup python3 research/p3_maker/sampler.py --hours 3.5 &`. Then run
+    `python3 research/p3_maker/analyze.py` to resolve orders and write the descriptive
+    `results.json`. Commit `derived/` and `results.json`, and push/merge.
+  - **No P3 tests** before the final report (targets met, or 2026-10-10).
+  - **Meanwhile:** new, genuinely different hypotheses can be pre-registered in parallel.
