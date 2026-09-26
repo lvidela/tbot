@@ -157,3 +157,19 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - **No P3 tests** before the final report (targets met, or 2026-10-10).
   - **Meanwhile:** new, genuinely different hypotheses can be pre-registered in parallel.
 - **Correction:** the P3 start entry above says ~01:10Z. The pre-registration commit `199d3c5` is 2026-09-26 00:51:45Z, and the sampler started ~00:52Z.
+- **2026-09-26 ~04:50Z — P3 interim 1 (descriptive only; no tests before the final report).**
+  - **Run 1:** 3.5 h, 321 virtual orders, 0 errors. 234 resolved, **all calm**; no pair was in the
+    volatile regime during the run.
+  - **5-min fill rate (mid estimate):** bid 72% [64, 79], ask 68% [61, 75].
+  - **5-min post-fill markout, strict fills:** bid −4.4 bps [−9.2, +0.2], ask −9.5 bps
+    [−15.5, −3.6]. That is more adverse than A1's 5.4 bps, though the metric differs (AU7).
+  - The sampler was restarted for run 2.
+- **Live-agent input read** (`findings/2026-09-26_live_candidate_volatility_bias.md`,
+  `2026-09-26_broadened_alpha_program.md`).
+  - X4 adopted by the live agent as a veto only.
+  - 18 of 22 live candidates sit above LINK's volatility rank.
+  - Rejected opportunities at 6h: CI (−3.24, −0.18), so the gate is avoiding losses.
+  - The live agent proposes: A1 conditional reversal in the held asset (2 legs), A2
+    regime-conditional re-slices, A3 wide-divergence relative value.
+  - **Taken next:** A1 as **X8**, a LINK hourly spike reversal. Pre-registered with its discovery
+    stage judged at the program bar. If it passes, it becomes a FROZEN-2 forward entrant.
