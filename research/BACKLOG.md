@@ -156,3 +156,4 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     `results.json`. Commit `derived/` and `results.json`, and push/merge.
   - **No P3 tests** before the final report (targets met, or 2026-10-10).
   - **Meanwhile:** new, genuinely different hypotheses can be pre-registered in parallel.
+- **Correction:** the P3 start entry above says ~01:10Z. The pre-registration commit `199d3c5` is 2026-09-26 00:51:45Z, and the sampler started ~00:52Z.
