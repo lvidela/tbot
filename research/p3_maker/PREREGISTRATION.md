@@ -88,3 +88,21 @@ Both rows are appended to `research/TRIALS.jsonl` when run.
 - **Tick resolution is ~25–30 s.**
 - **Gaps:** a failed Trades call can open a gap, which biases fills down. Errors are logged in
   `raw/log.jsonl`.
+
+## Amendment 1 (2026-09-26, before any P3 test was run; C3 diff record)
+- **Reason:** sampler gaps corrupt the order windows that span them. Two kinds of gap occurred:
+  - the ~24 min pause between routine runs;
+  - a container restart at ~10:31:49Z that left the running sampler with a stale proxy
+    configuration, so every request failed until it was restarted at 10:32:43Z.
+  - Fills and markouts inside a gap are unobservable. That biases fills down and markouts toward
+    missing.
+- **Change to `analyze.py`:** sha256 `49dbd5fb…` → `c10935e1…`.
+  - Each resolved order now records `max_tick_gap_s` over its 61-minute window.
+  - Orders already resolved get it back-filled from raw ticks into the append-only
+    `derived/gapflags.jsonl`.
+  - **The report uses only orders with max gap ≤ 120 s** (the normal cycle is ~27 s). Orders
+    whose gap cannot be computed are excluded.
+- **Effect at amendment time:** 185 of 759 resolved orders excluded. The pre-registered tests
+  (T1, T2) have not been run, so this does not select on outcomes.
+- **Also:** the routine must restart the sampler after any container restart. A process that
+  outlives a restart keeps the old proxy settings.
