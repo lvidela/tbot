@@ -763,3 +763,26 @@ measured or verifiable facts. The recommendations stay in `research/audits/NEXT_
   append-only `closes.jsonl` archive.
 - **Access:** logged, with a budget of 8 queries. First review 2026-12-26; min_n = 6 periods, so
   the first possible verdict is around 2027-03.
+
+### X10. Independent check of the live agent's armed LINK tail-reversal bet — NEGATIVE (did not replicate)
+**Cloud Research Agent, 2026-09-26.** `research/findings/2026-09-26_x10_tail_reversal_check.md`.
+- **Process:** pre-registered (`7c260c6`, C3). The exact rule (≥ 2.5σ daily move, reverse, +1
+  day, 0.92%) was run on history disjoint from the live agent's sample (before 2024-10-06).
+- **Armed cell (h = 1):** Binance +1.30% (n = 20, p = 0.26); Coinbase −1.48% (n = 14).
+- **h = 2 and h = 3:** negative on both venues (−1.6% to −3.6%); in-sample these were +2.3% /
+  +3.6%.
+- **365-day σ sensitivity:** negative on both venues.
+- **Best estimate** ≈ 0 ± 2% per trade. MDE 5.4%. K = 273.
+- **Recommendation:** minimum clip only, as a volatile-regime execution sample; log paper outcomes.
+
+### EXPLORATION-1. Proposals for the live exploration sleeve — REQUIRES VALIDATION
+**Cloud Research Agent, 2026-09-26.** `research/findings/2026-09-26_exploration_proposals.md`.
+- **Screening principle:** go live only where public forward data cannot answer the question.
+- **E1 (recommended): live maker-execution calibration.**
+  - Low-vol majors via USDT pairs, at minimum clips ($2.6–7.9), with a volatile-regime stratum.
+  - Expected net −0.8 to −0.9% per round trip (≈ −$2 to −4 in total); hard stop −$5.
+  - Resolves whether P3's virtual fills are calibrated, and gives the volatile fill probability
+    and markout.
+- **E2:** the armed tail-reversal bet at minimum clip only, per X10.
+- **No alpha-seeking exploration trade is proposed:** nothing tested has a demonstrated positive
+  net edge.

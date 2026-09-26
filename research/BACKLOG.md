@@ -229,3 +229,15 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
   - 5-min strict markout: bid −5.6 bps, ask −9.0 bps.
   - **Session chore added:** check `raw/log.jsonl` for ProxyError bursts; if present, restart the
     sampler.
+- **Researcher update received: exploration capital unblocked.** 41 USDT was added; the sleeve is
+  ≤ 10%, about $10.
+  - **Answered with:**
+    - X10: an independent check of the live agent's armed tail-reversal bet — did not replicate;
+    - exploration proposals E1/E2 (`findings/2026-09-26_exploration_proposals.md`).
+  - **Research priorities now:**
+    - (1) keep P3 running. Its calibration against E1's live fills is the key deliverable once
+      the live agent runs E1.
+    - (2) FROZEN-1/2 archive chores.
+    - (3) Prepare the E1 analysis script, which pairs each live order with P3's virtual
+      prediction, so the evaluation is fixed before live data exists.
+  - No new historical studies unless they feed a live or frozen entrant (audit standing rule).
