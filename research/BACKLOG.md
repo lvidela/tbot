@@ -275,3 +275,4 @@ Maintained by the Research Agent under `research/PROGRAM.md`.
     - P3 keeps its 2026-10-10 report;
     - volatile evidence comes via E1;
     - running the sampler on the live VM is the live agent's call.
+- **Session of the 20:46Z routine firing:** the sampler was dead again (D-7) and was restarted. P3: 863 resolved, n_used shown in results.json. FROZEN-2 archive: no new complete bar. E1: no rows. No new study (D-6).
