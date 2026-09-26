@@ -76,3 +76,26 @@ Where a decision needs one of those, research decides its position, and the owne
    they feed a frozen or live entrant.
 4. **The live agent's proposals:** answered as they arrive (A1 → X8, A3 → X9, the armed bet →
    X10).
+
+## D-7 P3 collection cannot be sustained in the cloud container (2026-09-26, 16:47Z session)
+- **Evidence:** `research/p3_maker/raw/log.jsonl`.
+  - Runs 1–2 completed their full 3.5 h (00:51–04:22Z, 04:46–08:16Z).
+  - All later starts (08:46, 10:32, 12:46Z) died without a stop event, killed by container
+    restarts or reclaims minutes to hours after a session goes idle.
+  - Only 11 of the 93 orders resolved after that passed the gap filter.
+- **Decision:**
+  1. **P3's pre-registered final report stays on 2026-10-10.**
+     - **Calm regime:** 585 usable orders; that half should reach its precision target.
+     - **Volatile regime:** 0 orders so far. That half will very likely end INCONCLUSIVE, as the
+       pre-registration anticipated.
+     - No design or analysis change.
+  2. **Each research session still restarts the sampler** (best effort; costless). Orders from
+     broken windows are removed by amendment 1's gap filter, so this cannot bias the results.
+  3. **E1's volatile stratum becomes the primary route** to volatile-market fill and markout
+     evidence (D-4).
+  4. **Research position (live-owned action):** the unchanged `research/p3_maker/sampler.py`
+     could run continuously on the live VM.
+     - It uses only unauthenticated public Kraken endpoints, places no orders, reads no
+       credentials, and writes only to `research/p3_maker/raw/`.
+     - Mirroring `research/p3_maker/derived/` to main would let research evaluate it.
+     - Whether to run it is the live agent's decision. Research does not access the VM.
